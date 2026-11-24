@@ -1,58 +1,1027 @@
-铁血沙盘
-IRON SANDBOX
-布阵阶段
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#191b19"><title>铁血沙盘 · 全面战争模拟器</title><style>:root{color-scheme:dark;--bg:#191b19;--panel:#20221f;--line:#414039;--gold:#dfbd77;--text:#ebe9dc;--muted:#aba99b;--blue:#93bbce;--red:#d89c87;--serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;--sans:Inter,"PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px var(--sans);height:100vh;height:100dvh;display:flex;flex-direction:column}button,select,summary{cursor:pointer;font:inherit}button,select{color:inherit;background:#282a26;border:1px solid var(--line);border-radius:4px}button{display:inline-flex;justify-content:center;align-items:center;gap:7px;transition:background .15s,border-color .15s}button:hover,select:hover{background:#34362e;border-color:#807459}button:active{transform:translateY(1px)}:focus-visible{outline:2px solid var(--gold);outline-offset:2px}i,svg{display:inline-block}i{font-style:normal;line-height:0}svg{width:18px;height:18px;vertical-align:middle}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--serif)}[hidden]{display:none!important}
+header{min-height:76px;padding:0 26px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #494537;background:linear-gradient(110deg,#22241f,#1c1e1b 55%);box-shadow:0 2px 10px #0002;z-index:5}.brand-emblem{width:42px;height:46px;display:grid;place-items:center;color:#e4bf75}.brand-emblem svg{height:46px;width:42px}.brand h1{font-size:25px;letter-spacing:3px;line-height:1.15}.brand small,.kicker,.map-plaque small,.balance-title small{font:600 10px Georgia,serif;letter-spacing:2px;color:var(--gold)}.brand small{font-size:9px;letter-spacing:2.1px}.brand-sub{border-left:1px solid var(--line);margin-left:5px;padding-left:18px;color:var(--muted);letter-spacing:2px}.actions{margin-left:auto;display:flex;align-items:center;gap:8px}.actions button,.icon-btn{min-height:36px;padding:0 13px}.actions .icon-btn,.icon-btn{width:36px;padding:0}.actions #speed{min-width:56px;font:15px Georgia,serif}.phase{color:#b1c6a0;font-size:12px;display:flex;align-items:center;gap:7px;margin-right:12px}.phase::before{content:'';width:6px;height:6px;border-radius:50%;background:#a5bf8a}.primary{background:linear-gradient(110deg,#edcf90,#cba65d);color:#28241a;border-color:#dfbc79;font-weight:bold}.primary:hover{background:#f0d498}.actions .primary{min-width:106px;font-size:16px;letter-spacing:2px}.primary svg{width:17px}.actions button:disabled{opacity:.55;cursor:default}
+main{display:flex;flex:1;min-height:0}aside{width:298px;flex:none;display:flex;flex-direction:column;padding:22px 16px 14px;background:linear-gradient(130deg,#242620,#20221f 60%);border-right:1px solid var(--line);min-height:0}.side-head{position:relative;margin-bottom:15px}.side-head h2,.map-title h2{font-size:26px;letter-spacing:2px;margin:4px 0 0;line-height:1.22}.section-mark{position:absolute;right:3px;top:9px;color:#908469}.section-mark svg{width:23px;height:23px}.team-tabs,.forms{display:grid;gap:5px}.team-tabs{grid-template-columns:repeat(2,1fr)}.team-tabs button{height:35px;background:#292a25;color:#a7a498;font-weight:600}.team-tabs button.on[data-team=blue]{background:#293a40;border-color:#66868e;color:#bcdeeb}.team-tabs button.on[data-team=red]{background:#452e29;border-color:#916456;color:#efbdac}.side-caption,.roster-title,.balance-title{display:flex;align-items:center;justify-content:space-between}.side-caption{margin:15px 0 7px;color:#cdc9ba;font-size:13px}.side-caption button{border:0;background:none;color:#b1ac9e;font-size:12px;padding:0 2px}.side-caption button.on{color:var(--gold)}.side-caption svg{width:13px}.forms{grid-template-columns:repeat(4,1fr)}.forms button{flex-direction:column;gap:3px;height:47px;color:var(--muted);font-size:12px}.forms button.on{color:var(--gold);border-color:#9a8352;background:#383429}.forms svg{height:15px}.roster-title{margin:18px 0 10px;padding-top:15px;border-top:1px solid var(--line)}h3{font-size:18px;letter-spacing:1px}.roster-title span{font:12px var(--sans);color:var(--muted)}nav{display:flex;gap:3px;margin:0 0 10px;flex-wrap:wrap}nav button{background:none;border:1px solid transparent;color:#b2afa3;padding:3px 5px;font-size:12px}nav button.on{color:var(--gold);border-color:#6a5c3d;background:#353126}
+#cards{min-height:82px;flex:1;overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:7px;padding:1px 4px 4px 1px;scrollbar-width:thin;scrollbar-color:#5a594b transparent}.card{position:relative;padding:8px 8px 9px;gap:0;display:flex;align-items:flex-start;flex-direction:column;color:#d9d7c8;background:linear-gradient(130deg,#30322b,#272923);text-align:left;overflow:hidden}.card.on{border-color:#b99a57;box-shadow:inset 2px 0 #c3a563;background:linear-gradient(120deg,#413b2c,#2c2d24)}.card-art{display:grid;place-items:center;color:#c9bea0;margin:0 0 3px}.card-art svg{height:29px;width:29px}.card.on .card-art,.card.gen .card-art{color:#d8b576}.cost{position:absolute;top:9px;right:7px;display:flex;align-items:center;gap:4px;color:#d4ba7e;font:12px Georgia,serif}.coin{width:8px;height:8px;border:1px solid currentColor;outline:1px solid #c9ab6a55;outline-offset:1px;border-radius:50%;display:inline-block}.card b,.card small{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}.card b{font:600 14px var(--serif)}.card small{font-size:11px;color:#aaa798;margin-top:3px}#inspect{margin-top:12px;border:1px solid #685d42;border-radius:4px;background:linear-gradient(120deg,#383429,#282a23);padding:12px}.detail-heading{display:flex;align-items:center;gap:8px}.detail-heading svg{color:var(--gold);height:30px;width:30px}.detail-heading b{font:700 17px var(--serif);color:#edd7a5}.detail-heading span{margin-left:auto;color:var(--gold);font-size:12px}.statrow{display:grid;grid-template-columns:repeat(4,1fr);margin:10px 0 7px;color:#b8b3a3;font-size:11px}.statrow b{display:block;color:#e2ddcb;font:600 16px Georgia,serif;margin-top:2px}.statrow div+div{border-left:1px solid #524c3d;padding-left:10px}#inspect p{color:#bdb8a7;font-size:12px;line-height:1.55}
+.workspace{flex:1;min-width:0;padding:21px clamp(14px,2vw,32px) 18px;display:flex;flex-direction:column;background:radial-gradient(ellipse at top left,#252620,transparent 65%)}.map-title{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}.map-title h2{font-size:28px}.gold-rule{display:inline-block;width:18px;height:1px;background:var(--gold);vertical-align:middle;margin-right:4px}.selects{display:flex;gap:8px}.selects label{display:flex;position:relative;align-items:center;color:#c1b593}.selects label>i{position:absolute;left:10px;pointer-events:none}.selects select{appearance:none;padding:8px 30px 8px 34px;background:#2a2b25;height:36px;max-width:165px;font-size:13px;color:#e2dfd2}.selects label:after{content:'';position:absolute;right:11px;width:5px;height:5px;border:solid #b6ad98;border-width:0 1px 1px 0;transform:rotate(45deg);pointer-events:none}
+.map-frame{position:relative;flex:1;min-height:150px;padding:5px;border:1px solid #8a7857;background:#33352c;box-shadow:0 5px 12px #0003}.map-frame:before,.map-frame:after{content:'';position:absolute;pointer-events:none;z-index:2;inset:-1px;background:linear-gradient(#d3b778,#d3b778) top left/17px 2px no-repeat,linear-gradient(#d3b778,#d3b778) top left/2px 17px no-repeat,linear-gradient(#d3b778,#d3b778) bottom right/17px 2px no-repeat,linear-gradient(#d3b778,#d3b778) bottom right/2px 17px no-repeat}.map-frame:after{transform:scaleX(-1)}.map-viewport{position:relative;height:100%;overflow:hidden;background:#c2b798}canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}.map-plaque{position:absolute;display:flex;align-items:center;gap:9px;left:15px;top:15px;padding:8px 13px 8px 10px;background:#282c24f2;color:#f0e7ca;border:1px solid #796f53;pointer-events:none;box-shadow:0 2px 5px #3d331633}.plaque-icon{color:#d3bd88}.plaque-icon svg{width:27px;height:27px}.map-plaque span#mapName{font:700 16px var(--serif);letter-spacing:2px}.map-plaque small{display:block;font-size:8px;letter-spacing:1.8px;margin-top:3px}#zoomTools{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;background:#282c24f5;color:#e4dcc5;border:1px solid #7d7358;border-radius:4px;box-shadow:0 2px 6px #30240f33}#zoomTools button{background:none;border:none;width:32px;height:31px;color:inherit;font-size:20px}#zoomTools button:hover{background:#565345}#zoomTools svg{width:15px}#zoomVal{font:12px Georgia,serif;color:#cdc6b0}#fit,#hp{border-left:1px solid #655f4c!important}.map-foot,.map-foot>div,.map-foot>span{display:flex;align-items:center}.map-foot{justify-content:space-between;padding:8px 0 11px;gap:4px;color:#97998c;font-size:12px}.map-foot>div{gap:6px}.map-foot>span{gap:6px}.map-foot button,.map-foot summary{font-size:12px;padding:5px 9px;color:#c5c3b3;background:#252721}.map-foot svg{width:14px;height:14px}.map-foot summary{list-style:none;border:1px solid var(--line);border-radius:4px;font-weight:bold}.map-foot details{position:relative}.map-foot details>div{position:absolute;bottom:110%;right:0;width:100px;display:grid;gap:3px;background:var(--panel);padding:5px;border:1px solid var(--line);z-index:4}.balance-panel{background:linear-gradient(100deg,#292d28,#242520);border:1px solid var(--line);border-radius:4px;padding:12px 16px}.balance-title{justify-content:flex-start;gap:8px}.balance-title i{color:#c8b78f}.balance-title h3{font-size:16px}.balance-title small{font-size:8px;color:#a8a38b;letter-spacing:1.7px}.balance-data{display:flex;justify-content:space-between;gap:6px;margin:8px 0}.power{display:flex;gap:7px;align-items:baseline;font-size:12px}.power i svg{width:13px;height:13px}.power b{font:600 14px var(--serif)}.blue{color:var(--blue)}.red{color:var(--red)}.power span{color:#cccbbf}.track{height:5px;background:#ac715e;overflow:hidden;border-radius:1px}.track>div{background:#739baa;height:100%;width:50%;border-right:3px solid #23231c;transition:width .2s}
+#toast{position:absolute;top:12%;left:50%;transform:translateX(-50%);background:#272a23ed;color:#f2dfaf;padding:7px 15px;border:1px solid #95845e;pointer-events:none;box-shadow:0 2px 8px #0003;text-align:center;border-radius:3px}#toast:empty{display:none}#dock{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);background:#242821ed;border:1px solid #9a885e;padding:6px 10px;max-width:96%;display:flex;gap:7px;align-items:center;overflow:auto;font-size:12px}#dock label{white-space:nowrap;color:#dacfaf}#skills{display:flex;gap:5px}#skills button{white-space:nowrap;display:block;font-size:12px;padding:6px;border-color:#615d4c}#skills button:enabled{border-color:var(--gold);color:var(--gold)}#skills button:disabled{color:#aba998}dialog{color:var(--text);border:1px solid #a08a58;background:#242720;width:min(430px,94vw);border-radius:6px;padding:25px;box-shadow:0 15px 70px #0008}dialog::backdrop{background:#10130f99;backdrop-filter:blur(3px)}dialog h2{font-size:29px;margin:8px 0}dialog p{color:#bdbba9;line-height:1.6}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.modal-actions button{padding:8px 12px}#reportStats{padding:13px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}#reportStats section{padding:10px;border:1px solid var(--line);line-height:1.8;font-size:13px}body.fold aside{display:none}
+@media(min-width:1600px){aside{width:330px}.card{padding:12px}.card-art svg{width:38px;height:38px}}
+@media(max-height:760px) and (min-width:761px){header{min-height:61px}aside{padding-top:13px}.side-head{margin-bottom:10px}.roster-title{margin-top:11px;padding-top:9px}.workspace{padding-top:13px}.map-title{margin-bottom:10px}#inspect{padding:8px}.balance-panel{padding:9px 14px}}
+@media(max-width:900px){.brand-sub{display:none}aside{width:250px;padding-left:12px;padding-right:12px}nav{gap:1px}nav button{padding:3px}.workspace{padding:14px 12px}.map-foot>span{font-size:11px}.phase{margin-right:0}}
+@media(max-width:760px){header{min-height:59px;padding:0 10px;gap:5px}.brand-emblem,.brand-emblem svg{width:30px;height:34px}.brand h1{font-size:19px;letter-spacing:1px}.brand small{font-size:7px;letter-spacing:1px}.actions{gap:4px}.actions .phase{display:none}.actions button,.icon-btn{padding:0 7px;min-height:32px}.actions #speed{min-width:39px}.actions .primary{min-width:60px;font-size:14px}.actions .icon-btn,.icon-btn{width:30px}.actions #reset svg{display:none}main{position:relative}aside{width:min(290px,85vw);position:absolute;inset:0 auto 0 0;z-index:4;box-shadow:6px 8px 18px #0008}.workspace{padding:13px 10px 10px}.map-title h2{font-size:22px}.kicker{font-size:9px}.selects{gap:4px}.selects select{max-width:123px;padding:6px 17px 6px 22px;font-size:12px}.selects label>i{left:4px}.selects svg{width:14px}.selects label:after{right:6px}.map-title{margin-bottom:10px}.map-plaque{left:6px;top:6px;padding:6px}.map-foot>span{font-size:10px}.map-foot>div{gap:3px}.map-foot button{padding:5px}.map-foot>span i{display:none}.balance-panel{padding:10px}.map-title>.kicker{letter-spacing:1px}#dock{bottom:52px}.map-frame{padding:3px}}
+@media(max-height:550px){aside{overflow:auto}#cards{flex:none;max-height:185px}.workspace{overflow:auto}.balance-panel{flex:none}}
+@media(max-width:760px) and (orientation:portrait){
+ body{height:auto;min-height:100dvh}header{position:sticky;top:0}main{display:flex;flex-direction:column;flex:none}aside{position:static;order:2;width:auto;margin:0 10px 14px;padding:14px;border:1px solid var(--line);border-radius:4px;box-shadow:none}.workspace{flex:none}.map-frame{flex:none;aspect-ratio:1.56;min-height:0}.map-foot>span{max-width:48%}.map-plaque{padding:3px 6px;gap:4px}.map-plaque span#mapName{font-size:13px}.map-plaque small{font-size:6px}.plaque-icon svg{width:18px;height:18px}#zoomTools{right:5px;bottom:5px}#zoomTools button{width:27px;height:25px}.side-head h2{font-size:21px}.side-head{margin-bottom:9px}.section-mark{top:4px}.forms button{flex-direction:row;height:36px}.side-caption{margin-top:10px}.roster-title{margin-top:11px;padding-top:9px}#cards{flex:none;max-height:260px;grid-template-columns:repeat(3,minmax(0,1fr))}.card b{font-size:13px}.card small{font-size:10px}.cost{font-size:11px}#inspect{margin-top:8px}
+}
+</style></head>
+<body>
+<header>
+ <button id="toggle" class="icon-btn" aria-label="收起或展开部署面板" data-icon="panel"></button>
+ <div class="brand-emblem" data-icon="crest"></div><div class="brand"><h1>铁血沙盘</h1><small>IRON SANDBOX</small></div>
+ <span class="brand-sub">全面战争模拟器</span>
+ <div class="actions"><span class="phase" id="phase">布阵阶段</span><button id="sound" class="icon-btn" title="切换音效" aria-label="切换音效" data-icon="sound"></button><button id="reset"><i data-icon="reset"></i>还原</button><button id="speed">1.0×</button><button id="fight" class="primary"><i data-icon="swords"></i><span>开战</span></button></div>
+</header>
+<main>
+ <aside id="sidebar">
+  <div class="side-head"><div class="kicker">DEPLOYMENT</div><h2>军团部署</h2><i class="section-mark" data-icon="flag"></i></div>
+  <div class="team-tabs" aria-label="部署阵营"><button data-team="blue" class="on"><i data-icon="flag"></i>蓝方阵营</button><button data-team="red"><i data-icon="flag"></i>红方阵营</button></div>
+  <div class="side-caption"><b>部署阵型</b><button id="erase" title="切换擦除工具"><i data-icon="eraser"></i>擦除</button></div>
+  <div class="forms"><button data-form="single" class="on"><i data-icon="single"></i>单兵</button><button data-form="line"><i data-icon="line"></i>横列</button><button data-form="square"><i data-icon="square"></i>方阵</button><button data-form="wedge"><i data-icon="wedge"></i>楔阵</button></div>
+  <div class="roster-title"><h3>兵种名册</h3><span id="roster-count"></span></div>
+  <nav id="categories" aria-label="兵种分类"></nav>
+  <div id="cards" aria-label="兵种名册"></div>
+  <section id="inspect" aria-label="兵种详情"></section>
+ </aside>
+ <section class="workspace">
+  <div class="map-title"><div><div class="kicker"><span class="gold-rule"></span> TACTICAL MAP</div><h2>战术沙盘</h2></div>
+   <div class="selects"><label><i data-icon="map"></i><select id="maps" aria-label="选择战场"></select></label><label><i data-icon="scroll"></i><select id="preset" aria-label="选择战役"></select></label></div>
+  </div>
+  <div class="map-frame"><div class="map-viewport" id="view"><canvas id="canvas" aria-label="互动战场"></canvas>
+   <div class="map-plaque"><span class="plaque-icon" data-icon="terrain"></span><div><span id="mapName"></span><small id="mapEnglish"></small></div></div>
+   <div id="zoomTools"><button id="plus" aria-label="放大">+</button><output id="zoomVal">100%</output><button id="minus" aria-label="缩小">−</button><button id="fit" aria-label="重置镜头" data-icon="fit"></button><button id="hp" aria-label="切换生命条" data-icon="heart"></button></div>
+   <div id="dock" hidden><label><input id="auto" type="checkbox" checked> 自动绝技</label><div id="skills"></div></div>
+   <div id="toast" role="status"></div>
+  </div></div>
+  <div class="map-foot"><span id="tip" title="空格键加拖动可平移镜头"><i data-icon="mouse"></i><span>点击部署 · 右键擦除 · 滚轮缩放</span></span><div><button id="mirror"><i data-icon="mirror"></i>镜像</button><button id="random"><i data-icon="dice"></i>随机混战</button><details id="more"><summary title="清除单位" aria-label="清除单位">···</summary><div><button id="clearSide">清空本方</button><button id="clearAll">清空全场</button></div></details></div></div>
+  <section class="balance-panel"><div class="balance-title"><i data-icon="swords"></i><h3>双方军力</h3><small>FORCE BALANCE</small></div>
+  <div class="balance-data"><div class="power blue"><i data-icon="flag"></i><b>蓝方</b><span id="blueStats"></span></div><div class="power red"><span id="redStats"></span><b>红方</b><i data-icon="flag"></i></div></div><div class="track"><div id="fill"></div></div></section>
+ </section>
+</main>
+<dialog id="report"><div class="kicker">BATTLE REPORT</div><h2 id="winner"></h2><p id="battleSub"></p><div id="reportStats"></div><p id="mvp"></p><div class="modal-actions"><button id="closeReport">观摩战场</button><button id="rematch" class="primary">还原阵型再战</button></div></dialog>
+<script>
+const WORLD_W = 2000, WORLD_H = 1200;
+const MAPS = [
+ ['plains','翠绿平原','开阔草原与林地，林地提供 15% 远程闪避。',[['forest',640,260,95],['forest',1360,920,105],['forest',1000,180,75],['forest',1000,1030,80],['hill',1000,600,190,120]]],
+ ['river','双桥河谷','双桥连接两岸，涉水时移速减半。',[['forest',650,580,85],['forest',1350,580,85],['rock',760,160,42],['rock',1240,1030,45]]],
+ ['volcano','赤壁焦土','熔岩池阻挡通行，接近边缘会受到灼烧。',[['lava',1000,310,105],['lava',1000,890,105],['rock',740,600,52],['rock',1260,600,52],['hill',540,250,140,90],['hill',1460,950,140,90]]],
+ ['snow','凛冬雪原','冰湖提升 15% 移速，松林为部队提供掩护。',[['ice',1000,600,280,210],['pine',600,240,85],['pine',1420,260,85],['pine',580,960,85],['pine',1410,940,85],['rock',1000,170,45]]],
+ ['citadel','孤城要塞','城墙分隔战场，两道城门连接内外。',[['hill',1380,220,95,85],['hill',1380,980,95,85],['rock',860,600,44]]],
+ ['desert','大漠孤烟','流沙区降低 45% 移速，沙丘为远程部队提供高地。',[['quicksand',1000,360,95],['quicksand',1000,840,95],['rock',700,300,48],['rock',1300,900,48],['hill',1000,600,140,90]]],
+ ['woods','幽暗密林','密林环绕战场，骑兵在林中减速。',[['forest',720,300,105],['forest',1280,300,105],['forest',1000,600,115],['forest',720,900,105],['forest',1280,900,105],['rock',520,600,40],['rock',1480,600,40]]],
+ ['colosseum','神殿遗迹','对称石柱环绕古竞技场，适合精锐部队交锋。',[['pillar',760,340,36],['pillar',1240,340,36],['pillar',760,860,36],['pillar',1240,860,36],['pillar',1000,600,44]]]
+].map(([id,name,desc,features])=>({id,name,desc,obstacles:features.map(([type,x,y,r,ry])=>({type,x,y,r,rx:r,ry}))}));
+MAPS[1].river={x:925,w:150,bridges:[{y:290,h:150},{y:760,h:150}]};
+MAPS[4].walls=[{x:1220,y:40,w:46,h:350},{x:1220,y:500,w:46,h:200},{x:1220,y:810,w:46,h:350}];
+const categories={all:'全部',general:'将领',infantry:'步兵',ranged:'远程',cavalry:'骑兵',siege:'器械',mythic:'奇幻'};
+const UNITS=[];
+function roster(cat,rows){
+ for(const [id,name,role,cost,hp,atk,def,range,speed,cd,radius,mass,special,desc] of rows)
+ UNITS.push({id,name,cat,role,cost,hp,atk,def,range,speed,cd,radius,mass,...special,desc});
+}
+roster('infantry',[
+ ['spearman','民兵长矛手','反骑兵 · 廉价前排',40,115,16,4,36,62,1.05,10,1,{antiCav:1.8},'对骑兵与战象造成 180% 穿刺伤害。'],
+ ['legionary','罗马重盾卫','高防盾墙 · 抗箭',85,230,20,12,26,52,1.1,11,1.6,{block:.55},'罗马塔盾可减免 55% 远程伤害。'],
+ ['berserker','维京狂战士','高攻速 · 残血狂暴',95,175,30,3,26,84,.72,11,1.2,{berserk:true},'生命低于一半时，攻击、攻速与移动速度提升。'],
+ ['spartan','斯巴达方阵','精锐重矛 · 铁壁',135,310,28,16,40,50,.95,12,2.2,{antiCav:1.7,block:.45},'精锐重甲长矛手，兼具远程防御与反骑兵能力。'],
+ ['assassin','暗影刺客','极速绕后 · 切后排',110,125,42,2,24,125,.62,9,.8,{crit:.35,back:true},'优先锁定远程与器械，暴击概率为 35%。'],
+ ['greatsword','铁甲大剑士','顺劈 · 破甲',140,260,40,11,34,58,1.2,12,1.8,{cleave:42,ap:.4},'巨剑横扫多个目标，无视 40% 护甲。']]);
+roster('ranged',[
+ ['archer','精锐长弓手','远程抛射 · 箭雨',65,85,18,2,300,56,1.25,9,.8,{proj:'arrow',ps:420},'长弓抛射，适合成排部署。'],
+ ['crossbow','重装连弩手','高破甲 · 克重盾',95,105,34,5,270,50,1.8,10,1,{proj:'bolt',ps:560,ap:.65},'重弩箭可无视目标 65% 护甲。'],
+ ['musketeer','帝国火枪手','枪火齐射 · 击退',115,100,44,3,250,54,2.1,10,.9,{proj:'bullet',ps:760,ap:.7,kb:26},'齐射击退冲锋单位，无视 70% 护甲。'],
+ ['javelin','标枪投掷手','中程爆发 · 克巨兽',80,120,32,4,175,70,1.35,10,1,{proj:'javelin',ps:460,antiLarge:1.65},'对战象、巨人等大型单位造成 165% 伤害。'],
+ ['firearcher','烈焰火箭手','持续灼烧 · 克集群',105,90,19,2,280,55,1.45,9,.8,{proj:'firearrow',ps:410,burn:10},'火箭命中后持续灼烧敌军。']]);
+roster('cavalry',[
+ ['hussar','轻装骠骑兵','极速包抄 · 切弓兵',120,190,26,5,30,138,.95,14,2.6,{cav:true,charge:1.6,back:true},'高速机动，优先攻击敌方后排。'],
+ ['lancer','重装冲锋骑','重骑冲锋 · 击飞',180,310,36,13,36,122,1.15,15,3.6,{cav:true,charge:2.4,kb:45},'冲锋后第一击造成 240% 伤害。'],
+ ['horsearcher','草原弓骑兵','移动射击 · 游击',150,165,20,4,235,128,1.15,14,2.2,{cav:true,proj:'arrow',ps:460,kite:true},'敌人接近时自动后撤，保持射击距离。'],
+ ['elephant','皇家战象','巨兽践踏 · 范围击飞',360,920,62,15,44,68,1.5,24,9,{cav:true,large:true,cleave:68,kb:65},'践踏前方敌军并造成范围击飞。']]);
+roster('siege',[
+ ['catapult','重型投石车','超远抛射 · 范围轰炸',260,220,88,8,560,24,4,20,5.5,{proj:'boulder',ps:310,aoe:68,kb:55},'巨石落地造成大范围溅射与击飞。'],
+ ['cannon','帝国加农炮','直线穿透 · 破阵',300,200,105,6,520,22,4.3,19,5.5,{proj:'cannonball',ps:640,pierce:5,aoe:34,kb:60,ap:.85},'实心铁弹沿直线穿透最多五名敌人。'],
+ ['ballista','诸葛连弩车','高速连射 · 穿透',240,195,42,7,470,28,1.15,17,4.5,{proj:'heavybolt',ps:680,pierce:2,ap:.7,antiLarge:1.5},'连发重型弩箭，擅长对付大型目标。'],
+ ['ram','铁甲攻城车','超高箭抗 · 破阵',220,760,55,18,36,44,1.8,21,8,{block:.8,kb:70,ap:.75},'铁板顶盖可减免 80% 远程伤害。']]);
+roster('mythic',[
+ ['pyro','烈焰大法师','炽热火球 · 范围爆炸',230,135,56,3,330,52,2.3,11,1,{proj:'fireball',ps:370,aoe:56,burn:12},'火球引发魔法爆破与持续灼烧。'],
+ ['frost','冰霜大术士','范围冰冻 · 减速',210,140,34,4,310,54,2.1,11,1,{proj:'frostbolt',ps:400,aoe:62,slow:true},'冰霜新星可以减缓敌军移动与攻击。'],
+ ['cleric','圣光大祭司','群体治疗 · 辅助',185,155,24,6,240,56,1.9,11,1,{healer:true},'治疗受伤友军及其附近同伴，扑灭火焰。'],
+ ['titan','雷霆泰坦巨人','巨型首领 · 震荡',520,1550,92,18,54,54,1.65,27,12,{large:true,cleave:88,kb:85},'重锤引发震荡，击退周围的敌人。'],
+ ['necro','亡灵死灵法师','骷髅召唤 · 增援',260,150,26,4,300,50,1.8,11,1,{proj:'shadowbolt',ps:430,summon:6.5},'每 6.5 秒召唤两名骷髅战士。']]);
+roster('general',[
+ ['gen_guanyu','武圣·关羽','青龙斩月',650,1650,88,18,48,108,1.05,18,6,{cav:true,cleave:66,ap:.45,aura:'atk',reach:190,ult:11},'提升周围友军 20% 攻击力。挥出青龙偃月刀，斩击前方扇形区域。'],
+ ['gen_lubu','无双·吕布','鬼神降临',750,1850,108,17,52,112,.92,19,7,{cav:true,cleave:75,steal:.25,ap:.5,aura:'fear',reach:180,ult:10},'威慑周围敌军，攻击可吸血。跃入敌阵释放震荡波。'],
+ ['gen_zhuge','卧龙·诸葛亮','东风借火',620,1050,48,11,350,62,1.5,15,3.5,{proj:'fireball',ps:420,aoe:45,aura:'def',reach:230,ult:12},'八阵图提升友军护甲，在敌军密集处召唤火海。'],
+ ['gen_caesar','执政官·凯撒','铁壁号令',600,1550,64,22,38,78,1,16,5,{block:.6,cleave:52,aura:'def',reach:240,ult:11},'鹰旗强化周围友军护甲。号角治疗友军并提高攻速。'],
+ ['gen_napoleon','征服者·拿破仑','帝国齐射',640,1120,65,12,320,74,1.6,15,3.8,{proj:'bullet',ps:800,ap:.75,aura:'haste',reach:250,ult:13},'提升友军攻速，呼叫十发炮弹轰击敌阵。'],
+ ['gen_joan','圣女·贞德','神圣裁决',580,1480,52,20,38,88,1.05,16,4.5,{cav:true,block:.5,aura:'heal',reach:220,ult:11},'持续治疗友军。圣光净化灼烧并震退敌人。'],
+ ['gen_genghis','草原之狼·成吉思汗','万箭齐发',660,1420,62,14,270,132,.9,17,4.8,{cav:true,proj:'arrow',ps:560,kite:true,aura:'speed',reach:240,ult:10},'强化友军移速与攻速。召唤二十四支箭矢覆盖敌阵。'],
+ ['gen_arthur','王者·亚瑟','誓约胜利之剑',700,1750,84,21,44,84,1,17,5.8,{cleave:62,ap:.5,aura:'atk',reach:200,ult:12},'提升周围友军攻击力。挥动圣剑释放金色贯穿光束。']]);
+const defs=Object.fromEntries(UNITS.map(u=>[u.id,u]));
+defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,atk:14,def:1,range:24,speed:74,cd:.95,radius:8,mass:.6,antiCav:1};
+const presets=[
+ ['虎牢关','plains','武圣联军','鬼神吕布',
+ [['gen_guanyu',660,600],['gen_zhuge',440,600],['legionary',610,380,6,85],['spearman',540,400,5,95],['archer',370,350,6,95],['lancer',520,210,3,45],['lancer',520,910,3,45]],
+ [['gen_lubu',1320,600],['berserker',1380,360,6,90],['greatsword',1450,400,5,95],['crossbow',1580,380,5,105],['horsearcher',1420,210,3,50],['horsearcher',1420,900,3,50],['catapult',1680,600]]],
+ ['滑铁卢','river','拿破仑炮群','联军方阵',
+ [['gen_napoleon',480,600],['cannon',360,270,4,210],['musketeer',580,220,8,105],['lancer',700,280,6,125]],
+ [['gen_arthur',1460,600],['gen_joan',1460,360],['spartan',1240,190,10,90],['crossbow',1540,240,8,100],['hussar',1360,820,4,65]]],
+ ['孤城血战','citadel','泰坦攻城','罗马守军',
+ [['gen_arthur',660,600],['titan',780,440,2,320],['ram',880,445,2,310],['catapult',340,360,3,240],['greatsword',620,250,8,100],['firearcher',480,300,6,120]],
+ [['gen_caesar',1360,600],['gen_zhuge',1520,600],['spartan',1310,390,6,85],['legionary',1390,340,6,100],['crossbow',1500,180,8,115],['ballista',1420,210,2,780],['cleric',1480,480,2,240]]],
+ ['帝国碰撞','desert','草原铁骑','罗马军团',
+ [['gen_genghis',540,600],['horsearcher',640,200,10,88],['hussar',490,250,6,140],['lancer',730,360,5,115]],
+ [['gen_caesar',1420,600],['legionary',1290,210,10,85],['spearman',1360,240,8,100],['javelin',1470,290,6,120],['elephant',1340,420,2,360]]],
+ ['诸神黄昏','volcano','圣光军团','亡灵大军',
+ [['gen_joan',560,600],['titan',680,600],['pyro',440,320,5,140],['frost',510,360,4,150],['cleric',390,440,3,160],['spartan',630,240,8,100]],
+ [['gen_lubu',1420,600],['titan',1320,600],['necro',1550,320,5,140],['assassin',1360,250,6,135],['berserker',1390,240,8,100]]],
+ ['众神竞技场','colosseum','圆桌盟军','征服者联军',
+ [['gen_guanyu',650,380],['gen_arthur',650,530],['gen_zhuge',520,600],['gen_joan',650,760],['spartan',740,340,6,100]],
+ [['gen_lubu',1350,380],['gen_caesar',1350,530],['gen_napoleon',1480,600],['gen_genghis',1350,760],['greatsword',1260,340,6,100]]]
+];
 
-还原1.0×
+</script><script>
+/* Engraved unit insignia. The host sets the metal colour through CSS color. */
+(() => {
+  'use strict';
 
-开战
-DEPLOYMENT
-军团部署
+  const line = (path, width = 1.6) => '<path d="' + path + '" fill="none" stroke-width="' + width + '"/>';
+  const metal = (path, opacity = 0.23) => '<path d="' + path + '" fill="currentColor" fill-opacity="' + opacity + '"/>';
+  const circle = (x, y, radius, opacity = 0) => '<circle cx="' + x + '" cy="' + y + '" r="' + radius + '" fill="currentColor" fill-opacity="' + opacity + '"/>';
+  const turn = (angle, art) => '<g transform="rotate(' + angle + ' 24 24)">' + art + '</g>';
+  const flip = art => '<g transform="translate(48 0) scale(-1 1)">' + art + '</g>';
+  const sheath = line('M23 27V42M25 27V42M22 42H26');
+  const sword = metal('M24 3L28 12L25.5 30H22.5L20 12Z') + line('M24 7V28M18 29Q24 33 30 29M23 33L25 35L23 37L25 39M22 41H26');
+  const spear = metal('M24 2Q25 9 30 15L25.5 18H22.5L18 15Q22 9 24 2Z') + line('M24 6V17M22 19H26M23 21V44M25 21V44');
+  const axe = metal('M25 10Q31 14 38 7Q42 17 34 22Q30 19 25 18Z') + line('M27 14Q34 17 38 12M24 8L21 40M26 9L24 41M20 41L24 42');
+  const arrow = metal('M24 3L28 13L24 11L20 13Z') + line('M24 10V40M24 38L20 35V30L24 33L28 30V35Z',1.35);
+  const bow = line('M10 39Q12 34 9 29Q10 13 27 9Q33 12 39 8M10 39L39 8',1.9);
+  const horse = metal('M10 39Q11 29 22 22L14 23L9 20L14 15L19 13L23 7L26 11L30 6L31 12Q39 16 38 27Q37 35 31 40Z') + line('M29 13Q35 18 34 24M30 18L34 22M30 23L33 27M29 28L31 32M13 18L17 18M20 15L22 15M18 38Q19 31 24 27M11 42H34',1.25);
+  const staff = line('M22.5 18L22.5 42M25.5 18L25.5 42M22 40H26M21 20H27M21 17H27');
+  const wing = metal('M23 23Q14 9 3 9L8 16L4 15L11 22L7 21Q14 29 21 29Z') + line('M7 12L17 19M9 17L19 23M12 22L20 26',1);
+  const crown = metal('M9 15L16 21L18 12L24 19L30 12L32 21L39 15L35 30H13Z') + line('M13 27Q24 30 35 27M12 32H36M18 24L19 24M24 22V25M29 24H30');
+  const wheel = (x, y, r) => circle(x,y,r,.12) + circle(x,y,r*.33) + line('M'+(x-r)+' '+y+'h'+(r*2)+'M'+x+' '+(y-r)+'v'+(r*2),1);
+  const star = metal('M24 4L25.8 10.2L32 12L25.8 13.8L24 20L22.2 13.8L16 12L22.2 10.2Z',.5);
 
+  const art = {
+    spearman: turn(29,spear) + metal('M12 23L21 25L20 34Q17 38 12 40Q8 36 8 32L8 25Z') + line('M11 26V32L13 36M14 28L18 28',1.1),
+    legionary: metal('M11 9Q24 4 37 9L36 34Q32 40 24 44Q16 40 12 34Z') + line('M14 11Q24 7 34 11L33 33Q29 38 24 40Q19 38 15 33Z',1.05) + metal('M24 16L29 24L24 32L19 24Z',.5) + line('M16 14L21 19M32 14L27 19M16 32L20 28M32 32L28 28M24 10V14M24 34V38',1.25),
+    berserker: turn(-35,axe) + flip(turn(-35,axe)),
+    spartan: metal('M8 18Q10 5 23 5Q34 4 40 12Q32 10 29 16L24 20Z') + line('M13 13L14 9M18 12L19 7M23 12L24 7M28 12L30 8M33 10L35 9',1.1) + metal('M10 27Q10 14 23 14Q35 15 36 26L34 39L28 43L27 31L24 29L23 36L20 36L19 28L14 29L15 37L11 35Z') + line('M13 24Q17 22 21 25M25 25Q30 21 33 23M24 17Q25 20 23 24',1.25),
+    assassin: turn(32,metal('M23 3Q30 12 26 26L22 28L19 23Q23 16 23 3Z') + line('M24 11L22 23M16 27Q22 31 29 26M21 31L19 39M24 31L22 41M17 40L22 42',1.6)) + line('M8 29L13 24M8 35L13 30M32 17L38 10',1),
+    greatsword: turn(32,metal('M24 2L29 12L27 27L24 32L21 27L19 12Z') + line('M24 5V29M15 27L18 31L23 30L26 30L31 31L33 27M23 33V40M25 33V40M22 41L24 44L26 41Z',1.7)),
+    archer: bow + turn(45,arrow),
+    crossbow: turn(35,metal('M22 15H26L27 35L25 42L21 43L22 29Z') + line('M5 22Q11 14 18 13L24 15L30 13Q38 14 43 22M5 22L24 32L43 22M24 5V30M21 11L24 5L27 11M26 34Q31 34 30 29')),
+    musketeer: turn(43,metal('M22 5H26V26L28 29L27 41L22 44L21 35L23 29L21 26Z') + line('M20 6H27M23 9V22M25 24L29 22L30 19M27 31Q34 28 29 26M23 37L26 35',1.3)),
+    javelin: turn(31,spear) + line('M9 31L18 17M8 24L15 13M30 35L36 27',1.15),
+    firearcher: bow + line('M12 37L33 15M18 31L13 30L10 34M19 31L18 36L14 39',1.65) + metal('M29 19Q25 13 31 8Q31 12 33 11Q37 8 37 3Q43 14 35 18L36 14Z',.43),
+    hussar: horse,
+    lancer: horse + turn(42,spear),
+    horsearcher: horse + line('M5 40Q2 32 4 25Q4 20 9 15M5 40L9 15M3 35L13 22',1.4),
+    elephant: metal('M9 33L7 26L8 17Q12 10 22 11L29 13Q37 11 39 18L40 28Q41 34 44 31Q44 40 37 38Q34 35 34 28L31 30L30 38H25L24 31L17 32L16 39H10Z') + metal('M27 15Q35 11 35 20L32 27Q26 25 26 20Z') + metal('M12 12L13 8H25L26 14L23 19L17 18Z') + line('M36 25Q38 30 42 26M9 18Q5 18 5 27M15 12H23M15 14H22M36 19H37',1.15),
+    catapult: metal('M7 33L31 28L39 32L14 38Z') + line('M13 32L20 17L26 31M16 31L20 22L23 31M11 20L35 11L37 13L13 23Z') + metal('M30 8Q36 12 41 6Q41 15 34 15Z') + wheel(16,38,4) + wheel(35,34,4),
+    cannon: metal('M10 28L35 13L39 18L16 34L11 32Z') + metal('M32 13L36 10L42 18L38 21Z',.4) + line('M17 30L36 17M18 34L38 39L39 37L25 30',1.4) + wheel(16,35,8),
+    ballista: line('M5 25Q12 14 18 16L24 22L30 17Q37 14 43 21M5 25L24 30L43 21') + metal('M21 19L25 18L27 35L23 39Z') + line('M24 8L24 29M21 13L24 8L27 13M23 36L15 40M27 33L36 37') + wheel(17,39,3.4) + wheel(34,37,3.4),
+    ram: metal('M4 25L14 12L33 10L42 22L35 25L11 28Z') + line('M8 24L16 15L32 13L38 21M12 28V36M34 25V32M16 25L18 31M30 23L29 29') + metal('M8 34L33 28L40 26L43 29L39 32L31 32L9 37Z') + wheel(13,39,3) + wheel(34,35,3),
+    pyro: staff + metal('M24 2Q25 8 29 8L29 5Q36 14 27 18H20Q14 13 20 7L21 11Q25 7 24 2Z',.32) + line('M22 15Q21 12 25 10M26 40L28 38M17 24L13 27M31 22L34 20',1),
+    frost: staff + line('M24 2V19M16 6L32 15M16 15L32 6M21 3L24 5L27 3M16 8L19 8L19 5M29 5L29 8H32M17 13H20L20 16M28 16V13L31 12',1.55) + circle(24,10.6,3,.45),
+    cleric: staff + line('M19 12Q13 16 18 21M29 12Q35 16 30 21M17 5L14 2M31 5L34 2M13 13H9M35 13H39',1.25) + star,
+    titan: turn(32,metal('M21 21H26V41L24 44L21 41Z') + metal('M10 9L14 6L33 7L38 12L35 21L30 23L12 21L9 16Z') + line('M13 10L16 9L16 18L13 18ZM31 10L34 12L32 19M20 10L24 11L21 14H25L22 18',1.3)) + line('M7 24L4 30L9 29L7 34M36 25L33 31L38 30L35 36',1.4),
+    necro: staff + metal('M14 11Q14 4 24 3Q34 4 34 11Q33 17 29 17L28 21L20 21L19 17Q15 16 14 11Z') + metal('M17 10L22 11L21 14Q17 15 17 10ZM31 10L26 11L27 14Q31 15 31 10Z',.65) + line('M23 16L24 14L25 16M22 18V21M26 18V21M15 5L12 3M33 5L36 3',1.1),
+    gen_guanyu: turn(29,metal('M22 26Q13 21 13 14L16 16Q12 8 19 2Q18 9 24 10Q33 12 30 20L26 26Z',.36) + line('M17 9Q17 15 24 16Q28 17 25 24M16 17Q17 21 22 22M24 12L25 14M20 26L28 26M21 28L27 28',1.2) + sheath + metal('M25 27Q31 28 33 35Q29 32 27 33L29 38Q24 35 25 27Z',.42)),
+    gen_lubu: turn(32,metal('M24 1L27 12L24 18L21 12Z',.5) + metal('M22 15Q15 18 13 9Q11 21 22 24ZM26 17Q32 18 35 11Q35 22 26 25Z') + line('M23 16V42M25 16V42M21 25H27M21 28H27M22 43H26M14 15L17 19M31 18L29 21',1.4) + metal('M25 28Q32 28 34 35L29 32L28 37Z')),
+    gen_zhuge: metal('M9 37Q7 22 13 13Q17 16 17 22Q16 11 23 7L24 16Q28 7 37 3L35 13L42 9Q39 21 32 26L36 25Q27 37 13 38Z') + line('M8 42L34 12M12 36L12 24M15 32L15 23M19 28L19 19M23 24L23 16M27 20L29 12M17 32L25 31M22 27L31 23M27 21L34 19M8 39L11 42',1.15),
+    gen_caesar: wing + flip(wing) + metal('M19 20L22 15L25 14L27 16L31 17L27 19L28 26L25 33L28 38L24 36L20 38L22 32L19 27Z',.45) + line('M23 17H24M20 29L17 32L14 31M27 29L30 31L33 29M13 38Q24 45 35 37M13 38L12 34M17 40L15 35M31 39L33 34M35 37L37 33',1.2),
+    gen_napoleon: metal('M5 24Q12 24 14 16Q17 9 25 9Q31 10 34 17Q36 22 43 21L40 28Q24 23 8 30Z') + line('M10 26Q24 20 39 24M16 17Q18 12 25 12M29 16L34 21',1.1) + circle(31,18,3,.45) + metal('M17 30L21 29L25 36L22 41L17 37ZM26 29L32 30L28 37L26 34Z') + line('M11 33L8 35L13 37M33 33L38 32L40 35M11 35L9 39M14 35L12 40M36 34L35 39M39 34L38 38',1.25),
+    gen_joan: turn(13,line('M12 6V43M14 7V43M11 41H15') + metal('M13 2L16 6L13 8L10 6Z',.55) + metal('M15 8Q20 4 27 9Q34 14 40 9L38 26Q33 30 26 25Q21 21 15 24Z') + line('M17 10Q21 8 26 11M18 21Q22 20 26 23',1) + metal('M28 12Q30 15 28 17Q31 14 32 16Q33 18 29 19L28 22L26 21L27 19Q23 18 24 16Q25 15 27 17Q25 14 28 12Z',.5)),
+    gen_genghis: metal('M5 22L11 19L17 11L18 6L23 11L31 6L32 13L39 18L36 18L42 27L37 26L40 33L33 31L34 38L27 34L22 41L19 36L14 38L17 28L12 27L10 29L5 26Z') + line('M10 22L14 22M16 18L21 16L19 19ZM22 14L28 11L28 15M21 29L24 24L24 30M28 28L32 32M30 19L35 22M7 25L12 24',1.2),
+    gen_arthur: sword + metal('M8 14L13 18L16 11L19 17L16 22L11 21ZM40 14L35 18L32 11L29 17L32 22L37 21Z') + line('M12 24L17 25M31 25L36 24M9 31L7 32M8 10L6 8M39 10L41 8M12 39L9 42M36 39L39 42',1.15),
+    skeleton: metal('M9 20Q9 8 23 7Q39 7 39 20Q38 27 31 29L30 36L27 39H19L16 36L16 30Q10 27 9 20Z') + circle(17,21,3.5,.55) + circle(30,21,3.5,.55) + line('M21 28L24 24L26 28M20 33V37M24 33V37M28 33V37')
+  };
 
-蓝方阵营
+  window.insignia = id => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (art[id] || sword) + '</svg>';
+})();
 
-红方阵营
-部署阵型
+</script><script>
+/* Original canvas cartography for the 2000 × 1200 battlefield. All detail is
+   seeded and static so the renderer can keep one painted sheet per map. */
+(() => {
+  "use strict";
 
-擦除
+  const W = 2000;
+  const H = 1200;
+  const TAU = Math.PI * 2;
+  // Light, local tint, shadow, engraving ink, woodland wash.
+  const inks = {
+    plains: ["#e9dfbe", "#c8c9a6", "#acaa87", "#625e46", "#87936b"],
+    river: ["#e6dbb9", "#bdc8a7", "#a8ac8c", "#62604a", "#82916b"],
+    volcano: ["#d5b599", "#c09677", "#9f7865", "#604637", "#8a8064"],
+    snow: ["#e5e4d7", "#c9d2cd", "#acb9ba", "#52615e", "#81918a"],
+    citadel: ["#e9debf", "#c7c5a4", "#a8a789", "#605c48", "#87946f"],
+    desert: ["#f0dfb6", "#d9c392", "#c7a674", "#7c6040", "#9a986e"],
+    woods: ["#d9d8ae", "#b4bf98", "#939f7d", "#555e45", "#788963"],
+    colosseum: ["#e2d9c2", "#c9bfa9", "#b5ab94", "#625950", "#8e9473"]
+  };
 
-单兵
+  function dice(s) {
+    return () => {
+      s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
 
-横列
+  function path(c, points, fill, close = false) {
+    c.beginPath();
+    c.moveTo(points[0][0], points[0][1]);
+    for (let i = 1; i < points.length; i++) c.lineTo(points[i][0], points[i][1]);
+    if (close) c.closePath();
+    if (fill) c.fill();
+    else c.stroke();
+  }
 
-方阵
+  function wash(c, x, y, w, h, color, alpha) {
+    c.save();
+    c.translate(x, y);
+    c.scale(w, h);
+    c.globalAlpha = alpha;
+    const grad = c.createRadialGradient(0, 0, 0, 0, 0, 1);
+    grad.addColorStop(0, color);
+    grad.addColorStop(0.42, color + "a8");
+    grad.addColorStop(1, color + "00");
+    c.fillStyle = grad;
+    c.fillRect(-1, -1, 2, 2);
+    c.restore();
+  }
 
-楔阵
-兵种名册
+  function contours(c, ink, seed) {
+    // March through a continuous height field, interpolating crossings to keep
+    // the contour strokes smooth across cell boundaries.
+    const step = 12, nx = Math.ceil(W / step) + 1, ny = Math.ceil(H / step) + 1;
+    const z = new Float32Array(nx * ny);
+    for (let y = 0; y < ny; y++) {
+      for (let x = 0; x < nx; x++) {
+        const px = x * step, py = y * step;
+        const a = px * 0.005 + 1.1 * Math.sin(py * 0.0053 + seed);
+        const b = py * 0.0044 + 0.78 * Math.sin(px * 0.0051 - seed);
+        z[y * nx + x] = 0.84 * Math.sin(a) + 0.72 * Math.cos(b)
+          + 0.32 * Math.sin(1.8 * a + b) + 0.19 * Math.sin(2.3 * b - 0.45 * a)
+          + 0.07 * Math.sin(px * 0.019 + Math.sin(py * 0.013)) * Math.cos(py * 0.012);
+      }
+    }
+    c.save();
+    c.strokeStyle = ink;
+    for (let n = 0; n < 28; n++) {
+      const level = -1.98 + n * 0.151;
+      c.globalAlpha = n % 4 === 0 ? 0.29 : 0.17;
+      c.lineWidth = n % 4 === 0 ? 1.45 : 0.9;
+      c.beginPath();
+      for (let y = 0; y < ny - 1; y++) {
+        for (let x = 0; x < nx - 1; x++) {
+          const i = y * nx + x;
+          const tl = z[i], tr = z[i + 1], br = z[i + nx + 1], bl = z[i + nx];
+          const t = tl > level, r = tr > level, b = br > level, l = bl > level;
+          if (t === r && r === b && b === l) continue;
+          const px = x * step, py = y * step;
+          const p = [];
+          if (t !== r) p.push([px + step * (level - tl) / (tr - tl), py]);
+          if (r !== b) p.push([px + step, py + step * (level - tr) / (br - tr)]);
+          if (b !== l) p.push([px + step * (level - bl) / (br - bl), py + step]);
+          if (l !== t) p.push([px, py + step * (level - tl) / (bl - tl)]);
+          for (let j = 1; j < p.length; j += 2) {
+            c.moveTo(p[j - 1][0], p[j - 1][1]);
+            c.lineTo(p[j][0], p[j][1]);
+          }
+        }
+      }
+      c.stroke();
+    }
+    c.restore();
+  }
 
+  // Sparse engraved hill chains use a lit face, a shaded face, and broken
+  // strokes along the fall line to suggest relief on a flat map.
+  function peak(c, x, y, w, h, p, rand) {
+    c.save();
+    c.translate(x, y);
+    c.scale(w, h);
+    const left = [[-0.94, 0.07], [-0.71, -0.12], [-0.53, -0.22], [-0.44, -0.42], [-0.31, -0.47], [-0.18, -0.75], [0, -1]];
+    const seam = [[0, -1], [0.06, -0.77], [0.01, -0.60], [0.11, -0.48], [0.04, -0.39], [0.21, -0.19], [0.35, -0.04]];
+    const right = [[0, -1], [0.16, -0.80], [0.27, -0.70], [0.48, -0.48], [0.64, -0.39], [0.78, -0.17], [1, 0.02]];
+    c.globalAlpha = 0.82;
+    c.fillStyle = p[1];
+    path(c, [...left, ...right.slice(1), [0.42, 0.08], [-0.24, 0.01]], true, true);
+    c.globalAlpha = 0.38;
+    c.fillStyle = p[3];
+    path(c, [...right, ...seam.slice(1).reverse()], true, true);
+    c.strokeStyle = p[3];
+    c.globalAlpha = 0.88;
+    c.lineWidth = 1.9 / w;
+    path(c, left); path(c, right); path(c, seam);
+    c.globalAlpha = 0.63;
+    c.lineWidth = 1.05 / w;
+    for (let i = 0; i < 18; i++) {
+      const dy = 0.08 + i * 0.046, dx = Math.max(0, dy * 0.19 + rand() * 0.04);
+      const len = 0.04 + dy * 0.29 + rand() * 0.06;
+      path(c, [[dx, -1 + dy], [dx + len * 0.55, -1 + dy + len * 0.32], [dx + len, -1 + dy + len * 0.77]]);
+    }
+    for (let i = 0; i < 7; i++) {
+      const dy = 0.2 + i * 0.1;
+      const dx = -dy * (0.22 + rand() * 0.32);
+      path(c, [[dx, -1 + dy], [dx - 0.045, -1 + dy + 0.13], [dx - 0.11, -1 + dy + 0.22]]);
+    }
+    c.restore();
+  }
 
-TACTICAL MAP
-战术沙盘
+  function ridge(c, x, y, length, angle, scale, p, rand) {
+    const peaks = [];
+    const count = Math.round(length / (36 * scale));
+    for (let i = 0; i < count; i++) {
+      const t = i / Math.max(1, count - 1);
+      const taper = 0.40 + Math.sin(Math.PI * t) * 0.6;
+      const w = (39 + rand() * 32) * scale * taper;
+      peaks.push([x + Math.cos(angle) * i * 35 * scale + (rand() - 0.5) * 17,
+        y + Math.sin(angle) * i * 35 * scale + (rand() - 0.5) * 31, w, w * (0.65 + rand() * 0.42)]);
+    }
+    peaks.sort((a, b) => a[1] - b[1]);
+    for (const mountain of peaks) peak(c, ...mountain, p, rand);
+  }
 
+  function tree(c, t, p) {
+    const {x, y, s} = t;
+    c.save();
+    c.translate(x, y); c.scale(s, s);
+    c.strokeStyle = p[3];
+    c.lineWidth = 1.15;
+    // Deliberately asymmetric branch tips give the groves a woodcut finish.
+    const crown = [[0, -20], [-3, -12], [-2, -12.6], [-5.5, -7.2], [-3.6, -7.8],
+      [-8, -1.5], [-3.6, -2.9], [-7.3, 1.5], [-1.2, -0.4], [3.9, 2.0],
+      [3.2, 0.3], [7.6, 1.0], [3.8, -4.5], [6, -3.8], [2.1, -10.5], [4, -9.6], [0, -20]];
+    c.fillStyle = p[4];
+    path(c, crown, true);
+    path(c, crown);
+    c.fillStyle = p[3];
+    path(c, [[0, -19], [0.2, -8], [-0.7, -1], [6.3, 0], [3.3, -5], [5, -4.1], [2, -10.3], [3.3, -10]], true, true);
+    path(c, [[-0.3, -4], [-0.3, 4], [2.2, 4.6]]);
+    c.restore();
+  }
 
+  function grove(c, x, y, r, p, rand) {
+    wash(c, x, y, r * 1.28, r * 1.05, p[4], 0.55);
+    const trees = [];
+    for (let i = 0; i < r * 0.9; i++) {
+      const a = rand() * TAU;
+      const rr = Math.sqrt(rand()) * r * (0.82 + 0.12 * Math.sin(a * 3 + x));
+      trees.push({x: x + Math.cos(a) * rr, y: y + Math.sin(a) * rr * 0.89,
+        s: 0.63 + rand() * 0.56});
+    }
+    trees.sort((a, b) => a.y - b.y);
+    for (const t of trees) tree(c, t, p);
+  }
 
+  function road(c, commands, ink) {
+    c.save();
+    c.beginPath();
+    c.moveTo(...commands[0]);
+    for (let i = 1; i < commands.length; i++) c.bezierCurveTo(...commands[i]);
+    c.strokeStyle = ink;
+    c.lineWidth = 7;
+    c.globalAlpha = 0.32;
+    c.stroke();
+    c.strokeStyle = "#fff0cb";
+    c.lineWidth = 4.8;
+    c.globalAlpha = 0.86;
+    c.stroke();
+    c.strokeStyle = ink;
+    c.lineWidth = 1.25;
+    c.globalAlpha = 0.67;
+    c.setLineDash([8, 7]);
+    c.stroke();
+    c.restore();
+  }
 
+  function compass(c, x, y, ink) {
+    c.save();
+    c.translate(x, y);
+    c.fillStyle = ink;
+    c.strokeStyle = ink;
+    c.globalAlpha = 0.79;
+    for (const r of [39, 43]) {
+      c.lineWidth = r === 39 ? 1.5 : 0.8;
+      c.beginPath(); c.arc(0, 0, r, 0, TAU); c.stroke();
+    }
+    c.lineWidth = 0.85;
+    for (let i = 0; i < 32; i++) {
+      c.save(); c.rotate(TAU * i / 32);
+      path(c, [[0, -39], [0, i % 4 === 0 ? -47 : -42]]);
+      c.restore();
+    }
+    for (let i = 0; i < 8; i++) {
+      c.save(); c.rotate(TAU * i / 8);
+      const r = i % 2 === 0 ? 52 : 28;
+      const width = i % 2 === 0 ? 6.4 : 4.2;
+      path(c, [[0, 0], [width, -7], [0, -r]], true, true);
+      path(c, [[0, 0], [-width, -7], [0, -r], [0, 0]]);
+      c.restore();
+    }
+    c.font = 'bold 19px Georgia, serif';
+    c.textAlign = 'center';
+    c.fillText('N', 0, -59);
+    c.restore();
+  }
 
+  function label(c, name, x, y, p, angle = 0) {
+    c.save(); c.translate(x, y); c.rotate(angle);
+    c.textAlign = "center";
+    c.font = '500 16px "Songti SC","Noto Serif CJK SC",serif';
+    c.fillStyle = p[3];
+    c.globalAlpha = 0.80;
+    c.fillText(name, 0, 0);
+    c.restore();
+  }
 
+  function river(c, rv, p) {
+    const x = rv.x, w = rv.w;
+    const bank = y => 4 * Math.sin(y / 50) + 4 * Math.sin(y / 103);
+    c.save();
+    const pts = [];
+    for (let y = 0; y <= H; y += 12) pts.push([x + bank(y), y]);
+    for (let y = H; y >= 0; y -= 12) pts.push([x + w + bank(y + 20), y]);
+    c.fillStyle = "#9eb9af"; path(c, pts, true, true);
+    c.strokeStyle = "#647f74"; c.lineWidth = 2; path(c, pts, false, true);
+    c.strokeStyle = "#d5dabc"; c.lineWidth = 1.6;
+    for (let i = 1; i < 7; i++) {
+      const rx = x + i * w / 7;
+      c.beginPath();
+      for (let y = 0; y <= H; y += 7) {
+        const cx = rx + bank(y) + 4 * Math.sin(y / 41 + i);
+        if (y % 112 < 7) c.moveTo(cx, y); else c.lineTo(cx, y);
+      }
+      c.stroke();
+    }
+    for (const b of rv.bridges) {
+      c.fillStyle = "#b6a17e";
+      c.fillRect(x - 12, b.y, w + 24, b.h);
+      c.strokeStyle = p[3]; c.lineWidth = 2.5;
+      c.strokeRect(x - 12, b.y, w + 24, b.h);
+      c.lineWidth = 1;
+      for (let px = x - 8; px < x + w + 12; px += 10) path(c, [[px, b.y + 3], [px + 1.5, b.y + b.h - 3]]);
+      for (const y of [b.y, b.y + b.h]) {
+        c.lineWidth = 4;
+        path(c, [[x - 16, y], [x + w + 16, y]]);
+      }
+    }
+    c.restore();
+  }
 
-+
-100%
-−
+  function terrain(c, map, p, rand) {
+    if (map.river) river(c, map.river, p);
+    for (const o of map.obstacles || []) {
+      const {x, y, r} = o;
+      if (o.type === "hill") {
+        wash(c, x - 0.14 * o.rx, y - 0.1 * o.ry, o.rx * 1.27, o.ry * 1.3, p[1], 0.60);
+        c.save();
+        c.strokeStyle = p[3]; c.globalAlpha = 0.37; c.lineWidth = 1.3;
+        for (let i = 1; i <= 6; i++) {
+          const pts = [];
+          for (let k = 0; k <= 80; k++) {
+            const a = TAU * k / 80;
+            const shape = 1 + 0.09 * Math.sin(a * 3 + i * 0.1) + 0.06 * Math.cos(a * 4);
+            const q = i * 0.15;
+            pts.push([x + o.rx * q * shape * Math.cos(a) - (1 - q) * o.rx * 0.18,
+              y + o.ry * q * shape * Math.sin(a) + (1 - q) * o.ry * 0.18]);
+          }
+          path(c, pts);
+        }
+        c.restore();
+      } else if (o.type === "pine" || o.type === "forest") {
+        grove(c, x, y, r, p, rand);
+      } else if (o.type === "rock") {
+        peak(c, x - 0.15 * r, y + r * 0.55, r * 0.94, r * 1.28, p, rand);
+        peak(c, x + 0.42 * r, y + r * 0.8, r * 0.46, r * 0.64, p, rand);
+      } else if (o.type === "pillar") {
+        c.save(); c.translate(x, y);
+        c.fillStyle = "#8c816e"; c.fillRect(-r * 0.63, -r * 0.65, r * 1.45, r * 1.6);
+        c.fillStyle = "#d2c7aa"; c.fillRect(-r * 0.8, -r * 0.8, r * 1.55, r * 1.58);
+        c.strokeStyle = p[3]; c.lineWidth = 2;
+        c.strokeRect(-r * 0.8, -r * 0.8, r * 1.55, r * 1.58);
+        for (const rr of [0.7, 0.54, 0.44]) {
+          c.beginPath(); c.arc(0, -r * 0.1, r * rr, 0, TAU); c.stroke();
+        }
+        c.restore();
+      } else {
+        const lake = o.type === "ice", lava = o.type === "lava";
+        const rx = lake ? o.rx : r, ry = lake ? o.ry : r;
+        c.save();
+        const pts = [];
+        for (let i = 0; i <= 90; i++) {
+          const a = i * TAU / 90, shape = 1 + 0.035 * Math.cos(a * 6) + 0.025 * Math.sin(a * 9);
+          pts.push([x + rx * shape * Math.cos(a), y + ry * shape * Math.sin(a)]);
+        }
+        c.fillStyle = lake ? "#b0c8c8" : lava ? "#a45337" : "#cda96e";
+        path(c, pts, true, true);
+        c.strokeStyle = p[3]; c.lineWidth = 2; path(c, pts, false, true);
+        c.clip();
+        c.strokeStyle = lava ? "#edbc72" : lake ? "#ebede1" : "#95774e";
+        for (let i = 0; i < 54; i++) {
+          const sx = x + (rand() * 2 - 1) * rx, sy = y + (rand() * 2 - 1) * ry;
+          const l = (rand() * 0.45 + 0.08) * rx;
+          c.lineWidth = 0.95 + rand();
+          path(c, [[sx, sy], [sx + l * 0.35, sy + rand() * 10], [sx + l, sy - rand() * 12]]);
+        }
+        c.restore();
+      }
+    }
+    for (const w of map.walls || []) {
+      c.save(); c.fillStyle = "#8b8974";
+      c.fillRect(w.x + 6, w.y + 7, w.w, w.h);
+      c.fillStyle = "#c7bca0"; c.fillRect(w.x, w.y, w.w, w.h);
+      c.strokeStyle = p[3]; c.lineWidth = 2; c.strokeRect(w.x, w.y, w.w, w.h);
+      for (let y = w.y; y <= w.y + w.h - 10; y += 14) {
+        path(c, [[w.x, y], [w.x + w.w, y]]);
+        const xx = w.x + (Math.round((y - w.y) / 14) % 2 ? 10 : 29);
+        path(c, [[xx, y], [xx, y + 13]]);
+      }
+      for (const y of [w.y, w.y + w.h - 23]) {
+        c.fillRect(w.x - 4, y, w.w + 8, 23);
+        c.strokeRect(w.x - 4, y, w.w + 8, 23);
+      }
+      c.restore();
+    }
+  }
 
-点击部署 · 右键擦除 · 滚轮缩放
+  function paintMap(c, map) {
+    const p = inks[map.id] || inks.plains;
+    let seed = 2847;
+    for (const ch of map.id || "plains") seed = (Math.imul(seed, 31) + ch.charCodeAt(0)) >>> 0;
+    const rand = dice(seed);
+    c.save();
+    c.beginPath(); c.rect(0, 0, W, H); c.clip();
+    c.fillStyle = p[0]; c.fillRect(0, 0, W, H);
+    wash(c, 150, 180, 920, 750, p[2], 0.65);
+    wash(c, 1630, 730, 940, 780, p[1], 0.94);
+    wash(c, 410, 1200, 480, 640, p[2], 0.58);
+    for (let i = 0; i < 34; i++) {
+      wash(c, rand() * W, rand() * H, 90 + rand() * 240, 56 + rand() * 210,
+        rand() > 0.42 ? p[1] : "#fff0ce", 0.18 + rand() * 0.19);
+    }
+    // Fibers, ink flecks, and a subtle survey grid are printed under the relief.
+    c.fillStyle = p[3]; c.globalAlpha = 0.15;
+    for (let i = 0; i < 24500; i++) {
+      c.fillRect(rand() * W, rand() * H, 0.65 + rand() * 1.4, 0.6 + rand() * 0.94);
+    }
+    c.globalAlpha = 0.18;
+    c.strokeStyle = p[3]; c.lineWidth = 1.35; c.beginPath();
+    for (let x = 0; x <= W; x += 125) { c.moveTo(x, 0); c.lineTo(x, H); }
+    for (let y = 0; y <= H; y += 125) { c.moveTo(0, y); c.lineTo(W, y); }
+    c.stroke(); c.globalAlpha = 1;
+    contours(c, p[3], (seed % 379) / 73);
+    c.strokeStyle = p[3]; c.globalAlpha = 0.39; c.lineWidth = 1.2;
+    for (let i = 0; i < 1050; i++) {
+      const x = rand() * W, y = rand() * H;
+      c.beginPath(); c.moveTo(x - 3, y - 1);
+      c.lineTo(x, y); c.lineTo(x - 1, y - 4 - rand() * 2);
+      c.moveTo(x + 2, y); c.lineTo(x + 5, y - 2);
+      c.stroke();
+    }
+    c.globalAlpha = 1;
+    if (map.id !== "colosseum") {
+      road(c, [[-20, 870], [180, 830, 220, 680, 445, 701], [710, 742, 764, 512, 970, 513],
+        [1189, 513, 1342, 318, 1525, 369], [1710, 420, 1805, 240, 2030, 278]], p[3]);
+      road(c, [[277, -15], [310, 176, 468, 284, 439, 446], [423, 558, 342, 630, 366, 703]], p[3]);
+      road(c, [[1440, 364], [1482, 583, 1659, 562, 1625, 772], [1580, 955, 1717, 1054, 1822, 1214]], p[3]);
+      const sand = map.id === "desert" ? 0.72 : 1;
+      ridge(c, 2, 250, 400, -0.58, 1.23 * sand, p, rand);
+      ridge(c, 62, 287, 245, -0.61, 0.85 * sand, p, rand);
+      ridge(c, 1435, 65, 470, 0.24, 1.16 * sand, p, rand);
+      ridge(c, 1730, 115, 210, 0.65, 0.82 * sand, p, rand);
+      ridge(c, 2, 1065, 460, 0.24, 1.19 * sand, p, rand);
+      ridge(c, 1680, 932, 345, -0.64, sand, p, rand);
+    }
+    terrain(c, map, p, rand);
+    if (map.id === "plains") {
+      label(c, "西 岭", 178, 183, p, -0.22);
+      label(c, "青 石 岭", 1640, 154, p, 0.13);
+      label(c, "北 林", 1002, 282, p);
+      label(c, "南 林", 1005, 1128, p);
+    }
+    compass(c, 1867, 1052, p[3]);
+    c.restore();
+  }
+  window.paintMap = paintMap;
+})();
 
-镜像
+</script><script>
+'use strict';
+const clamp=(v,l,h)=>Math.max(l,Math.min(h,v));
+const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const game={phase:'setup',paused:false,team:'blue',unit:'gen_guanyu',form:'single',erase:false,cat:'all',map:MAPS[0],units:[],snapshot:[],shots:[],effects:[],time:0,speed:1,hp:true,auto:true,sound:true,stats:{},preset:0};
+let uid=0, audio=null;
+const lastTone={};
+function tone(type){
+ if(!game.sound)return;
+ const now=performance.now();
+ if(now-(lastTone[type]??-1000)<(type==='hit'?100:55))return;
+ lastTone[type]=now;
+ try{
+   const AC=window.AudioContext||window.webkitAudioContext;
+   if(!AC)return;
+   audio??=new AC(); if(audio.state==='suspended')audio.resume().catch(()=>{});
+   const settings={place:[330,540,.06],hit:[390,90,.08],arrow:[680,210,.08],cannon:[120,35,.25],magic:[340,800,.21],horn:[195,295,.5],ult:[250,670,.42]};
+   const [from,to,duration]=settings[type], t=audio.currentTime,osc=audio.createOscillator(),gain=audio.createGain();
+   osc.type=type==='horn'||type==='cannon'?'sawtooth':'triangle';
+   osc.frequency.setValueAtTime(from,t);osc.frequency.exponentialRampToValueAtTime(to,t+duration);
+   gain.gain.setValueAtTime(type==='horn'?.075:.045,t);gain.gain.exponentialRampToValueAtTime(.001,t+duration);
+   osc.connect(gain).connect(audio.destination);osc.start(t);osc.stop(t+duration);
+ }catch{}
+}
+function spawn(id,team,x,y){
+ const d=defs[id],max=id==='skeleton'?290:260;
+ if(!d||game.units.filter(u=>u.alive&&u.team===team&&(id==='skeleton'||u.d.id!=='skeleton')).length>=max)return;
+ const u={uid:++uid,d,team,x:clamp(x,24,1976),y:clamp(y,24,1176),alive:true,hp:d.hp,cd:Math.random()*.3,skill:(d.ult||0)*.45,summon:(d.summon||0)*.6,
+ burn:0,burnDps:0,burnOwner:null,slow:0,haste:0,shield:0,vx:0,vy:0,charge:0,kills:0,damage:0,flash:0,face:team==='blue'?0:Math.PI};
+ game.units.push(u);return u;
+}
+const terrainSolid=o=>['rock','pillar','lava'].includes(o.type);
+function blocked(x,y,r){
+ return game.map.obstacles.some(o=>terrainSolid(o)&&Math.hypot(x-o.x,y-o.y)<o.r+r)||
+ (game.map.walls||[]).some(w=>x+r>w.x&&x-r<w.x+w.w&&y+r>w.y&&y-r<w.y+w.h);
+}
+function ground(u){
+ let speed=1,hill=false;
+ const m=game.map,r=u.d.radius;
+ if(m.river&&u.x>m.river.x&&u.x<m.river.x+m.river.w&&!m.river.bridges.some(b=>u.y>b.y&&u.y<b.y+b.h))speed*=.5;
+ for(const o of m.obstacles){
+  const dx=u.x-o.x,dy=u.y-o.y,d=Math.hypot(dx,dy);
+  if(terrainSolid(o)&&d<r+o.r){
+   const a=Math.atan2(dy,dx);u.x=o.x+Math.cos(a)*(r+o.r);u.y=o.y+Math.sin(a)*(r+o.r);
+   if(o.type==='lava'&&game.phase==='battle'){u.burn=2;u.burnDps=14;u.burnOwner=null}
+  }else if(d<o.r&&(o.type==='forest'||o.type==='pine')&&u.d.cav)speed*=.78;
+  else if(d<o.r&&o.type==='quicksand')speed*=.55;
+  else if(o.ry&&(dx/o.rx)**2+(dy/o.ry)**2<=1){if(o.type==='ice')speed*=1.15;if(o.type==='hill')hill=true}
+ }
+ for(const w of m.walls||[]){
+  const dx=u.x-clamp(u.x,w.x,w.x+w.w),dy=u.y-clamp(u.y,w.y,w.y+w.h),d=Math.hypot(dx,dy);
+  if(!d&&u.x>=w.x&&u.x<=w.x+w.w&&u.y>=w.y&&u.y<=w.y+w.h)u.x=u.x<w.x+w.w/2?w.x-r:w.x+w.w+r;
+  else if(d>0&&d<r){u.x+=dx/d*(r-d);u.y+=dy/d*(r-d)}
+ }
+ u.x=clamp(u.x,r,WORLD_W-r);u.y=clamp(u.y,r,WORLD_H-r);return {speed,hill};
+}
+function snapshot(){game.snapshot=game.units.filter(u=>u.d.id!=='skeleton').map(u=>[u.d.id,u.team,u.x,u.y])}
+function restore(){game.units=[];for(const entry of game.snapshot)spawn(...entry);setup()}
+function setup(){game.phase='setup';game.paused=false;game.shots=[];game.effects=[];game.time=0;syncUI()}
+function begin(){
+ if(game.phase==='ended'){restore();return}
+ if(game.phase==='battle'){game.paused=!game.paused;syncUI();return}
+ const count=team=>game.units.filter(u=>u.team===team).length;
+ if(!count('blue')||!count('red')){toast('双方各部署至少一个单位即可开战');return}
+ game.stats={blue:count('blue'),red:count('red')};snapshot();game.phase='battle';game.paused=false;game.time=0;
+ tone('horn');syncUI();toast('战鼓擂响，全军出击');
+}
+function ring(x,y,r,color,life=.45){game.effects.push({type:'ring',x,y,r,color,t:life,life})}
+function hit(a,b,power,ap=0,kb=0,ranged=false,dot=false){
+ if(!b.alive)return;
+ const armor=b.d.def*(b.armorBuff||1);
+ let dmg=dot?power:Math.max(3,power*(b.shield>0?.55:1)*(ranged?(1-(b.d.block||0)):1)-armor*(1-ap));
+ if(!dot&&a&&Math.random()<(a.d.crit||0))dmg*=1.85;
+ dmg=Math.min(b.hp,dmg);b.hp-=dmg;
+ if(!dot)b.flash=.13;
+ if(a){a.damage+=dmg;if(a.d.steal&&a.alive)a.hp=Math.min(a.d.hp,a.hp+dmg*a.d.steal);
+  const ang=Math.atan2(b.y-a.y,b.x-a.x);b.vx+=Math.cos(ang)*kb*4.5/b.d.mass;b.vy+=Math.sin(ang)*kb*4.5/b.d.mass}
+ if(b.hp<=0){b.alive=false;if(a)a.kills++;if(b.d.ult)toast(b.d.name+' 战死沙场')}
+}
+function launch(u,tx,ty,extra){
+ const d=u.d;
+ game.shots.push({owner:u,x:u.x,y:u.y,sx:u.x,sy:u.y,tx,ty,t:0,dur:clamp(Math.hypot(tx-u.x,ty-u.y)/(d.ps||450),.12,2.2),
+ type:d.proj,dmg:d.atk,ap:d.ap||0,kb:d.kb||0,aoe:d.aoe||0,pierce:d.pierce||0,burn:d.burn,slow:d.slow,hit:new Set(),...extra});
+}
+function special(u){
+ if(!u||!u.alive||u.skill>0||game.phase!=='battle'||game.paused)return;
+ const enemies=game.units.filter(v=>v.alive&&v.team!==u.team),allies=game.units.filter(v=>v.alive&&v.team===u.team);
+ if(!enemies.length)return;
+ let target=enemies[0],best=0;
+ for(const e of enemies.slice(0,30)){const n=enemies.filter(v=>distance(e,v)<130).length;if(n>best){best=n;target=e}}
+ u.skill=u.d.ult;tone('ult');toast(u.d.name+' · '+u.d.role);
+ const a=Math.atan2(target.y-u.y,target.x-u.x),id=u.d.id;
+ switch(id){
+ case 'gen_guanyu':
+  game.effects.push({type:'arc',x:u.x,y:u.y,r:235,a,color:'#3c9575',life:.6,t:.6});
+  for(const e of enemies){const da=Math.atan2(e.y-u.y,e.x-u.x)-a;if(distance(u,e)<235&&Math.cos(da)>Math.cos(.85))hit(u,e,240,.7,75)}break;
+ case 'gen_lubu':
+  if(distance(u,target)<340){u.x=target.x+10;u.y=target.y}
+  ring(u.x,u.y,210,'#c44943');for(const e of enemies)if(distance(u,e)<210){hit(u,e,270,.65,95);e.slow=2.5}break;
+ case 'gen_zhuge':
+  game.effects.push({type:'fire',x:target.x,y:target.y,r:175,owner:u,color:'#b15b28',life:4.5,t:4.5,tick:0});break;
+ case 'gen_caesar':case 'gen_joan':{
+  const joan=id==='gen_joan';ring(u.x,u.y,260,'#dec77c');
+  for(const v of allies)if(distance(u,v)<(joan?260:270)){v.hp=Math.min(v.d.hp,v.hp+v.d.hp*(joan?.35:.28)+(joan?80:50));v.shield=5;if(joan){v.burn=v.slow=0}else v.haste=5}
+  if(joan)for(const e of enemies)if(distance(u,e)<180)hit(u,e,110,.5,90);break;}
+ case 'gen_napoleon':case 'gen_genghis':{
+  const gun=id==='gen_napoleon';
+  for(let k=0;k<(gun?10:24);k++)launch(u,clamp(target.x+(Math.random()-.5)*250,40,1960),clamp(target.y+(Math.random()-.5)*210,40,1160),
+   {type:gun?'boulder':'arrow',sx:gun?(u.team==='blue'?40:1960):u.x,dur:gun?.9:.65,t:-k*(gun?.12:.03),dmg:gun?130:68,aoe:gun?75:30,ap:gun?.8:.5,kb:gun?65:0,slow:!gun});break;}
+ case 'gen_arthur':
+  game.effects.push({type:'beam',x:u.x,y:u.y,r:950,a,color:'#ffe6a0',life:.75,t:.75});
+  for(const e of enemies){const dx=e.x-u.x,dy=e.y-u.y,d=clamp(dx*Math.cos(a)+dy*Math.sin(a),0,950);if(Math.hypot(dx-d*Math.cos(a),dy-d*Math.sin(a))<52+e.d.radius)hit(u,e,280,.85,65)}break;
+ }
+}
+function shotHit(p,e){
+ hit(p.owner,e,p.dmg,p.ap,p.kb,true);
+ if(p.burn){e.burn=3.5;e.burnDps=p.burn;e.burnOwner=p.owner}
+ if(p.slow)e.slow=3;
+}
+function updateShots(dt){
+ game.shots=game.shots.filter(p=>{
+  const ox=p.x,oy=p.y;p.t+=dt;if(p.t<0)return true;
+  const f=Math.min(1,p.t/p.dur);p.x=p.sx+(p.tx-p.sx)*f;p.y=p.sy+(p.ty-p.sy)*f;
+  const enemies=game.units.filter(v=>v.alive&&v.team!==p.owner.team);
+  if(p.pierce){
+   const dx=p.x-ox,dy=p.y-oy,len=dx*dx+dy*dy||1;
+   for(const e of enemies){if(p.hit.has(e.uid))continue;const k=clamp(((e.x-ox)*dx+(e.y-oy)*dy)/len,0,1);
+    if(Math.hypot(e.x-ox-k*dx,e.y-oy-k*dy)<e.d.radius+8){shotHit(p,e);p.hit.add(e.uid);if(!--p.pierce){p.tx=p.x;p.ty=p.y;break}}}
+   if(!p.pierce&&!p.aoe)return false;
+  }
+  if(f<1&&(p.pierce||!p.hit.size))return true;
+  if(p.aoe){ring(p.tx,p.ty,p.aoe,p.slow?'#87b6c3':'#bf7641');
+   for(const e of enemies)if(!p.hit.has(e.uid)&&Math.hypot(e.x-p.tx,e.y-p.ty)<p.aoe+e.d.radius)shotHit(p,e)
+  }else{let victim=null,min=Infinity;
+   for(const e of enemies){const d=Math.hypot(e.x-p.tx,e.y-p.ty);if(!p.hit.has(e.uid)&&d<32+e.d.radius&&d<min){min=d;victim=e}}
+   if(victim){const wood=game.map.obstacles.some(o=>['forest','pine'].includes(o.type)&&distance(o,victim)<o.r);if(!wood||Math.random()>.15)shotHit(p,victim)}
+  }return false;
+ });
+}
+function simulate(dt){
+ game.time+=dt;
+ const alive=game.units.filter(u=>u.alive),teams={blue:[],red:[]};
+ for(const u of alive)teams[u.team].push(u);
+ if(!teams.red.length||!teams.blue.length){game.phase='ended';syncUI();reportResult(teams);return}
+ const gens=alive.filter(u=>u.d.ult);
+ for(const u of alive){
+  if(!u.alive)continue;
+  const d=u.d,allies=teams[u.team],enemies=teams[u.team==='blue'?'red':'blue'];
+  for(const key of ['flash','slow','haste','shield'])u[key]=Math.max(0,u[key]-dt);
+  if(u.burn>0){hit(u.burnOwner,u,u.burnDps*Math.min(dt,u.burn),0,0,false,true);u.burn-=dt;if(!u.alive)continue}
+  const terrain=ground(u);let speed=terrain.speed,rate=1,power=1;u.armorBuff=1;
+  for(const g of gens){if(!g.alive||distance(g,u)>g.d.reach)continue;
+   if(g.team!==u.team){if(g.d.aura==='fear')power*=.9;continue}
+   switch(g.d.aura){case 'atk':power+=.2;break;case 'def':u.armorBuff=1.25;break;case 'haste':rate*=.8;break;
+    case 'speed':speed+=.22;rate*=.9;break;case 'heal':u.hp=Math.min(d.hp,u.hp+dt*9);break;}
+  }
+  if(u.haste>0)rate*=.68;if(u.slow>0){speed*=.5;rate*=1.45}
+  if(d.berserk&&u.hp<d.hp/2){power*=1.35;rate*=.65;speed*=1.2}
+  if(d.ult){u.skill=Math.max(0,u.skill-dt);if(u.team==='red'||game.auto)special(u)}
+  if(d.summon&&(u.summon-=dt)<=0){u.summon=d.summon;for(let k=0;k<2;k++)spawn('skeleton',u.team,u.x+Math.cos(u.face)*26,u.y+(k?16:-16))}
+  u.x+=u.vx*dt;u.y+=u.vy*dt;u.vx*=.05**dt;u.vy*=.05**dt;u.cd-=dt;
+  if(d.healer){let injured=null,low=.96;for(const v of allies){if(v.alive&&v!==u&&v.hp/v.d.hp<low&&distance(u,v)<460){injured=v;low=v.hp/v.d.hp}}
+   if(injured){const a=Math.atan2(injured.y-u.y,injured.x-u.x);if(distance(injured,u)>d.range*.85){u.x+=Math.cos(a)*d.speed*speed*dt;u.y+=Math.sin(a)*d.speed*speed*dt}
+    else if(u.cd<=0){u.cd=d.cd*rate;ring(injured.x,injured.y,125,'#719760');for(const v of allies)if(v.alive&&distance(v,injured)<=125){v.hp=Math.min(v.d.hp,v.hp+42);v.burn=0}}continue}
+  }
+  let target=null,min=Infinity;
+  for(const v of enemies){if(!v.alive)continue;let score=distance(u,v);if(d.back&&(['ranged','siege'].includes(v.d.cat)||v.d.healer))score*=.55;if(score<min){min=score;target=v}}
+  if(!target)continue;
+  const dist=distance(u,target),a=Math.atan2(target.y-u.y,target.x-u.x),range=d.range+target.d.radius+(d.proj&&terrain.hill?45:0);
+  u.face=a;
+  if(dist>range||(d.kite&&dist<range*.58)){
+   let dir=a,step=d.speed*speed*dt;if(dist<range)step*=-.85;
+   if(step>0&&blocked(u.x+Math.cos(dir)*(d.radius+step),u.y+Math.sin(dir)*(d.radius+step),d.radius)){
+    const sign=game.map.walls?(u.y<600?(u.y<445?1:-1):(u.y<755?1:-1)):(u.y<600?-1:1);
+    dir=game.map.walls?sign*Math.PI/2:a+sign*1.16;
+   }
+   u.x+=Math.cos(dir)*step;u.y+=Math.sin(dir)*step;u.charge+=Math.max(0,step);
+  }
+  if(dist>range+6||u.cd>0)continue;
+  u.cd=d.cd*rate;let dmg=d.atk*power*(d.proj&&terrain.hill?1.15:1)*(target.d.cav?(d.antiCav||1):1)*(target.d.large?(d.antiLarge||1):1);
+  if(d.charge&&u.charge>110){dmg*=d.charge;u.charge=0}
+  if(d.proj){const spread=d.proj==='boulder'?28:d.proj==='arrow'?14:6;launch(u,target.x+(Math.random()-.5)*spread,target.y+(Math.random()-.5)*spread,{dmg});tone(d.aoe?'cannon':'arrow')}
+  else{tone('hit');if(d.cleave){for(const e of enemies)if(e.alive&&distance(u,e)<=d.cleave+e.d.radius)hit(u,e,dmg,d.ap,d.kb||12)}
+   else hit(u,target,dmg,d.ap,d.kb||8)}
+ }
+ for(let i=0;i<alive.length;i++){const a=alive[i];if(!a.alive)continue;
+  for(let j=i+1;j<alive.length;j++){const b=alive[j],min=a.d.radius+b.d.radius,dx=b.x-a.x,dy=b.y-a.y;if(!b.alive||Math.abs(dx)>min||Math.abs(dy)>min)continue;
+   const dist=Math.hypot(dx,dy);if(dist>=min)continue;const push=(min-dist)*.42,ratio=b.d.mass/(a.d.mass+b.d.mass),nx=dist?dx/dist:1,ny=dist?dy/dist:0;
+   a.x-=nx*push*ratio;a.y-=ny*push*ratio;b.x+=nx*push*(1-ratio);b.y+=ny*push*(1-ratio)}
+ }
+ updateShots(dt);
+ game.effects=game.effects.filter(e=>{
+  e.t-=dt;if(e.type==='fire'&&(e.tick-=dt)<=0){e.tick=.45;for(const v of alive)if(v.alive&&v.team!==e.owner.team&&distance(e,v)<e.r){hit(e.owner,v,36,.5);v.burn=3;v.burnDps=14;v.burnOwner=e.owner}}
+  return e.t>0;
+ });
+}
 
-随机混战
-···
-清空本方清空全场
+</script><script>
+'use strict';
+const $=id=>document.getElementById(id);
+const icons={
+ panel:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
+ crest:'<path d="M12 1 22 4v9q-1 6-10 10Q3 19 2 13V4Z" fill="#39362a"/><path d="m12 3 8 2v8q-1 5-8 8-7-3-8-8V5Z"/><path d="m6 6 2 1 9 10m1-11-2 1L7 17m-2-2 4 4m6 0 4-4M12 5l1.1 2-1.1 2-1.1-2Z"/>',
+ sound:'<path d="M3 9h4l5-4v14l-5-4H3Zm13-1q4 4 0 8m3-11q7 7 0 14"/>',
+ mute:'<path d="M3 9h4l5-4v14l-5-4H3Zm13 0 5 6m0-6-5 6"/>',
+ reset:'<path d="M4 10a8.2 8.2 0 1 1 1 7M4 4v6h6"/>',
+ swords:'<path d="m3 3 4 1 11 12-2 2L4 7Zm18 0-4 1-4 5m-2 5-4 4-2-2 4-5m-6 4 6 6m6 0 6-6m-3 3 3 3M3 21l3-3"/>',
+ flag:'<path d="M5 21V3m0 1c5-4 9 4 15 0l-2 5 2 4c-6 4-10-4-15 0Z"/>',
+ eraser:'<path d="m3 14 10-10 7 7-9 9H8Zm5-5 7 7m-4 4h10"/>',
+ map:'<path d="m3 5 6-2 6 3 6-2v15l-6 2-6-3-6 2Zm6-2v15m6-12v15"/>',
+ scroll:'<path d="M6 5h13a2 2 0 0 1 2 2v2h-4V7a2 2 0 0 1 2-2M6 5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11V9M4 16h10v2a2 2 0 0 0 3 2"/>',
+ terrain:'<path d="m1 18 7-11 4 7 3-5 8 10H2m3-5 3-2 3 2m2 0 2-1 2 1"/><circle cx="16" cy="5" r="2"/>',
+ fit:'<path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5"/><circle cx="12" cy="12" r="2"/>',
+ heart:'<path d="M12 20C8 17 1 12 3 7c2-5 7-4 9-1 3-4 8-4 10 1 1 5-6 10-10 13Z"/>',
+ mouse:'<rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 3v6"/>',
+ mirror:'<path d="M12 2v20M3 17l5-11v11Zm18 0L16 6v11Z"/>',
+ dice:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 7h.1m10 0h.1m-5 5h.1m-5 5h.1m10 0h.1" stroke-width="3"/>',
+ pause:'<path d="M8 4v16m8-16v16" stroke-width="3"/>',play:'<path d="m7 4 12 8-12 8Z"/>'
+};
+for(const [name,points] of Object.entries({single:[[12,12]],line:[[3,12],[9,12],[15,12],[21,12]],square:[[6,6],[12,6],[18,6],[6,12],[12,12],[18,12],[6,18],[12,18],[18,18]],wedge:[[12,5],[8,11],[16,11],[4,17],[12,17],[20,17]]})){
+ icons[name]=points.map(([x,y])=>'<rect x="'+(x-1.8)+'" y="'+(y-1.8)+'" width="3.6" height="3.6" fill="currentColor" stroke="none"/>').join('');
+}
+function icon(name){return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linejoin="round" stroke-linecap="round">'+icons[name]+'</svg>'}
+document.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
+const canvas=$('canvas'),ctx=canvas.getContext('2d'),sheet=document.createElement('canvas');
+sheet.width=WORLD_W;sheet.height=WORLD_H;
+const cam={x:1000,y:600,zoom:1,base:1,w:0,h:0,dpr:1};
+const pointer={inside:false,mode:'',x:0,y:0,space:false};
+const english=['GREEN PLAINS','TWIN BRIDGES','EMBER VALLEY','WINTER FIELD','THE CITADEL','DESERT DUNES','DARK FOREST','TEMPLE RUINS'];
+let toastTimer=0;
+function toast(msg){$('toast').textContent=msg;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').textContent='',1850)}
+function setMap(id){
+ game.map=MAPS.find(m=>m.id===id)||MAPS[0];$('maps').value=game.map.id;$('mapName').textContent=game.map.name;
+ $('mapEnglish').textContent=english[MAPS.indexOf(game.map)];document.querySelector('.map-plaque').title=game.map.desc;
+ window.paintMap(sheet.getContext('2d'),game.map);game.units.forEach(ground);
+}
+function preset(n){
+ const p=presets[n];game.preset=n;game.units=[];game.phase='setup';setMap(p[1]);
+ for(const [k,team] of [[4,'blue'],[5,'red']])for(const [id,x,y,count=1,dy=0] of p[k])for(let j=0;j<count;j++)spawn(id,team,x,y+j*dy);
+ $('preset').value=String(n);snapshot();setup();fit();
+}
+function custom(){game.preset=null;$('preset').value='custom'}
+function fit(){cam.zoom=1;cam.x=1000;cam.y=600;$('zoomVal').textContent='100%'}
+function zoom(f){cam.zoom=clamp(cam.zoom*f,.55,3.6);$('zoomVal').textContent=Math.round(cam.zoom*100)+'%'}
+function world(x,y){return {x:cam.x+(x-cam.w/2)/(cam.zoom*cam.base),y:cam.y+(y-cam.h/2)/(cam.zoom*cam.base)}}
+function offsets(){
+ const g=Math.max(26,defs[game.unit].radius*2.5),dir=game.team==='blue'?1:-1;
+ if(game.form==='line')return [-2,-1,0,1,2].map(y=>[0,y*g]);
+ if(game.form==='square')return [-1,0,1].flatMap(x=>[-1,0,1].map(y=>[x*g,y*g]));
+ if(game.form==='wedge')return [[g*dir,0],[0,-g*.85],[0,g*.85],[-g*dir,-g*1.7],[-g*dir,0],[-g*dir,g*1.7]];return [[0,0]];
+}
+function place(w,erase){
+ if(game.phase!=='setup')return;
+ if(erase){const count=game.units.length;game.units=game.units.filter(u=>distance(w,u)>Math.max(36,u.d.radius+16));if(count!==game.units.length)custom()}
+ else{const d=defs[game.unit];let placed=false;
+ for(const [ox,oy] of offsets()){const x=w.x+ox,y=w.y+oy;
+ if(x<30||x>1970||y<30||y>1170||blocked(x,y,d.radius)||game.units.some(u=>Math.hypot(x-u.x,y-u.y)<(d.radius+u.d.radius)*.72))continue;
+ if(spawn(d.id,game.team,x,y))placed=true}if(placed){tone('place');custom()}}
+ stats();
+}
+function list(){
+ const display=game.cat==='all'?UNITS:UNITS.filter(d=>d.cat===game.cat);
+ $('roster-count').textContent=display.length+' 种';
+ $('cards').replaceChildren(...display.map(d=>{const b=document.createElement('button');b.className='card'+(d.ult?' gen':'')+(d.id===game.unit&&!game.erase?' on':'');
+ b.innerHTML='<span class="card-art">'+insignia(d.id)+'</span><span class="cost"><i class="coin"></i>'+d.cost+'</span><b>'+d.name+'</b><small>'+d.role+'</small>';
+ b.title=d.name+' · '+d.desc;b.onclick=()=>selectUnit(d.id);b.setAttribute('aria-pressed',String(d.id===game.unit&&!game.erase));return b}));
+}
+function selectUnit(id){
+ game.unit=id;game.erase=false;$('erase').classList.remove('on');const d=defs[id];list();
+ $('inspect').innerHTML='<div class="detail-heading">'+insignia(id)+'<b>'+d.name+'</b><span>'+d.cost+' 金</span></div><div class="statrow">'+
+ [['生命',d.hp],['攻击',d.atk],['护甲',d.def],['射程',d.range]].map(([k,v])=>'<div>'+k+'<b>'+v+'</b></div>').join('')+'</div><p>'+d.desc+'</p>';
+}
+function timestamp(){return [Math.floor(game.time/60),Math.floor(game.time)%60].map(n=>String(n).padStart(2,'0')).join(':')}
+function stats(){
+ let b=0,r=0,bg=0,rg=0;for(const u of game.units){if(u.alive){if(u.team==='blue'){b++;bg+=u.d.cost}else{r++;rg+=u.d.cost}}}
+ $('blueStats').textContent=b+' 人 · '+bg.toLocaleString()+' 金';$('redStats').textContent=r+' 人 · '+rg.toLocaleString()+' 金';
+ $('fill').style.width=((bg+rg?bg/(bg+rg):b+r?b/(b+r):.5)*100)+'%';
+ $('phase').textContent=game.phase==='battle'?(game.paused?'已暂停 ':'激战中 ')+timestamp():game.phase==='ended'?'战斗结束':'布阵阶段';
+ if(game.phase==='battle'){
+ const generals=game.units.filter(u=>u.team==='blue'&&u.d.ult);
+ [...$('skills').children].forEach((b,i)=>{const u=generals[i];b.disabled=!u.alive||u.skill>0||game.paused;b.textContent=u.d.role+' '+(!u.alive?'阵亡':u.skill>0?Math.ceil(u.skill)+'s':'就绪');b.title=u.d.name+' · 生命 '+Math.ceil(u.hp)+'/'+u.d.hp});
+ }
+}
+function syncUI(){
+ const active=game.phase==='battle';$('fight').innerHTML=icon(active?(game.paused?'play':'pause'):'swords')+'<span>'+(active?(game.paused?'继续':'暂停'):game.phase==='ended'?'还原':'开战')+'</span>';
+ const generals=game.units.filter(u=>u.team==='blue'&&u.d.ult);
+ $('skills').replaceChildren(...generals.map(u=>{const b=document.createElement('button');b.onclick=()=>special(u);return b}));
+ $('dock').hidden=!active||!generals.length;if(game.phase!=='ended'&&$('report').open)$('report').close();stats();
+}
+function reportResult(teams){
+ const winner=teams.blue.length?'蓝方获胜':teams.red.length?'红方获胜':'双方战平';
+ $('winner').textContent=winner;$('battleSub').textContent=game.map.name+' · 战斗耗时 '+timestamp();
+ $('reportStats').innerHTML=['blue','red'].map((t,i)=>'<section><b class="'+t+'">'+(i?'红':'蓝')+'方战报</b><br>出战 '+game.stats[t]+'　存活 '+teams[t].length+'<br>总伤害 '+Math.round(game.units.filter(u=>u.team===t).reduce((n,u)=>n+u.damage,0)).toLocaleString()+'</section>').join('');
+ const mvp=game.units.reduce((a,b)=>a.damage>b.damage?a:b);$('mvp').textContent='本场 MVP　'+mvp.d.name+' · '+mvp.kills+' 击杀 · '+Math.round(mvp.damage)+' 伤害';
+ tone('horn');$('report').showModal();
+}
+function atmosphere(){
+ const id=game.map.id;
+ const count=({snow:70,desert:45,volcano:36,plains:20,woods:25})[id]||0;
+ const t=performance.now()*.001;
+ ctx.save();ctx.globalAlpha=.52;ctx.fillStyle=({snow:'#fff',desert:'#a28c65',volcano:'#ce723b'})[id]||'#71845c';
+ for(let i=0;i<count;i++){
+  const x=(i*533+Math.sin(t*.28+i)*9+t*(id==='desert'?90:12))%2000;
+  const y=((i*397+t*(id==='volcano'?-32:23))%1200+1200)%1200;
+  ctx.beginPath();ctx.ellipse(x,y,id==='desert'?5:2.4,id==='snow'?2.4:1.2,i+t*.12,0,7);ctx.fill();
+ }ctx.restore();
+}
+function unitToken(u){
+ const d=u.d,general=!!d.ult,blue=u.team==='blue',color=blue?'#365e73':'#975242',light='#f6e7c4';
+ ctx.save();ctx.translate(u.x,u.y);if(!u.alive){ctx.fillStyle=blue?'#48677755':'#91574755';ctx.beginPath();ctx.ellipse(0,2,d.radius*.9,d.radius*.42,u.face,0,7);ctx.fill();ctx.restore();return}
+ const r=d.radius*(general?1.15:1.13);
+ ctx.fillStyle='#483c3348';ctx.beginPath();ctx.ellipse(2,r*.75,r*1.05,r*.52,0,0,7);ctx.fill();
+ if(general){
+  ctx.strokeStyle=blue?'#496e8480':'#9b685480';ctx.lineWidth=1.6;ctx.setLineDash([7,8]);ctx.beginPath();ctx.arc(0,0,d.reach,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+  ctx.strokeStyle='#594e37';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-r+1,-r*1.65);ctx.lineTo(-r+1,r*.9);ctx.stroke();
+  ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(-r,-r*1.65);ctx.lineTo(r*.6,-r*1.65);ctx.lineTo(r*.27,-r*1.31);ctx.lineTo(r*.6,-r);ctx.lineTo(-r,-r);ctx.closePath();ctx.fill();
+ }
+ ctx.beginPath();
+ if(d.cat==='cavalry'){ctx.moveTo(0,-r*1.2);ctx.lineTo(r,0);ctx.lineTo(0,r*1.2);ctx.lineTo(-r,0);ctx.closePath()}
+ else if(d.cat==='siege')ctx.rect(-r*.9,-r*.8,r*1.8,r*1.6);
+ else{ctx.moveTo(-r*.87,-r*.84);ctx.lineTo(r*.87,-r*.84);ctx.lineTo(r*.84,r*.3);ctx.quadraticCurveTo(r*.6,r*.85,0,r*1.1);ctx.quadraticCurveTo(-r*.7,r*.82,-r*.87,r*.26);ctx.closePath()}
+ ctx.fillStyle=u.flash>0?'#edddad':color;ctx.fill();ctx.strokeStyle=general?'#b08a48':'#4d4b3b';ctx.lineWidth=general?3.5:2.1;ctx.stroke();
+ ctx.save();ctx.scale(.8,.8);ctx.strokeStyle=light;ctx.lineWidth=1.8;ctx.stroke();ctx.restore();
+ ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=light;
+ if(general){ctx.font='bold '+Math.round(r*1.22)+'px serif';ctx.fillText(d.name.split('·')[1][0],0,-1)}
+ else{
+  ctx.lineWidth=2.2;ctx.strokeStyle=light;ctx.beginPath();
+  if(d.cat==='ranged'){ctx.moveTo(-r*.5,r*.35);ctx.lineTo(r*.47,-r*.45);ctx.lineTo(r*.4,-r*.08);ctx.moveTo(r*.47,-r*.45);ctx.lineTo(r*.13,-r*.4)}
+  else if(d.cat==='cavalry'){ctx.moveTo(-r*.38,r*.22);ctx.lineTo(0,-r*.27);ctx.lineTo(r*.38,r*.22)}
+  else if(d.cat==='siege'){ctx.moveTo(-r*.45,0);ctx.lineTo(r*.45,0);ctx.moveTo(0,-r*.4);ctx.lineTo(0,r*.4)}
+  else if(d.cat==='mythic'){ctx.arc(0,0,r*.3,0,Math.PI*2)}
+  else{ctx.moveTo(-r*.26,-r*.4);ctx.lineTo(-r*.26,r*.31);ctx.moveTo(r*.26,-r*.4);ctx.lineTo(r*.26,r*.31)}ctx.stroke();
+ }
+ if(game.hp&&(general||u.hp<d.hp)){ctx.fillStyle='#4b4738';ctx.fillRect(-r,-r-6,2*r,3.5);ctx.fillStyle=blue?'#78a9b9':'#d39073';ctx.fillRect(-r,-r-6,2*r*u.hp/d.hp,3.5)}
+ if(general){const name=d.name.split('·')[1];ctx.font='bold 18px "Noto Serif CJK SC",serif';const w=ctx.measureText(name).width+16;
+ ctx.fillStyle=blue?'#293e46':'#58382e';ctx.fillRect(-w/2,r+5,w,25);ctx.strokeStyle='#b9a579';ctx.lineWidth=1;ctx.strokeRect(-w/2,r+5,w,25);ctx.fillStyle='#f4e9ca';ctx.fillText(name,0,r+17)}
+ ctx.restore();
+}
+function fieldLabel(x,text,en,blue){
+ ctx.save();ctx.translate(x,125);ctx.fillStyle=blue?'#365569':'#894937';ctx.textAlign='center';ctx.font='bold 24px "Noto Serif CJK SC",serif';ctx.fillText(text,0,0);
+ ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(-99,-8);ctx.lineTo(-65,-8);ctx.moveTo(65,-8);ctx.lineTo(99,-8);ctx.stroke();
+ ctx.font='12px Georgia';ctx.fillText(en,0,20);ctx.restore();
+}
+function draw(){
+ const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
+ if(rect.width!==cam.w||rect.height!==cam.h||dpr!==cam.dpr){cam.w=rect.width;cam.h=rect.height;cam.dpr=dpr;canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr);
+ cam.base=(rect.width<500?Math.min(rect.width/1850,rect.height/1150):Math.max(rect.width/WORLD_W,Math.min(rect.height/WORLD_H,rect.width/1650)))}
+ const z=cam.base*cam.zoom;if(!z)return;
+ ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle='#bdb496';ctx.fillRect(0,0,cam.w,cam.h);
+ ctx.translate(cam.w/2,cam.h/2);ctx.scale(z,z);ctx.translate(-cam.x,-cam.y);
+ ctx.drawImage(sheet,0,0);
+ if(game.phase==='setup'){ctx.save();ctx.strokeStyle='#80775b99';ctx.lineWidth=2;ctx.setLineDash([9,10]);ctx.beginPath();ctx.moveTo(1000,0);ctx.lineTo(1000,1200);ctx.stroke();ctx.restore();
+ fieldLabel(555,'蓝 方 部 署 区','BLUE DEPLOYMENT',true);fieldLabel(1450,'红 方 部 署 区','RED DEPLOYMENT',false)}
+ for(const e of game.effects){ctx.save();ctx.globalAlpha=Math.max(0,e.t/e.life)*.82;ctx.strokeStyle=ctx.fillStyle=e.color;ctx.lineWidth=4;
+ ctx.beginPath();if(e.type==='beam'){ctx.lineWidth=48;ctx.moveTo(e.x,e.y);ctx.lineTo(e.x+Math.cos(e.a)*e.r,e.y+Math.sin(e.a)*e.r);ctx.stroke()}
+ else if(e.type==='arc'){ctx.lineWidth=18;ctx.arc(e.x,e.y,e.r*(1-.5*e.t/e.life),e.a-.85,e.a+.85);ctx.stroke()}
+ else if(e.type==='fire'){ctx.globalAlpha*=.48;ctx.arc(e.x,e.y,e.r,0,7);ctx.fill()}
+ else{ctx.arc(e.x,e.y,e.r*(1-.8*e.t/e.life),0,7);ctx.stroke()}ctx.restore()}
+ for(const u of game.units)if(!u.alive)unitToken(u);for(const u of game.units)if(u.alive)unitToken(u);
+ for(const p of game.shots){if(p.t<0)continue;const arc=['arrow','firearrow','boulder','javelin'].includes(p.type)?Math.sin(Math.min(1,p.t/p.dur)*Math.PI)*Math.min(100,.2*Math.hypot(p.tx-p.sx,p.ty-p.sy)):0;
+ ctx.save();ctx.translate(p.x,p.y-arc);ctx.rotate(Math.atan2(p.ty-p.sy,p.tx-p.sx));ctx.beginPath();ctx.strokeStyle=p.burn?'#b5562c':'#484638';ctx.lineWidth=3;
+ if(['boulder','cannonball','fireball','frostbolt','shadowbolt'].includes(p.type)){ctx.fillStyle=({fireball:'#d26b24',frostbolt:'#5b98ad',shadowbolt:'#845887'})[p.type]||'#544c41';ctx.arc(0,0,6.5,0,7);ctx.fill()}else{ctx.moveTo(-10,0);ctx.lineTo(7,0);ctx.stroke()}ctx.restore()}
+ atmosphere();
+ if(game.phase==='setup'&&pointer.inside&&!pointer.space&&pointer.mode!=='pan'){
+ const w=world(pointer.x,pointer.y);ctx.save();ctx.strokeStyle=game.erase?'#9a4f3f':game.team==='blue'?'#365e73':'#975242';ctx.lineWidth=2;
+ for(const [x,y] of game.erase?[[0,0]]:offsets()){ctx.beginPath();ctx.arc(w.x+x,w.y+y,game.erase?36:defs[game.unit].radius,0,7);ctx.stroke()}ctx.restore()}
+}
+for(const m of MAPS)$('maps').add(new Option(m.name,m.id));
+$('maps').onchange=e=>{if(game.phase!=='setup')restore();setMap(e.target.value);custom();toast(game.map.desc)};
+for(const [i,p] of presets.entries())$('preset').add(new Option(i===0?'虎牢关之战':p[0],String(i)));
+$('preset').add(new Option('自定义战役','custom'));$('preset').onchange=e=>{if(e.target.value==='custom')custom();else preset(Number(e.target.value))};
+for(const [cat,name] of Object.entries(categories)){const b=document.createElement('button');b.textContent=name;b.classList.toggle('on',cat==='all');b.onclick=()=>{
+ game.cat=cat;for(const el of $('categories').children)el.classList.toggle('on',el===b);list();$('cards').scrollTop=0};$('categories').append(b)}
+document.querySelectorAll('[data-team]').forEach(b=>b.onclick=()=>{game.team=b.dataset.team;document.querySelectorAll('[data-team]').forEach(el=>el.classList.toggle('on',el===b))});
+document.querySelectorAll('[data-form]').forEach(b=>b.onclick=()=>{game.form=b.dataset.form;game.erase=false;$('erase').classList.remove('on');document.querySelectorAll('[data-form]').forEach(el=>el.classList.toggle('on',el===b));list()});
+$('erase').onclick=()=>{game.erase=!game.erase;$('erase').classList.toggle('on',game.erase);list()};
+$('toggle').onclick=()=>document.body.classList.toggle('fold');
+$('fight').onclick=begin;$('reset').onclick=()=>{restore();toast('已还原至开战前阵型')};
+$('sound').onclick=()=>{game.sound=!game.sound;$('sound').innerHTML=icon(game.sound?'sound':'mute');$('sound').setAttribute('aria-pressed',String(game.sound));if(game.sound)tone('place')};
+const speeds=[.5,1,2,4];
+$('speed').onclick=()=>{game.speed=speeds[(speeds.indexOf(game.speed)+1)%4];$('speed').textContent=game.speed.toFixed(1)+'×'};
+$('plus').onclick=()=>zoom(1.2);$('minus').onclick=()=>zoom(1/1.2);$('fit').onclick=fit;
+$('hp').onclick=()=>{game.hp=!game.hp;$('hp').style.opacity=game.hp?'1':'.45';$('hp').setAttribute('aria-pressed',String(game.hp))};
+$('auto').onchange=e=>game.auto=e.target.checked;
+$('closeReport').onclick=()=>$('report').close();$('rematch').onclick=restore;
+function editField(){if(game.phase!=='setup')restore();custom();$('more').open=false}
+$('clearSide').onclick=()=>{editField();game.units=game.units.filter(u=>u.team!==game.team);stats()};
+$('clearAll').onclick=()=>{editField();game.units=[];stats()};
+$('mirror').onclick=()=>{if(game.phase!=='setup')restore();const blue=game.units.filter(u=>u.team==='blue');if(!blue.length){toast('蓝方暂无兵力可镜像');return}
+ editField();game.units=blue.slice();for(const u of blue)spawn(u.d.id,'red',2000-u.x,u.y);stats();toast('已镜像蓝方阵型')};
+$('random').onclick=()=>{editField();game.units=[];const gens=UNITS.filter(d=>d.ult),units=UNITS.filter(d=>!d.ult),pick=list=>list[Math.floor(Math.random()*list.length)];
+ for(const team of ['blue','red']){spawn(pick(gens).id,team,team==='blue'?560:1440,600);
+  for(let i=0;i<4;i++){const d=pick(units),n=d.cost>=250?2:d.cost>=140?5:9;
+   for(let j=0;j<n;j++){let x=280+Math.random()*520;if(team==='red')x=2000-x;const y=200+i*210+(Math.random()-.5)*140;if(!blocked(x,y,d.radius))spawn(d.id,team,x,y)}}
+ }snapshot();stats();toast('双方军团已就位')};
+canvas.oncontextmenu=e=>e.preventDefault();
+function locate(e){const r=canvas.getBoundingClientRect();pointer.x=e.clientX-r.left;pointer.y=e.clientY-r.top;pointer.inside=true;return world(pointer.x,pointer.y)}
+canvas.onpointerdown=e=>{if(!e.isPrimary)return;const w=locate(e);canvas.setPointerCapture(e.pointerId);
+ pointer.mode=e.button===1||pointer.space||game.phase!=='setup'?'pan':e.button===2||game.erase?'erase':'place';
+ if(pointer.mode==='pan')canvas.style.cursor='grabbing';else place(w,pointer.mode==='erase')};
+canvas.onpointermove=e=>{if(!e.isPrimary)return;const x=pointer.x,y=pointer.y,w=locate(e);
+ if(pointer.mode==='pan'){cam.x=clamp(cam.x-(pointer.x-x)/(cam.zoom*cam.base),0,2000);cam.y=clamp(cam.y-(pointer.y-y)/(cam.zoom*cam.base),0,1200)}
+ else if(pointer.mode)place(w,pointer.mode==='erase')};
+canvas.onpointerup=canvas.onpointercancel=()=>{pointer.mode='';canvas.style.cursor=game.phase==='setup'?'crosshair':'grab'};
+canvas.onpointerleave=()=>pointer.inside=false;
+canvas.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY<0?1.12:1/1.12)},{passive:false});
+window.onkeydown=e=>{if(e.target.matches('select,input')||$('report').open)return;
+ if(e.code==='Space'&&e.target===document.body){e.preventDefault();pointer.space=true;canvas.style.cursor='grab'}
+ if(/^Digit[1-9]$/.test(e.code)&&game.phase==='battle')special(game.units.filter(u=>u.team==='blue'&&u.d.ult)[Number(e.key)-1])};
+window.onkeyup=e=>{if(e.code==='Space'){pointer.space=false;canvas.style.cursor=game.phase==='setup'?'crosshair':'grab'}};
+window.addEventListener('blur',()=>{pointer.mode='';pointer.space=false});
+document.addEventListener('click',e=>{if(!$('more').contains(e.target))$('more').open=false});
+if(matchMedia('(max-width:760px) and (orientation:landscape)').matches)document.body.classList.add('fold');
+selectUnit('gen_guanyu');preset(0);
+let prev=performance.now(),lastUI=0;
+function loop(now){
+ const dt=Math.min(.05,(now-prev)/1000);prev=now;
+ if(game.phase==='battle'&&!game.paused){const steps=Math.max(1,Math.ceil(game.speed));for(let i=0;i<steps&&game.phase==='battle';i++)simulate(dt*game.speed/steps)}
+ if(game.phase==='battle'&&now-lastUI>100){stats();lastUI=now}
+ draw();requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
 
-双方军力
-FORCE BALANCE
-
-蓝方
-
-
-红方
-
-
+</script></body></html>
