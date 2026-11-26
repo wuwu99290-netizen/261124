@@ -69,6 +69,9 @@ h3{font-size:18px;letter-spacing:1px}
 nav{display:flex;gap:3px;margin:0 0 10px;flex-wrap:wrap}
 nav button{background:none;border:1px solid transparent;color:#b2afa3;padding:3px 5px;font-size:12px}
 nav button.on{color:var(--gold);border-color:#6a5c3d;background:#353126}
+.search-wrap{margin-bottom:8px}
+.search-wrap input{width:100%;background:#1a1c18;border:1px solid var(--line);border-radius:4px;color:var(--text);padding:6px 9px;font:12px var(--sans);outline:none}
+.search-wrap input:focus{border-color:var(--gold)}
 #cards{min-height:110px;flex:1;overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:max-content;align-content:start;gap:7px;padding:1px 4px 4px 1px;scrollbar-width:thin;scrollbar-color:#5a594b transparent}
 .card{position:relative;min-height:76px;padding:8px 8px 9px;gap:0;display:flex;align-items:flex-start;flex-direction:column;justify-content:flex-start;color:#d9d7c8;background:linear-gradient(130deg,#30322b,#272923);text-align:left;overflow:hidden}
 .card.on{border-color:#b99a57;box-shadow:inset 2px 0 #c3a563;background:linear-gradient(120deg,#413b2c,#2c2d24)}
@@ -93,6 +96,47 @@ nav button.on{color:var(--gold);border-color:#6a5c3d;background:#353126}
 .ctrl-pad button{height:32px;font-size:13px;padding:0}
 .ctrl-actions{display:flex;gap:5px}
 .ctrl-actions button{flex:1;padding:5px;font-size:11px}
+.form-save-box{display:grid;grid-template-columns:1fr auto auto;gap:6px;margin:12px 0;align-items:center}
+.form-save-box input{background:#1b1e1a;border:1px solid var(--line);border-radius:4px;color:var(--text);padding:7px 9px;font:inherit;outline:none;min-width:0}
+.form-save-box input:focus{border-color:var(--gold)}
+.form-save-box select,.form-save-box button{height:34px;padding:0 10px}
+.form-list-bar{display:flex;justify-content:space-between;align-items:center;margin:10px 0 6px;font-size:12px;color:var(--muted)}
+.form-list-bar button{padding:3px 9px;font-size:11px;color:#e89b8e;border-color:#6b423b}
+.form-list{max-height:240px;overflow:auto;display:grid;gap:6px;padding-right:2px}
+.form-item{display:grid;grid-template-columns:20px 1fr auto auto;gap:8px;align-items:center;padding:8px 10px;background:#1c1f1b;border:1px solid var(--line);border-radius:4px}
+.form-item b{font-family:var(--serif);font-size:14px;color:var(--text);display:block}
+.form-item small{font-size:11px;color:var(--muted)}
+.form-item .tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:10px;margin-left:5px;background:#32352b;color:var(--gold);vertical-align:middle}
+.form-item button{padding:4px 8px;font-size:12px}
+.form-item .del-one{color:#e89b8e;border-color:#6b423b}
+.form-empty{text-align:center;padding:20px;color:var(--muted);font-size:12px;border:1px dashed var(--line);border-radius:4px}
+#mapEditorBar{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:#21251ef2;border:1px solid var(--gold);border-radius:6px;padding:7px 10px;z-index:8;display:flex;flex-wrap:wrap;gap:5px;align-items:center;justify-content:center;max-width:94%;box-shadow:0 6px 22px #0007;font-size:12px}
+#mapEditorBar button,#mapEditorBar select{padding:4px 7px;font-size:11px;min-height:26px}
+#mapEditorBar button.on{color:var(--gold);border-color:var(--gold);background:#3d3726}
+.ed-sep{width:1px;height:18px;background:#524d3d;margin:0 2px}
+#mapStudio{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column}
+.st-head{min-height:58px;padding:0 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #494537;background:linear-gradient(110deg,#22241f,#1c1e1b 55%);flex-wrap:wrap}
+.st-head h2{font-size:20px;color:var(--gold);letter-spacing:2px;margin-right:6px}
+.st-head input{background:#1b1e1a;border:1px solid var(--line);border-radius:4px;color:var(--text);padding:6px 10px;font:inherit;width:185px;outline:none}
+.st-head input:focus{border-color:var(--gold)}
+.st-head select,.st-head button{height:34px;padding:0 11px}
+.st-head .st-right{margin-left:auto;display:flex;gap:7px;align-items:center}
+.st-body{flex:1;display:flex;min-height:0}
+.st-side{width:270px;flex:none;background:var(--panel);border-right:1px solid var(--line);padding:14px;display:flex;flex-direction:column;gap:12px;overflow:auto}
+.st-sec-title{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:1px;margin-bottom:4px}
+.st-brushes{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.st-brushes button{padding:7px 8px;font-size:12px;justify-content:flex-start;color:#d6d3c4}
+.st-brushes button.on{border-color:var(--gold);background:#3a3527;color:var(--gold);font-weight:700}
+.st-slider-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.st-slider-row input{flex:1;accent-color:var(--gold)}
+.st-saved{display:grid;gap:6px;max-height:220px;overflow:auto}
+.st-saved-item{display:flex;align-items:center;gap:5px;padding:6px 8px;background:#1b1e1a;border:1px solid var(--line);border-radius:4px;font-size:12px}
+.st-saved-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-saved-item button{padding:3px 6px;font-size:11px}
+.st-canvas-wrap{flex:1;min-width:0;padding:16px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,#252721,#161815);overflow:hidden}
+.st-frame{width:100%;max-width:1120px;aspect-ratio:5/3;max-height:100%;padding:5px;border:1px solid #8a7857;background:#33352c;box-shadow:0 8px 28px #0006;position:relative}
+#studioCanvas{width:100%;height:100%;display:block;cursor:crosshair;touch-action:none}
+@media(max-width:820px){.st-body{flex-direction:column}.st-side{width:100%;max-height:42vh;border-right:0;border-bottom:1px solid var(--line)}}
 .cost{position:absolute;top:9px;right:7px;display:flex;align-items:center;gap:4px;color:#d4ba7e;font:12px Georgia,serif}
 .coin{width:8px;height:8px;border:1px solid currentColor;outline:1px solid #c9ab6a55;outline-offset:1px;border-radius:50%;display:inline-block}
 .card b,.card small{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
@@ -202,7 +246,7 @@ body.fold aside{display:none}
  <div class="actions">
   <span class="phase" id="phase">布阵阶段</span>
   <button id="sound" class="icon-btn" title="切换音效" aria-label="切换音效" data-icon="sound"></button>
-  <button id="dipBtn" title="設置同盟、多打一與中立觀望觸發條件"><i data-icon="flag"></i>外交</button><button id="reset"><i data-icon="reset"></i>还原</button>
+  <button id="mapEditBtn" title="自由绘制自定义地图地形、水域、城墙与岛屿"><i data-icon="map"></i>编辑地图</button><button id="dipBtn" title="設置同盟、多打一與中立觀望觸發條件"><i data-icon="flag"></i>外交</button><button id="reset"><i data-icon="reset"></i>还原</button>
   <button id="speed">1.0×</button>
   <button id="fight" class="primary"><i data-icon="swords"></i><span>开战</span></button>
  </div>
@@ -216,7 +260,7 @@ body.fold aside{display:none}
    <button data-team="green"><i data-icon="flag"></i>绿方</button>
    <button data-team="gold"><i data-icon="flag"></i>黄方</button>
   </div>
-  <div class="side-caption"><b>部署阵型</b><span style="display:flex;gap:8px"><button id="panSide" title="浏览/拖拽镜头模式（不会放置单位）"><i data-icon="hand"></i>漫游</button><button id="erase" title="切换擦除工具"><i data-icon="eraser"></i>擦除</button></span></div>
+  <div class="side-caption"><b>部署阵型</b><span style="display:flex;gap:7px"><button id="brushBtn" title="开启后单指/鼠标滑动即可连续刷兵部署"><i data-icon="brush"></i>连刷</button><button id="panSide" title="浏览/拖拽镜头模式（不会放置单位）"><i data-icon="hand"></i>漫游</button><button id="erase" title="切换擦除工具"><i data-icon="eraser"></i>擦除</button></span></div>
   <div class="forms">
    <button data-form="single" class="on"><i data-icon="single"></i>单兵</button>
    <button data-form="line"><i data-icon="line"></i>横列</button>
@@ -225,6 +269,7 @@ body.fold aside{display:none}
   </div>
   <div class="roster-title"><h3>兵种名册</h3><span id="roster-count"></span></div>
   <nav id="categories" aria-label="兵种分类"></nav>
+  <div class="search-wrap"><input id="unitSearch" type="search" placeholder="🔍 搜尋 500 種兵種、文明或武器..."></div>
   <div id="cards" aria-label="兵种名册"></div>
   <section id="inspect" aria-label="兵种详情"></section>
  </aside>
@@ -258,6 +303,36 @@ body.fold aside{display:none}
      <span></span><button data-dir="down">▼</button><span></span>
     </div>
     <div class="ctrl-actions"><button id="ctrlUlt" class="primary">釋放大招(E)</button></div>
+   </div>
+   <div id="mapEditorBar" hidden>
+    <select id="edBiome" title="切换底图地貌">
+     <option value="plains">草原底图</option>
+     <option value="sea">海洋底图</option>
+     <option value="desert">沙漠底图</option>
+     <option value="snow">雪原底图</option>
+     <option value="volcano">焦土底图</option>
+     <option value="colosseum">遗迹底图</option>
+    </select>
+    <span class="ed-sep"></span>
+    <button data-brush="forest" class="on">树林</button>
+    <button data-brush="hill">丘陵</button>
+    <button data-brush="rock">山石</button>
+    <button data-brush="wall">城墙</button>
+    <button data-brush="water">水域</button>
+    <button data-brush="island">岛屿</button>
+    <button data-brush="lava">熔岩</button>
+    <button data-brush="ice">冰面</button>
+    <button data-brush="quicksand">流沙</button>
+    <button data-brush="erase" style="color:#e89b8e">擦除</button>
+    <span class="ed-sep"></span>
+    <select id="edSize" title="笔刷半径">
+     <option value="55">小笔刷</option>
+     <option value="95" selected>中笔刷</option>
+     <option value="150">大笔刷</option>
+    </select>
+    <button id="edClearTerrain">清空地形</button>
+    <button id="edSaveMap" class="primary">存为地图</button>
+    <button id="edDone">完成</button>
    </div>
    <div id="toast" role="status"></div>
   </div></div>
@@ -297,6 +372,85 @@ body.fold aside{display:none}
  <div class="dip-grid" id="dipGrid"></div>
  <div class="modal-actions"><button id="closeDip" class="primary">確認並套用</button></div>
 </dialog>
+<dialog id="formModal">
+ <div class="kicker">FORMATION ARCHIVE</div>
+ <h2>阵容库管理</h2>
+ <p>可自定义命名保存全场或单方阵容；载入单方阵容时将自动部署到当前选中的阵营，支持跨阵营自由混搭对决。</p>
+ <div class="form-save-box">
+  <input id="formNameInput" type="text" maxlength="24" placeholder="输入阵容名称（如：铁甲舰队）">
+  <select id="formScope" aria-label="保存范围">
+   <option value="all">保存全场</option>
+   <option value="blue">仅保存蓝方</option>
+   <option value="red">仅保存红方</option>
+   <option value="green">仅保存绿方</option>
+   <option value="gold">仅保存黄方</option>
+  </select>
+  <button id="doSaveForm" class="primary">保存</button>
+ </div>
+ <div class="form-list-bar">
+  <span id="formCountLabel">已保存 0 个阵容</span>
+  <div style="display:flex;gap:6px">
+   <button id="delSelectedForms" title="删除勾选的阵容">删除所选</button>
+  </div>
+ </div>
+ <div class="form-list" id="formList"></div>
+ <div class="modal-actions"><button id="closeFormModal">关闭</button></div>
+</dialog>
+<section id="mapStudio" hidden aria-label="自定义地图工坊">
+ <div class="st-head">
+  <h2>地图工坊</h2>
+  <input id="stMapName" type="text" maxlength="20" placeholder="给你的地图起个名字...">
+  <select id="stTemplate" aria-label="载入初始地图模板" title="从内置初始地图开始修改"><option value="">📋 载入初始地图模板...</option></select>
+  <select id="stBiome" aria-label="选择底图地貌">
+   <option value="plains">草原底图</option>
+   <option value="sea">海洋底图</option>
+   <option value="desert">沙漠底图</option>
+   <option value="snow">雪原底图</option>
+   <option value="volcano">焦土底图</option>
+   <option value="colosseum">遗迹底图</option>
+  </select>
+  <div class="st-right">
+   <button id="stUndo" title="撤销上一步">↶ 撤销</button>
+   <button id="stClear">清空画布</button>
+   <button id="stSaveUse" class="primary">保存并使用</button>
+   <button id="stClose">返回战场</button>
+  </div>
+ </div>
+ <div class="st-body">
+  <div class="st-side">
+   <div>
+    <div class="st-sec-title">地形画笔（点击或拖拽绘制，右键擦除）</div>
+    <div class="st-brushes" id="stBrushes">
+     <button data-sb="forest" class="on">🌲 树林</button>
+     <button data-sb="hill">⛰️ 丘陵</button>
+     <button data-sb="rock">🪨 山石</button>
+     <button data-sb="water">🌊 水域</button>
+     <button data-sb="island">🏝️ 岛屿</button>
+     <button data-sb="wall_v">🧱 竖城墙</button>
+     <button data-sb="wall_h">🧱 横城墙</button>
+     <button data-sb="lava">🌋 熔岩</button>
+     <button data-sb="ice">❄️ 冰面</button>
+     <button data-sb="quicksand">🏜️ 流沙</button>
+     <button data-sb="erase" style="grid-column:span 2;color:#e89b8e">🧹 橡皮擦（擦除地形）</button>
+    </div>
+   </div>
+   <div>
+    <div class="st-sec-title">笔刷尺寸</div>
+    <div class="st-slider-row">
+     <input id="stRadius" type="range" min="40" max="180" value="95">
+     <span id="stRadiusVal">95</span>
+    </div>
+   </div>
+   <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div class="st-sec-title">已保存的自定义地图</div>
+    <div class="st-saved" id="stSavedList"></div>
+   </div>
+  </div>
+  <div class="st-canvas-wrap">
+   <div class="st-frame"><canvas id="studioCanvas" width="2000" height="1200"></canvas></div>
+  </div>
+ </div>
+</section>
 
 <script>
 const BASE_W = 2000, BASE_H = 1200;
@@ -432,7 +586,9 @@ function roster(cat,rows){
   UNITS.push({id,name,cat,role,cost,hp,atk,def,range,speed,cd,radius,mass,...special,desc});
 }
 roster('modern',[
- ['marine','特種突擊兵','自動步槍 · 火力壓制',135,195,24,7,265,80,.46,10,1.1,{proj:'bullet',ps:820,ap:.55},'【現代】配備突擊步槍的現代步兵，極高射速持續火力壓制。'],
+ ['marine','特種突擊兵','自動步槍 · 火力壓制',125,195,25,7,270,80,.44,10,1.1,{proj:'bullet',ps:820,ap:.58},'【現代】配備突擊步槍的現代步兵，極高射速持續火力壓制。'],
+ ['sniper','反器材狙擊手','超遠狙殺 · 專克將領',175,125,140,3,540,62,2.35,10,.9,{proj:'bullet',ps:1050,ap:.92,crit:.4,back:true},'【現代】540 超遠射程反器材狙擊槍，92% 破甲與 40% 暴擊，專點敵方將領與重甲！'],
+ ['flamethrower','重裝噴火兵','烈焰掃蕩 · 範圍灼燒',155,240,30,10,140,64,.52,11,1.5,{proj:'fireball',ps:360,aoe:46,burn:18,ap:.5},'【現代】手持高壓噴火器，近距離持續噴射烈焰燒穿成片步兵方陣！'],
  ['tank','主戰坦克','重裝履帶 · 穿甲砲轟',380,1080,124,28,370,76,2.6,21,11.0,{proj:'cannonball',ps:680,aoe:56,kb:65,ap:.85,block:.65},'【現代】複合裝甲主戰坦克，高防抗箭，主砲轟出高爆穿甲彈與焦坑。'],
  ['mlrs','多管火箭車','超遠齊射 · 區域覆蓋',420,360,52,8,650,62,4.2,20,7.0,{proj:'rocket',ps:480,aoe:62,kb:50,ap:.7,salvo:5,burn:10},'【現代】超遠程火箭砲車，每次齊射 5 發高爆燃燒火箭覆蓋敵陣！'],
  ['heli','武裝直升機','空中砲艇 · 高爆機砲',340,580,44,13,350,165,.42,16,3.5,{air:true,kite:true,airDodge:.25,proj:'bullet',ps:880,aoe:34,ap:.72},'【空軍】免疫地面近戰攻擊，自帶 25% 空中閃避，懸停拉扯以高爆穿甲機砲瘋狂掃射！'],
@@ -447,6 +603,7 @@ roster('building',[
  ['med_tent','戰地醫療營','陣地回血 · 淨化灼燒',260,820,0,12,240,0,2.2,20,999,{building:true,healer:true},'【建築】固定戰地醫院，週期性為周圍大片友軍大幅恢復生命並滅火。']
 ]);
 roster('navy',[
+ ['transport','两栖登陆舰','载兵 12 人 · 抢滩登陆',280,960,26,18,220,76,1.4,24,10.0,{naval:true,proj:'bullet',ps:760,block:.6,spawnUnit:'marine',summon:3.8,hangarCap:12},'【海军】重甲两栖运兵登陆舰，舱内满载 12 名特种突击兵（不无限再生），抵近岸边或接敌时连续投放抢滩登陆部队！'],
  ['galley','撞角快船','高速撞击 · 海上突袭',130,320,44,8,38,112,1.0,16,3.8,{naval:true,charge:2.1,kb:55},'【海军】轻快三层桨战船，加速撞击敌舰造成 210% 破甲撞角伤害。'],
  ['fireship','赤壁火船','冲阵自爆 · 连环火海',160,210,75,4,34,124,0.9,14,2.8,{naval:true,suicideBoom:true,aoe:105,burn:16},'【海军】满载猛火油的艨艟火船，接敌或沉没时引爆烈焰火海！'],
  ['tower_ship','楼船水师','重甲巨舰 · 箭雨压制',230,640,30,14,300,62,1.1,22,7.5,{naval:true,proj:'arrow',ps:460,block:.45},'【海军】古代多层楼船，高甲抗箭，搭载精锐弓弩持续压制水面与沿岸。'],
@@ -459,20 +616,38 @@ roster('infantry',[
  ['berserker','维京狂战士','高攻速 · 残血狂暴',95,175,30,3,26,84,.72,11,1.2,{berserk:true},'生命低于一半时，攻击、攻速与移动速度提升。'],
  ['spartan','斯巴达方阵','精锐重矛 · 铁壁',135,310,28,16,40,50,.95,12,2.2,{antiCav:1.7,block:.45},'精锐重甲长矛手，兼具远程防御与反骑兵能力。'],
  ['assassin','暗影刺客','极速绕后 · 切后排',110,125,42,2,24,125,.62,9,.8,{crit:.35,back:true},'优先锁定远程与器械，暴击概率为 35%。'],
- ['greatsword','铁甲大剑士','顺劈 · 破甲',140,260,40,11,34,58,1.2,12,1.8,{cleave:42,ap:.4},'巨剑横扫多个目标，无视 40% 护甲。']
+ ['greatsword','铁甲大剑士','顺劈 · 破甲',130,265,42,11,34,58,1.15,12,1.8,{cleave:44,ap:.45},'巨剑横扫多个目标，无视 45% 护甲。'],
+ ['pikeman','長槍方陣兵','超長槍 · 騎兵剋星',70,175,24,8,54,54,1.0,11,1.6,{antiCav:2.3},'五米瑞士超長槍方陣，超遠近戰觸及，對騎兵與戰象造成 230% 穿刺重創！'],
+ ['halberdier','重甲戰戟兵','長柄戰戟 · 破甲反騎',105,235,34,12,46,56,1.05,11,1.8,{ap:.55,antiCav:1.85},'集劈、刺、鉤於一體的重型戰戟，兼具 55% 破甲與反騎能力。'],
+ ['warhammer','戰錘重騎士','雙手戰錘 · 專砸重甲',120,275,44,15,30,54,1.2,12,2.1,{ap:.85,kb:38},'沉重戰錘無視 85% 護甲並重擊震退，專治斯巴達、重盾衛與坦克！'],
+ ['flail','鏈枷武士','鐵鏈連枷 · 繞盾順劈',95,200,36,8,36,68,1.0,11,1.3,{cleave:40,ap:.5},'揮舞帶刺鐵鏈流星錘，無視盾陣並對前方範圍造成破甲重擊。'],
+ ['samurai','東洋太刀武士','居合太刀 · 極速暴擊',125,225,44,11,32,84,.76,11,1.3,{crit:.32,ap:.35},'身披當世具足的太刀精銳，極高攻速與 32% 暴擊斬殺前排。'],
+ ['modao','大唐陌刀衛','長柄陌刀 · 人馬俱碎',150,305,48,15,44,54,1.12,12,2.2,{cleave:54,antiCav:2.0,ap:.5},'唐代重甲陌刀手，大範圍順劈斬殺，對騎兵造成 200% 毀滅打擊！'],
+ ['monk_staff','少林棍僧','齊眉長棍 · 疾速格擋',75,165,22,6,38,94,.64,10,1.0,{kb:22,block:.35},'身法迅捷的長棍武僧，極快連打擊退並能撥開 35% 遠程箭矢。'],
+ ['shield_axe','維京盾斧手','圓盾戰斧 · 攻守兼備',85,220,29,11,28,64,.95,11,1.5,{block:.45,ap:.3},'左手圓盾抗箭、右手重斧破甲，性價比極高的中堅步兵。']
 ]);
 roster('ranged',[
  ['archer','精锐长弓手','远程抛射 · 箭雨',65,85,18,2,300,56,1.25,9,.8,{proj:'arrow',ps:420},'长弓抛射，适合成排部署。'],
  ['crossbow','重装连弩手','高破甲 · 克重盾',95,105,34,5,270,50,1.8,10,1,{proj:'bolt',ps:560,ap:.65},'重弩箭可无视目标 65% 护甲。'],
- ['musketeer','帝国火枪手','枪火齐射 · 击退',115,100,44,3,250,54,2.1,10,.9,{proj:'bullet',ps:760,ap:.7,kb:26},'齐射击退冲锋单位，无视 70% 护甲。'],
+ ['musketeer','帝國火槍手','排槍齊射 · 高破甲',90,115,62,4,290,58,1.5,10,1.0,{proj:'bullet',ps:800,ap:.78,kb:34},'強化後的近代線列燧發槍手，90 金高性價比，精準排槍無視 78% 護甲並強力擊退！'],
  ['javelin','标枪投掷手','中程爆发 · 克巨兽',80,120,32,4,175,70,1.35,10,1,{proj:'javelin',ps:460,antiLarge:1.65},'对战象、巨人等大型单位造成 165% 伤害。'],
- ['firearcher','烈焰火箭手','持续灼烧 · 克集群',105,90,19,2,280,55,1.45,9,.8,{proj:'firearrow',ps:410,burn:10},'火箭命中后持续灼烧敌军。']
+ ['firearcher','烈焰火箭手','持续灼烧 · 克集群',90,90,22,2,290,56,1.35,9,.8,{proj:'firearrow',ps:420,burn:11},'火箭命中后持续灼烧敌军。'],
+ ['longbow','英格蘭長弓手','超遠長弓 · 破甲箭雨',85,95,29,2,385,56,1.25,9,.8,{proj:'arrow',ps:470,ap:.42},'兩米紫杉重長弓，擁有全弓兵最遠的 385 射程與 42% 破甲穿透！'],
+ ['arquebus','鳥槍手 (火繩槍)','廉價火器 · 破甲點殺',65,88,48,2,255,54,1.65,9,.9,{proj:'bullet',ps:740,ap:.72,kb:22},'明代與戰國經典鳥銃兵，65 金超值造價即可打出 72% 破甲火藥齊射！'],
+ ['slinger','投石索兵','廉價飛石 · 高速騷擾',35,78,16,1,250,70,.92,9,.7,{proj:'boulder_sm',ps:460,kb:12},'僅 35 金的古典投石索散兵，高速拋石壓制無甲單位。'],
+ ['blowgun','毒吹箭獵手','劇毒吹箭 · 減速持續傷',55,82,15,1,235,80,.85,9,.7,{proj:'arrow',ps:500,slow:true,burn:9},'叢林吹箭手，命中令敵軍中毒持續掉血並大幅減速。'],
+ ['shuriken','手裏劍忍者','雙發飛鏢 · 高速機動',80,115,21,2,210,108,.68,9,.8,{proj:'bolt',ps:580,salvo:2,crit:.25},'疾速游走的忍者，一次甩出兩枚高暴擊手裏劍！'],
+ ['chukonu','諸葛連弩兵','三連手弩 · 密集火力',95,98,17,4,245,54,.95,10,.9,{proj:'bolt',ps:540,salvo:3,ap:.35},'手持連發諸葛手弩，一輪齊射三支弩箭，近中程火力極度密集！'],
+ ['grenadier','黑火藥擲彈兵','手雷轟炸 · 破陣清場',115,140,56,5,200,58,2.05,10,1.1,{proj:'fireball',ps:360,aoe:54,kb:38,burn:8,ap:.5},'投擲黑火藥手榴彈，落地引爆大範圍火焰衝擊波轟散步兵方陣！']
 ]);
 roster('cavalry',[
  ['hussar','轻装骠骑兵','极速包抄 · 切弓兵',120,190,26,5,30,138,.95,14,2.6,{cav:true,charge:1.6,back:true},'高速机动，优先攻击敌方后排。'],
  ['lancer','重装冲锋骑','重骑冲锋 · 击飞',180,310,36,13,36,122,1.15,15,3.6,{cav:true,charge:2.4,kb:45},'冲锋后第一击造成 240% 伤害。'],
  ['horsearcher','草原弓骑兵','移动射击 · 游击',150,165,20,4,235,128,1.15,14,2.2,{cav:true,proj:'arrow',ps:460,kite:true},'敌人接近时自动后撤，保持射击距离。'],
- ['elephant','皇家战象','巨兽践踏 · 范围击飞',360,920,62,15,44,68,1.5,24,9,{cav:true,large:true,cleave:68,kb:65},'践踏前方敌军并造成范围击飞。']
+ ['elephant','皇家战象','巨兽践踏 · 范围击飞',340,950,65,15,44,68,1.45,24,9,{cav:true,large:true,cleave:68,kb:65},'践踏前方敌军并造成范围击飞。'],
+ ['dragoon','火槍龍騎兵','馬背火槍 · 游擊破甲',160,215,48,7,240,126,1.5,14,2.6,{cav:true,proj:'bullet',ps:780,ap:.7,kite:true},'裝備卡賓火槍的龍騎兵，高速游擊拉扯並以高破甲彈雨重創重甲！'],
+ ['camel','駱駝長矛騎','沙漠戰駝 · 專克騎兵',140,255,34,9,38,112,1.0,15,3.2,{cav:true,antiCav:1.95,charge:1.7},'高大戰駝令敵方戰馬驚懼，對各類騎兵造成 195% 額外穿刺傷害！'],
+ ['chariot','鐮刀重戰車','輪刃碾壓 · 範圍衝鋒',210,420,54,12,40,120,1.25,18,5.2,{cav:true,large:true,cleave:58,charge:2.2,kb:55},'雙馬牽引的古戰車，輪軸裝配長鐮刀，高速衝陣大範圍割裂步兵群！']
 ]);
 roster('siege',[
  ['catapult','重型投石车','超远抛射 · 范围轰炸',260,220,88,8,560,24,4,20,5.5,{proj:'boulder',ps:310,aoe:68,kb:55},'巨石落地造成大范围溅射与击飞。'],
@@ -501,6 +676,297 @@ roster('general',[
 ]);
 const defs=Object.fromEntries(UNITS.map(u=>[u.id,u]));
 defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,atk:14,def:1,range:24,speed:74,cd:.95,radius:8,mass:.6,antiCav:1};
+
+// =========================================================================
+// COMPREHENSIVE 500-UNIT ENCYCLOPEDIA GENERATOR (Balanced Pricing & Roles)
+// =========================================================================
+(() => {
+  const existing = new Set(UNITS.map(u => u.id));
+  function addU(u) {
+    if (existing.has(u.id) || UNITS.length >= 500) return;
+    existing.add(u.id);
+    UNITS.push(u);
+    defs[u.id] = u;
+  }
+  function calcCost(hp, atk, def, range, cd, sp) {
+    const dps = (atk * (sp.salvo || 1)) / Math.max(0.35, cd);
+    let c = hp * 0.14 + dps * 2.1 + def * 2.2 + (range > 80 ? range * 0.12 : range * 0.25);
+    if (sp.aoe) c += sp.aoe * 0.9;
+    if (sp.cleave) c += sp.cleave * 0.55;
+    if (sp.ap) c += sp.ap * 35;
+    if (sp.air) c *= 1.35;
+    if (sp.naval) c *= 1.12;
+    if (sp.ult) c = Math.max(540, c * 1.15);
+    if (sp.summon) c += 220;
+    return Math.max(25, Math.round(c / 5) * 5);
+  }
+
+  // A. +30 Legendary Historical Generals (Total 40 Generals)
+  const extraGens = [
+    ['gen_zhaoyun','常山·趙雲','七進七出',1680,92,19,46,120,.92,{cav:true,cleave:64,ap:.45,aura:'speed',reach:200,ult:10,ultType:'slash',ico:'spearman'},'白馬銀槍，提升周圍友軍移速與攻速；大招橫掃龍膽槍氣！'],
+    ['gen_zhangfei','燕人·張飛','當陽怒吼',1820,96,18,44,98,1.0,{cav:true,cleave:72,kb:55,aura:'fear',reach:210,ult:10,ultType:'leap',ico:'pikeman'},'威懾周圍敵軍；大招怒吼震盪波重創並減速大片敵軍！'],
+    ['gen_machao','錦馬超','西涼鐵騎',1640,94,17,46,128,.95,{cav:true,charge:2.4,cleave:60,aura:'speed',reach:220,ult:10,ultType:'slash',ico:'lancer'},'強化騎兵移速；大招西涼長槍破陣衝殺！'],
+    ['gen_huangzhong','老將·黃忠','百步穿楊',1180,82,12,410,72,1.15,{proj:'arrow',ps:580,ap:.6,crit:.35,aura:'atk',reach:230,ult:10,ultType:'arrowrain',ico:'longbow'},'弓箭名將，強化周圍攻擊；大招萬箭齊發覆蓋敵群！'],
+    ['gen_dianwei','古之惡來·典韋','雙鐵戟舞',1920,102,21,36,86,.85,{cleave:68,berserk:true,aura:'atk',reach:180,ult:10,ultType:'leap',ico:'berserker'},'殘血愈戰愈勇；大招雙戟震地重擊四周敵軍！'],
+    ['gen_caocao','魏武·曹操','短歌行令',1480,68,20,42,84,1.0,{cav:true,cleave:54,aura:'haste',reach:260,ult:11,ultType:'rally',ico:'gen_caesar'},'大範圍強化友軍攻速；大招號令全軍回血與狂熱！'],
+    ['gen_hanxin','兵仙·韓信','背水一戰',1380,66,18,44,88,.98,{cleave:56,aura:'atk',reach:280,ult:11,ultType:'rally',ico:'gen_caesar'},'超大範圍軍團攻擊光環；大招激發全軍護盾與攻速！'],
+    ['gen_baiqi','人屠·白起','長平殺陣',1740,98,19,44,92,.95,{cleave:70,ap:.55,aura:'fear',reach:240,ult:10,ultType:'leap',ico:'greatsword'},'令周圍敵軍戰慄減攻；大招引發猩紅殺陣震盪波！'],
+    ['gen_huoqubing','冠軍侯·霍去病','封狼居胥',1660,95,18,46,134,.9,{cav:true,charge:2.5,cleave:65,aura:'speed',reach:240,ult:10,ultType:'slash',ico:'lancer'},'閃電突襲騎兵之王；大招斬出破甲衝鋒槍氣！'],
+    ['gen_yuefei','武穆·岳飛','滿江紅陣',1800,88,23,46,96,.96,{cav:true,cleave:66,block:.55,aura:'def',reach:240,ult:11,ultType:'holy',ico:'pikeman'},'岳家軍鐵壁防禦光環；大招聖光鼓舞回血並震退敵軍！'],
+    ['gen_qijiguang','抗倭·戚繼光','鴛鴦戰陣',1620,76,22,42,80,.98,{cleave:58,block:.6,aura:'def',reach:250,ult:11,ultType:'rally',ico:'modao'},'極致步兵防禦光環；大招強化防線護盾與攻速！'],
+    ['gen_zhengchenggong','國姓爺·鄭成功','樓船破浪',1720,84,19,420,64,2.1,{naval:true,proj:'cannonball',ps:660,pierce:3,aoe:46,aura:'haste',reach:270,ult:11,ultType:'navalbarrage',ico:'gen_zhouyu'},'【海軍統帥】強化水師攻速；大招傾瀉 12 發艦砲齊射！'],
+    ['gen_alexander','亞歷山大大帝','夥伴騎兵',1720,90,20,46,118,.95,{cav:true,charge:2.3,cleave:62,aura:'atk',reach:250,ult:11,ultType:'rally',ico:'lancer'},'馬其頓征服者，強化全軍攻擊；大招號令衝鋒回血！'],
+    ['gen_hannibal','迦太基·漢尼拔','坎尼包圍',1980,86,21,48,74,1.1,{cav:true,large:true,cleave:76,kb:70,aura:'fear',reach:230,ult:11,ultType:'leap',ico:'elephant'},'騎乘重甲戰象統帥；大招戰象踏地震飛四周敵軍！'],
+    ['gen_leonidas','斯巴達王·列奧尼達','溫泉關死戰',1950,84,26,44,68,.95,{antiCav:2.0,block:.65,cleave:55,aura:'def',reach:210,ult:11,ultType:'holy',ico:'spartan'},'極致護甲與抗箭；大招堅壁庇護全軍回血並震退來敵！'],
+    ['gen_richard','獅心王·理查','十字軍重斬',1820,94,22,42,84,1.0,{cleave:66,ap:.5,aura:'atk',reach:210,ult:11,ultType:'beam',ico:'greatsword'},'重甲騎士王；大招揮出聖十字斬擊光束貫穿敵陣！'],
+    ['gen_saladin','阿尤布·薩拉丁','新月彎刀',1580,82,17,42,124,.88,{cav:true,cleave:58,aura:'speed',reach:240,ult:10,ultType:'arrowrain',ico:'hussar'},'沙漠輕騎統帥；大招召喚新月箭雨覆蓋敵陣！'],
+    ['gen_nobunaga','第六天魔王·織田信長','三段擊齊射',1360,78,14,320,76,1.25,{proj:'bullet',ps:820,ap:.78,aura:'haste',reach:260,ult:11,ultType:'barrage',ico:'arquebus'},'火器霸主，大幅提升遠程攻速；大招呼叫十發重砲轟炸！'],
+    ['gen_shingen','甲斐之虎·武田信玄','風林火山',1720,86,20,44,116,.98,{cav:true,charge:2.2,cleave:64,aura:'def',reach:240,ult:11,ultType:'rally',ico:'samurai'},'赤備騎兵統帥；大招風林火山大幅強化友軍戰力！'],
+    ['gen_musashi','劍聖·宮本武藏','二天一流',1540,112,15,36,105,.72,{crit:.42,lifesteal:.2,cleave:56,aura:'atk',reach:160,ult:9,ultType:'slash',ico:'samurai'},'單挑與暴擊極致的劍聖；大招斬出雙刀月牙劍氣！'],
+    ['gen_tadakatsu','戰國無雙·本多忠勝','蜻蛉切',1840,98,23,50,104,.94,{cav:true,antiCav:2.0,cleave:68,ap:.55,aura:'fear',reach:190,ult:10,ultType:'slash',ico:'pikeman'},'一生無傷的重甲槍神；大招橫掃蜻蛉切破甲槍氣！'],
+    ['gen_frederick','腓特烈大帝','斜線戰術',1440,72,17,300,78,1.3,{proj:'bullet',ps:820,ap:.75,aura:'haste',reach:270,ult:12,ultType:'barrage',ico:'musketeer'},'普魯士線列步兵之魂；大招呼叫重砲覆蓋轟炸！'],
+    ['gen_wellington','鐵公爵·威靈頓','方陣防線',1560,68,21,290,74,1.35,{proj:'bullet',ps:800,block:.55,aura:'def',reach:260,ult:11,ultType:'rally',ico:'musketeer'},'防禦大師，強化全軍護甲；大招穩固方陣回血加速！'],
+    ['gen_patton','裝甲統帥·巴頓','鐵血裝甲師',2400,140,30,400,86,2.1,{proj:'cannonball',ps:720,aoe:62,ap:.88,block:.65,aura:'speed',reach:280,ult:11,ultType:'barrage',ico:'tank'},'【現代裝甲統帥】駕駛指揮坦克衝鋒，大招呼叫重砲地毯轟炸！'],
+    ['gen_zhukov','勝利元帥·朱可夫','喀秋莎風暴',2200,130,28,440,78,2.2,{proj:'rocket',ps:560,aoe:68,salvo:2,ap:.85,aura:'atk',reach:280,ult:12,ultType:'barrage',ico:'mlrs'},'【現代砲兵統帥】強化全軍火力，大招呼叫火箭砲飽和轟炸！'],
+    ['gen_nimitz','艦隊上將·尼米茲','太平洋艦隊',2900,65,28,580,44,1.0,{naval:true,kite:true,proj:'bullet',ps:860,block:.72,spawnUnit:'jet',summon:3.0,hangarCap:8,aura:'haste',reach:300,ult:12,ultType:'navalbarrage',ico:'carrier'},'【現代航母統帥】8 架艦載機超級旗艦，大招呼叫艦隊齊射！'],
+    ['gen_yamamoto','聯合艦隊·山本','巨艦大砲',2750,145,28,600,46,2.8,{naval:true,proj:'boulder',ps:520,aoe:92,ap:.9,block:.7,aura:'atk',reach:300,ult:12,ultType:'navalbarrage',ico:'ironclad'},'【現代戰列艦統帥】大和級巨艦主砲轟鳴，大招傾瀉 12 發重砲！'],
+    ['gen_sunce','小霸王·孫策','江東猛虎',1660,94,17,42,118,.88,{cav:true,berserk:true,cleave:62,aura:'atk',reach:200,ult:10,ultType:'leap',ico:'halberdier'},'江東猛將；大招躍入敵陣引發霸王震盪波！'],
+    ['gen_xuchu','虎癡·許褚','裸衣血戰',2020,104,20,38,82,.98,{berserk:true,cleave:74,kb:65,aura:'fear',reach:180,ult:10,ultType:'leap',ico:'warhammer'},'超高血量重錘猛將；大招重砸地面震飛四周！'],
+    ['gen_chengji','蒙古神射·哲別','疾風箭雨',1380,76,13,340,136,.88,{cav:true,kite:true,proj:'arrow',ps:580,ap:.55,aura:'speed',reach:250,ult:10,ultType:'arrowrain',ico:'horsearcher'},'蒙古四狗神射；大招召喚 24 支穿甲箭雨！']
+  ];
+  for (const [id,name,role,hp,atk,def,range,speed,cd,sp,desc] of extraGens) {
+    addU({id,name,cat:'general',role,cost:calcCost(hp,atk,def,range,cd,sp),hp,atk,def,range,speed,cd,radius:sp.naval?26:(sp.large?23:17),mass:sp.naval?14:(sp.large?9:5.5),...sp,desc});
+  }
+
+  // B. Systematic Regional & Weapon Infantry (+106 -> 120 Infantry)
+  const infCivs = [
+    ['秦軍','qin',1.05,1.05,1.0], ['漢軍','han',1.08,1.02,1.05], ['唐軍','tang',1.12,1.1,1.05], ['宋軍','song',1.1,0.98,1.15],
+    ['明軍','ming',1.06,1.06,1.08], ['希臘','greek',1.1,1.02,1.15], ['羅馬','roman',1.15,1.0,1.2], ['條頓','teuton',1.2,1.12,1.2],
+    ['維京','viking',1.05,1.18,0.9], ['不列顛','brit',1.06,1.04,1.05], ['法蘭西','fr',1.08,1.06,1.08], ['東洋','jp',0.96,1.18,1.0],
+    ['鄂圖曼','otto',1.08,1.12,1.05], ['波斯','pers',1.0,1.05,1.0], ['阿茲特克','azt',0.92,1.2,0.82], ['祖魯','zulu',0.9,1.15,0.8]
+  ];
+  const infWeps = [
+    ['刀盾兵','saber_sh','盾牆推進 · 抗箭',190,21,10,26,56,1.05,{block:.45,ico:'legionary'}],
+    ['長槍兵','pike','超長槍 · 反騎兵',155,22,7,52,54,1.0,{antiCav:2.1,ico:'pikeman'}],
+    ['戰戟衛','halb','長柄戟 · 破甲反騎',210,31,11,44,56,1.05,{ap:.5,antiCav:1.7,ico:'halberdier'}],
+    ['重斧手','axe','雙手戰斧 · 高爆發',180,35,6,28,74,.86,{ap:.35,ico:'berserker'}],
+    ['大劍衛','gs','雙手巨劍 · 順劈',235,38,11,34,58,1.15,{cleave:42,ap:.42,ico:'greatsword'}],
+    ['戰錘兵','ham','破甲重錘 · 擊退',245,40,13,28,54,1.18,{ap:.8,kb:34,ico:'warhammer'}],
+    ['突襲刺客','ass','疾速切後排 · 暴擊',125,38,3,24,118,.68,{crit:.3,back:true,ico:'assassin'}]
+  ];
+  let ic = 0;
+  for (const [cn, ck, hM, aM, dM] of infCivs) {
+    for (const [wn, wk, role, hp, atk, def, rng, spd, cd, sp] of infWeps) {
+      if (ic >= 106) break;
+      const H = Math.round(hp * hM), A = Math.round(atk * aM), D = Math.round(def * dM);
+      addU({id:`inf_${ck}_${wk}`, name:`${cn}${wn}`, cat:'infantry', role, cost:calcCost(H,A,D,rng,cd,sp), hp:H, atk:A, def:D, range:rng, speed:spd, cd, radius:11, mass:1.4, ...sp, desc:`${cn}精銳${wn}，${role}。`});
+      ic++;
+    }
+  }
+
+  // C. Systematic Regional & Weapon Ranged (+78 -> 90 Ranged)
+  const rngCivs = [
+    ['秦軍','qin',1.02,1.08], ['漢軍','han',1.05,1.05], ['唐軍','tang',1.08,1.08], ['明軍','ming',1.05,1.12],
+    ['英格蘭','eng',1.0,1.15], ['法蘭西','fr',1.05,1.06], ['西班牙','esp',1.08,1.1], ['熱那亞','gen',1.15,1.1],
+    ['東洋','jp',0.98,1.12], ['鄂圖曼','otto',1.08,1.1], ['蒙古','mon',1.0,1.12], ['印度','ind',1.0,1.05], ['海盜','pir',0.95,1.15]
+  ];
+  const rngWeps = [
+    ['複合弓手','bow','高射速拋射',88,20,2,310,58,1.15,{proj:'arrow',ps:440,ico:'archer'}],
+    ['重長弓手','lbow','超遠破甲箭雨',92,27,2,380,55,1.28,{proj:'arrow',ps:470,ap:.4,ico:'longbow'}],
+    ['絞盤重弩手','xbow','重弩高破甲',105,36,5,280,50,1.75,{proj:'bolt',ps:560,ap:.68,ico:'crossbow'}],
+    ['鳥銃火繩槍','arq','高性價比火器',88,48,2,260,54,1.62,{proj:'bullet',ps:740,ap:.72,kb:22,ico:'arquebus'}],
+    ['線列來福槍','rif','遠距精準排槍',112,62,4,315,58,1.52,{proj:'bullet',ps:820,ap:.8,kb:30,ico:'musketeer'}],
+    ['投彈手','grn','黑火藥範圍爆破',135,54,5,205,58,2.05,{proj:'fireball',ps:360,aoe:52,burn:8,ap:.5,ico:'grenadier'}]
+  ];
+  let rc = 0;
+  for (const [cn, ck, hM, aM] of rngCivs) {
+    for (const [wn, wk, role, hp, atk, def, rng, spd, cd, sp] of rngWeps) {
+      if (rc >= 78) break;
+      const H = Math.round(hp * hM), A = Math.round(atk * aM);
+      addU({id:`rng_${ck}_${wk}`, name:`${cn}${wn}`, cat:'ranged', role, cost:calcCost(H,A,def,rng,cd,sp), hp:H, atk:A, def, range:rng, speed:spd, cd, radius:9, mass:.9, ...sp, desc:`${cn}編制${wn}，${role}。`});
+      rc++;
+    }
+  }
+
+  // D. Systematic Cavalry & Beasts (+53 -> 60 Cavalry)
+  const cavCivs = [
+    ['西涼','xil',1.08,1.12], ['虎豹','hub',1.18,1.15], ['玄甲','xua',1.2,1.14], ['鐵浮屠','tief',1.3,1.12],
+    ['蒙古','mon',1.02,1.12], ['波蘭翼','pol',1.15,1.2], ['法蘭西','fr',1.18,1.1], ['哥薩克','cos',1.0,1.1],
+    ['馬木留克','mam',1.12,1.12], ['武田赤備','tak',1.1,1.16], ['羅馬','rom',1.1,1.05], ['波斯具裝','per',1.22,1.1], ['阿拉伯','arb',0.96,1.12]
+  ];
+  const cavTypes = [
+    ['輕騎兵','lgt','極速切後排',185,26,5,30,140,.92,{cav:true,charge:1.6,back:true,ico:'hussar'}],
+    ['重裝槍騎','hvy','重甲毀滅衝鋒',315,38,14,38,120,1.12,{cav:true,charge:2.4,kb:46,ico:'lancer'}],
+    ['游擊弓騎','ha','移動風箏射擊',168,22,4,245,130,1.1,{cav:true,proj:'arrow',ps:470,kite:true,ico:'horsearcher'}],
+    ['火槍龍騎','drg','高速破甲卡賓',210,48,7,245,126,1.48,{cav:true,proj:'bullet',ps:780,ap:.7,kite:true,ico:'dragoon'}]
+  ];
+  let cc = 0;
+  for (const [cn, ck, hM, aM] of cavCivs) {
+    for (const [tn, tk, role, hp, atk, def, rng, spd, cd, sp] of cavTypes) {
+      if (cc >= 52) break;
+      const H = Math.round(hp * hM), A = Math.round(atk * aM);
+      addU({id:`cav_${ck}_${tk}`, name:`${cn}${tn}`, cat:'cavalry', role, cost:calcCost(H,A,def,rng,cd,sp), hp:H, atk:A, def, range:rng, speed:spd, cd, radius:14, mass:3.0, ...sp, desc:`${cn}${tn}，${role}。`});
+      cc++;
+    }
+  }
+  addU({id:'cav_carthage_ele',name:'迦太基重甲戰象',cat:'cavalry',role:'重裝巨獸 · 踐踏',cost:420,hp:1150,atk:74,def:19,range:46,speed:66,cd:1.45,radius:25,mass:10.5,cav:true,large:true,cleave:72,kb:72,ico:'elephant',desc:'身披青銅重甲的迦太基戰象，無情碾壓步兵陣線。'});
+
+  // E. Siege Engines (+36 -> 40 Siege)
+  const siegeList = [
+    ['輕型投石機','boulder',180,68,510,3.2,58,'catapult'],['配重巨型投石機','boulder',290,128,640,4.6,86,'catapult'],
+    ['回回巨砲','boulder',310,136,630,4.8,90,'catapult'],['火球投石車','fireball',220,92,560,3.8,76,'catapult'],
+    ['紅夷大砲','cannonball',240,122,560,4.2,40,'cannon'],['佛朗機子母砲','cannonball',210,78,490,2.5,32,'cannon'],
+    ['拿破崙野戰砲','cannonball',230,115,550,3.6,38,'cannon'],['青銅重臼砲','boulder',250,110,590,4.0,82,'catapult'],
+    ['三弓床子弩','heavybolt',230,78,560,1.65,0,'ballista'],['神臂床弩','heavybolt',210,64,520,1.35,0,'ballista'],
+    ['一窩蜂火箭車','rocket',200,36,520,3.6,50,'mlrs'],['架火戰車','rocket',220,42,540,3.8,54,'mlrs'],
+    ['希臘火噴射車','fireball',290,46,240,1.0,52,'ram'],['鐵甲衝撞戰車','ram',860,68,38,1.7,0,'ram'],
+    ['加特林手搖機槍','bullet',210,22,380,0.34,0,'cannon'],['馬克沁重機槍組','bullet',190,24,400,0.3,0,'cannon']
+  ];
+  const siegeTiers = [['標準','std',1.0,1.0], ['帝國精銳','elt',1.25,1.2]];
+  let sc = 0;
+  for (const [sn, proj, hp, atk, rng, cd, aoe, ico] of siegeList) {
+    for (const [tn, tk, mH, mA] of siegeTiers) {
+      if (sc >= 32) break;
+      const H = Math.round(hp * mH), A = Math.round(atk * mA);
+      const sp = proj==='ram'
+        ? {block:.82,kb:72,ap:.75,ico}
+        : {proj, ps:proj==='bullet'?840:proj==='cannonball'?650:proj==='heavybolt'?700:360, aoe, pierce:proj==='cannonball'?5:(proj==='heavybolt'?3:0), salvo:proj==='rocket'?4:1, burn:proj==='fireball'||proj==='rocket'?10:0, kb:aoe?55:18, ap:.78, ico};
+      addU({id:`sg_${sc}_${tk}`, name:(tk==='std'?'':tn)+sn, cat:'siege', role:`重型器械 · ${proj==='ram'?'破陣':'遠程火力'}`, cost:calcCost(H,A,9,rng,cd,sp), hp:H, atk:A, def:9, range:rng, speed:proj==='ram'?46:24, cd, radius:19, mass:5.8, ...sp, desc:`${tn}${sn}，戰場攻堅重器。`});
+      sc++;
+    }
+  }
+  for (const [id,nm,hp,atk,rng,cd,aoe,ico] of [
+    ['sg_ox','齊國火牛陣',160,95,30,1.0,85,'fireship'],
+    ['sg_tower','移動攻城塔',1100,32,260,1.2,0,'watchtower'],
+    ['sg_rail','巨型攻城巨砲',360,185,720,5.6,105,'cannon'],
+    ['sg_mortar_h','蒸汽重型榴彈砲',320,155,660,4.8,95,'cannon']
+  ]) {
+    const sp = id==='sg_ox' ? {cav:true,suicideBoom:true,aoe,burn:14,ico} : (id==='sg_tower' ? {block:.8,proj:'arrow',ps:460,ico} : {proj:'boulder',ps:420,aoe,kb:75,ap:.85,ico});
+    addU({id,name:nm,cat:'siege',role:'特種攻城器械',cost:calcCost(hp,atk,12,rng,cd,sp),hp,atk,def:12,range:rng,speed:id==='sg_ox'?118:22,cd,radius:21,mass:6.5,...sp,desc:`特種攻城單位：${nm}。`});
+  }
+
+  // F. Naval Warships (+44 -> 50 Navy)
+  const navBase = [
+    ['三層槳撞角船','galley',340,46,9,38,116,1.0,{naval:true,charge:2.1,kb:55,ico:'galley'}],
+    ['維京龍頭長船','galley',380,52,10,40,118,.95,{naval:true,charge:2.0,cleave:48,ico:'galley'}],
+    ['希臘火戰船','fireship',420,42,10,240,92,1.1,{naval:true,proj:'fireball',ps:390,aoe:55,burn:16,ico:'fireship'}],
+    ['東吳蒙衝快船','galley',310,44,8,38,124,.95,{naval:true,charge:2.2,ico:'galley'}],
+    ['朝鮮龜甲船','ironclad',920,62,22,280,66,1.6,{naval:true,proj:'fireball',ps:420,aoe:52,block:.7,ico:'tower_ship'}],
+    ['日本安宅巨艦','tower_ship',780,36,15,310,58,1.05,{naval:true,proj:'arrow',ps:480,salvo:2,block:.5,ico:'tower_ship'}],
+    ['鄭和寶船旗艦','tower_ship',1250,68,18,390,54,1.8,{naval:true,proj:'cannonball',ps:620,pierce:3,aoe:42,block:.55,ico:'tower_ship'}],
+    ['西班牙大帆船','frigate',960,94,15,470,54,3.0,{naval:true,proj:'cannonball',ps:660,pierce:4,aoe:46,ap:.8,ico:'frigate'}],
+    ['海盜黑帆快船','frigate',620,76,10,410,78,2.4,{naval:true,proj:'cannonball',ps:660,pierce:3,ap:.75,ico:'frigate'}],
+    ['一級戰列艦','frigate',1150,118,17,510,50,3.1,{naval:true,proj:'cannonball',ps:680,pierce:5,aoe:52,ap:.85,ico:'frigate'}],
+    ['魚雷快艇','galley',280,135,6,340,128,3.2,{naval:true,proj:'rocket',ps:520,aoe:62,ap:.9,ico:'galley'}],
+    ['神盾驅逐艦','ironclad',1450,86,20,560,72,1.6,{naval:true,proj:'rocket',ps:680,salvo:2,aoe:54,antiAir:2.2,ap:.82,ico:'ironclad'}],
+    ['飛彈巡洋艦','ironclad',1850,108,24,620,64,2.2,{naval:true,proj:'rocket',ps:640,salvo:3,aoe:66,antiAir:2.0,ap:.85,ico:'ironclad'}],
+    ['大和級戰列艦','ironclad',2600,195,30,680,44,4.2,{naval:true,proj:'boulder',ps:520,aoe:105,kb:85,ap:.92,block:.72,ico:'ironclad'}],
+    ['核動力超級航母','carrier',3100,56,28,600,42,1.0,{naval:true,kite:true,proj:'bullet',ps:880,block:.75,spawnUnit:'jet',summon:2.8,hangarCap:10,ico:'carrier'}]
+  ];
+  const navNations = [['皇家','roy',1.05,1.06],['帝國','imp',1.12,1.08],['聯邦','fed',1.0,1.12]];
+  let nc = 0;
+  for (const [bn, modelId, hp, atk, def, rng, spd, cd, sp] of navBase) {
+    for (const [nn, nk, mH, mA] of navNations) {
+      if (nc >= 44) break;
+      const H = Math.round(hp * mH), A = Math.round(atk * mA);
+      addU({id:`nav_${nc}_${nk}`, name:`${nn}${bn}`, cat:'navy', role:`海軍艦艇 · ${bn}`, cost:calcCost(H,A,def,rng,cd,sp), hp:H, atk:A, def, range:rng, speed:spd, cd, radius:sp.hangarCap?32:(H>1000?25:20), mass:H>1000?13:6.5, renderAs:modelId, ...sp, desc:`${nn}海軍編制${bn}。`});
+      nc++;
+    }
+  }
+
+  // G. Modern Land, Armor & Air Force (+50 -> 58 Modern)
+  const modList = [
+    ['步槍班','marine',185,24,6,275,80,.44,{proj:'bullet',ps:820,ap:.55,ico:'marine'}],
+    ['重機槍組','marine',220,30,8,340,56,.28,{proj:'bullet',ps:860,ap:.6,ico:'marine'}],
+    ['反坦克火箭兵','marine',165,115,5,330,72,2.4,{proj:'rocket',ps:620,aoe:52,ap:.92,antiLarge:1.8,ico:'mlrs'}],
+    ['防空飛彈兵','marine',160,92,5,440,70,1.8,{proj:'rocket',ps:780,aoe:40,antiAir:2.8,ap:.8,ico:'flak_tower'}],
+    ['外骨骼裝甲兵','marine',420,42,18,300,92,.4,{proj:'bullet',ps:880,ap:.7,block:.5,ico:'marine'}],
+    ['輕型偵察坦克','tank',680,78,18,340,108,1.9,{proj:'cannonball',ps:700,aoe:42,ap:.78,ico:'tank'}],
+    ['虎式重型坦克','tank',1350,145,30,410,64,2.8,{proj:'cannonball',ps:720,aoe:62,ap:.88,block:.7,ico:'tank'}],
+    ['豹2主戰坦克','tank',1220,140,29,430,84,2.4,{proj:'cannonball',ps:780,aoe:58,ap:.9,block:.68,ico:'tank'}],
+    ['M1艾布蘭坦克','tank',1280,144,30,425,82,2.45,{proj:'cannonball',ps:780,aoe:60,ap:.9,block:.7,ico:'tank'}],
+    ['99A主戰坦克','tank',1260,146,29,435,85,2.4,{proj:'cannonball',ps:790,aoe:60,ap:.9,block:.68,ico:'tank'}],
+    ['雙管天啟重坦','tank',1950,115,34,420,58,2.2,{proj:'cannonball',ps:720,salvo:2,aoe:64,ap:.92,block:.75,ico:'tank'}],
+    ['自走榴彈砲','mlrs',520,135,12,700,60,4.0,{proj:'boulder',ps:480,aoe:88,kb:70,ap:.85,ico:'mlrs'}],
+    ['自行防空砲車','tank',640,42,16,460,82,.35,{proj:'bullet',ps:940,antiAir:2.6,ap:.7,ico:'flak_tower'}],
+    ['喀秋莎火箭車','mlrs',340,46,6,640,66,4.0,{proj:'rocket',ps:460,salvo:6,aoe:58,burn:10,ap:.7,ico:'mlrs'}],
+    ['阿帕契直升機','heli',660,52,15,380,175,.38,{air:true,kite:true,airDodge:.28,proj:'rocket',ps:740,aoe:42,ap:.78,ico:'heli'}],
+    ['A-10對地攻擊機','jet',780,48,18,390,210,.26,{air:true,kite:true,airDodge:.32,proj:'bullet',ps:920,aoe:38,ap:.85,ico:'jet'}],
+    ['隱形五代戰機','jet',620,110,14,460,285,1.15,{air:true,kite:true,airDodge:.52,proj:'rocket',ps:760,salvo:2,aoe:78,ap:.9,ico:'jet'}],
+    ['戰略重轟炸機','jet',1150,95,18,420,175,2.4,{air:true,kite:true,airDodge:.22,proj:'boulder',ps:420,salvo:4,aoe:92,burn:14,ap:.85,ico:'jet'}],
+    ['察打一體無人機','jet',240,64,6,430,190,1.5,{air:true,kite:true,airDodge:.38,proj:'rocket',ps:660,aoe:54,ap:.78,ico:'jet'}],
+    ['電磁磁軌砲坦','tank',1580,210,32,560,72,3.2,{proj:'cannonball',ps:1100,pierce:6,aoe:48,ap:.96,block:.72,ico:'tank'}]
+  ];
+  const modVar = [['標準','std',1.0,1.0],['精銳改進型','mk2',1.2,1.18],['重裝突擊型','hvy',1.35,1.1]];
+  let mc = 0;
+  for (const [mn, mRender, hp, atk, def, rng, spd, cd, sp] of modList) {
+    for (const [vn, vk, mH, mA] of modVar) {
+      if (mc >= 50) break;
+      const H = Math.round(hp * mH), A = Math.round(atk * mA);
+      addU({id:`mod_${mc}_${vk}`, name:(vk==='std'?'':vn)+mn, cat:'modern', role:`現代裝備 · ${mn}`, cost:calcCost(H,A,def,rng,cd,sp), hp:H, atk:A, def, range:rng, speed:spd, cd, radius:mRender==='marine'?10:(mRender==='tank'||mRender==='mlrs'?21:17), mass:mRender==='tank'?11:(sp.air?3.2:1.5), renderAs:mRender, ...sp, desc:`現代化軍種：${vn}${mn}。`});
+      mc++;
+    }
+  }
+
+  // H. Mythic & Fantasy (+25 -> 30 Mythic)
+  const mythList = [
+    ['雷電大法師',150,62,4,350,54,1.9,{proj:'frostbolt',ps:520,aoe:66,ap:.75,ico:'pyro'}],
+    ['遠古紅龍',1850,125,22,360,155,1.5,{air:true,large:true,airDodge:.2,proj:'fireball',ps:460,aoe:95,burn:20,ap:.8,ico:'jet'}],
+    ['冰霜巨龍',1780,108,23,360,150,1.55,{air:true,large:true,airDodge:.2,proj:'frostbolt',ps:460,aoe:105,slow:true,ap:.75,ico:'frost'}],
+    ['獅鷲騎士',520,62,12,260,170,1.0,{air:true,airDodge:.25,proj:'javelin',ps:540,ap:.5,ico:'heli'}],
+    ['聖光大天使',1350,95,20,310,165,1.15,{air:true,airDodge:.3,proj:'fireball',ps:520,aoe:70,ap:.75,ico:'cleric'}],
+    ['炎魔領主',1650,118,20,56,64,1.4,{large:true,cleave:95,burn:18,kb:85,ap:.65,ico:'titan'}],
+    ['冰霜泰坦',1720,98,22,56,52,1.6,{large:true,cleave:92,slow:true,kb:80,ico:'titan'}],
+    ['牛頭人重斧手',540,64,13,38,76,1.1,{large:true,cleave:58,kb:55,ico:'berserker'}],
+    ['半人馬神射手',290,34,6,310,136,1.0,{cav:true,kite:true,proj:'arrow',ps:520,ap:.45,ico:'horsearcher'}],
+    ['精靈神箭手',125,36,4,420,76,.95,{proj:'arrow',ps:560,ap:.55,crit:.35,ico:'longbow'}],
+    ['矮人重錘衛士',360,46,20,28,46,1.1,{ap:.82,block:.55,kb:40,ico:'warhammer'}],
+    ['獸人狂戰士',310,48,7,30,86,.78,{berserk:true,cleave:42,ico:'berserker'}],
+    ['哥布林爆破手',95,90,1,150,105,1.4,{proj:'fireball',ps:360,aoe:62,burn:12,ico:'grenadier'}],
+    ['吸血鬼伯爵',640,68,14,34,112,.75,{lifesteal:.4,crit:.35,ico:'assassin'}],
+    ['暗影狼人',420,58,9,30,126,.68,{berserk:true,crit:.3,back:true,ico:'assassin'}],
+    ['岩石魔像',1180,68,28,40,42,1.6,{large:true,cleave:64,kb:70,block:.6,ico:'titan'}],
+    ['不死鳳凰',960,82,12,330,180,1.25,{air:true,airDodge:.32,proj:'fireball',ps:500,aoe:78,burn:18,ico:'jet'}],
+    ['德魯伊祭司',220,30,6,290,60,1.8,{healer:true,ico:'cleric'}],
+    ['深淵死靈王',580,54,12,340,56,1.5,{proj:'shadowbolt',ps:480,aoe:54,summon:4.5,ico:'necro'}],
+    ['聖殿光明法師',210,58,8,350,58,1.7,{proj:'fireball',ps:480,aoe:64,ap:.7,ico:'cleric'}],
+    ['鋼鐵巨像',1480,96,30,48,46,1.6,{large:true,cleave:76,kb:80,ap:.75,block:.7,ico:'titan'}],
+    ['風暴女武神',560,66,14,280,172,.95,{air:true,airDodge:.3,proj:'javelin',ps:580,ap:.6,ico:'heli'}],
+    ['地獄三頭犬',680,76,12,38,118,.82,{cav:true,cleave:56,burn:14,ico:'hussar'}],
+    ['虛空刺客',260,72,6,28,142,.58,{crit:.48,back:true,ap:.65,ico:'assassin'}],
+    ['上古黃金泰坦',2200,132,26,58,56,1.5,{large:true,cleave:105,kb:95,ap:.75,ico:'titan'}]
+  ];
+  for (let i = 0; i < mythList.length; i++) {
+    const [nm, hp, atk, def, rng, spd, cd, sp] = mythList[i];
+    addU({id:`myth_${i}`, name:nm, cat:'mythic', role:`奇幻神話 · ${sp.air?'空中巨獸':sp.large?'巨型單位':'魔法戰力'}`, cost:calcCost(hp,atk,def,rng,cd,sp), hp, atk, def, range:rng, speed:spd, cd, radius:sp.large?26:(sp.air?17:12), mass:sp.large?11:(sp.air?3.5:1.6), renderAs:sp.air?(sp.large?'jet':'heli'):undefined, ...sp, desc:`傳說奇幻單位：${nm}。`});
+  }
+
+  // I. Fortifications & Production Buildings (+15 -> 20 Buildings, brings exact total to 500!)
+  const bldList = [
+    ['重弩哨塔',980,44,20,410,1.1,{building:true,proj:'bolt',ps:620,ap:.65,block:.55,ico:'watchtower'}],
+    ['火砲碉堡',1380,112,26,520,2.8,{building:true,proj:'cannonball',ps:680,pierce:4,aoe:46,ap:.85,block:.65,ico:'artillery_tower'}],
+    ['防空飛彈陣地',1050,115,20,560,1.6,{building:true,proj:'rocket',ps:820,aoe:52,antiAir:3.0,ap:.85,ico:'flak_tower'}],
+    ['光棱雷射塔',1120,138,22,490,1.8,{building:true,proj:'bullet',ps:1100,aoe:42,ap:.95,ico:'flak_tower'}],
+    ['火焰噴射碉堡',1150,48,22,220,.65,{building:true,proj:'fireball',ps:380,aoe:62,burn:18,ico:'artillery_tower'}],
+    ['寒冰減速塔',960,38,18,380,1.4,{building:true,proj:'frostbolt',ps:480,aoe:78,slow:true,ico:'watchtower'}],
+    ['騎兵馬廄',1450,0,18,0,1.0,{building:true,spawnUnit:'lancer',summon:8.5,ico:'barracks'}],
+    ['現代裝甲工廠',1950,0,24,0,1.0,{building:true,spawnUnit:'tank',summon:11.0,ico:'barracks'}],
+    ['前線空軍機場',1850,0,20,0,1.0,{building:true,spawnUnit:'jet',summon:9.5,hangarCap:6,ico:'barracks'}],
+    ['野戰醫療總部',1100,0,16,300,1.8,{building:true,healer:true,ico:'med_tent'}],
+    ['超重型城門堡壘',2800,56,34,360,1.4,{building:true,proj:'arrow',ps:520,salvo:3,block:.75,ico:'watchtower'}],
+    ['雙管重砲陣地',1520,108,26,600,3.0,{building:true,proj:'boulder',ps:480,salvo:2,aoe:74,ap:.85,ico:'artillery_tower'}],
+    ['近防加特林塔',1080,32,20,380,.26,{building:true,proj:'bullet',ps:920,ap:.68,antiAir:2.0,ico:'flak_tower'}],
+    ['亡靈召喚祭壇',1250,0,16,0,1.0,{building:true,spawnUnit:'skeleton',summon:4.5,ico:'barracks'}],
+    ['帝國指揮中樞',2600,45,28,420,1.5,{building:true,proj:'bullet',ps:820,aura:'atk',reach:320,ico:'watchtower'}],
+    ['斯巴達訓練營',1550,0,20,0,1.0,{building:true,spawnUnit:'spartan',summon:8.0,ico:'barracks'}],
+    ['火槍手兵營',1400,0,18,0,1.0,{building:true,spawnUnit:'musketeer',summon:7.5,ico:'barracks'}],
+    ['突擊兵營地',1650,0,20,0,1.0,{building:true,spawnUnit:'marine',summon:7.5,ico:'barracks'}]
+  ];
+  for (let i = 0; i < bldList.length; i++) {
+    const [nm, hp, atk, def, rng, cd, sp] = bldList[i];
+    addU({id:`bld_${i}`, name:nm, cat:'building', role:`防禦與生產建築`, cost:calcCost(hp,atk,def,rng,cd,sp), hp, atk, def, range:rng, speed:0, cd, radius:21, mass:999, ...sp, desc:`戰地建築：${nm}。`});
+  }
+})();
 
 const presets=[
  ['虎牢关','plains','武圣联军','鬼神吕布',
@@ -576,6 +1042,28 @@ const presets=[
   const waves = line('M6 39Q12 36 18 39Q24 42 30 39Q36 36 42 39',1.2);
 
   const art = {
+    // New Weapon Arsenal SVGs (20 bespoke emblems)
+    sniper: turn(38,metal('M21 3H25V27L28 31L26 42L21 43L21 31Z',.35) + line('M18 14H28M23 3V26M19 9H27M27 25L33 21M20 35H25',1.35)),
+    flamethrower: metal('M9 18H17V36H9ZM19 22H33V27H19Z',.34) + metal('M34 24Q37 16 43 18Q40 24 44 29Q37 31 34 24Z',.5) + line('M13 18V13H24V22M24 27L22 36',1.4),
+    pikeman: turn(26,metal('M24 1L27 10L24 12L21 10Z',.45) + line('M24 10V46M22 13H26M18 18L24 15L30 18',1.6)),
+    halberdier: turn(28,metal('M24 2L27 11L24 14L21 11ZM25 13Q34 11 37 21Q30 22 25 20ZM23 15L15 17L23 19Z',.38) + line('M24 11V45M22 23H26',1.5)),
+    warhammer: turn(30,metal('M13 10H35V19H13Z',.4) + metal('M35 12L42 15L35 18Z',.45) + line('M24 6V44M17 10V19M31 10V19',1.6)),
+    flail: line('M12 40L24 22M24 22Q29 14 35 16',1.7) + circle(36,16,5.5,.4) + line('M36 8V11M36 21V24M28 16H31M41 16H44M31 11L33 13M39 19L41 21',1.4),
+    samurai: turn(34,metal('M25 3Q29 17 25 31L22 31Q25 17 23 4Z',.36) + line('M18 31H29M23 31V42M21 35H26M21 39H26',1.55)),
+    modao: turn(28,metal('M23 2Q29 9 27 23L22 23L22 5Z',.42) + line('M24 23V46M19 23H29M22 26H26',1.6)),
+    monk_staff: turn(32,line('M24 4V44M21 11H27M21 37H27M20 24H28',2.2)),
+    shield_axe: circle(17,27,10,.26) + circle(17,27,3,.5) + turn(-22,axe),
+    longbow: line('M12 42Q6 24 12 6M12 42L12 6',2.0) + line('M12 24H41M35 19L41 24L35 29M16 21L12 24L16 27',1.55),
+    arquebus: turn(40,metal('M21 6H25V27L28 33L25 43L21 43L21 32Z',.34) + line('M23 6V27M25 24Q32 23 31 17M17 27H26',1.4)),
+    slinger: line('M12 36Q22 24 30 14Q35 10 38 14Q40 19 34 22L18 38',1.6) + circle(34,16,3.5,.5),
+    blowgun: turn(36,line('M23 5V43M25 5V43',1.35) + metal('M24 2L27 8H21Z',.5) + line('M20 38H28',1.5)),
+    shuriken: metal('M24 6L28 19L42 24L28 29L24 42L20 29L6 24L20 19Z',.38) + circle(24,24,3.5,.15),
+    chukonu: turn(34,metal('M20 12H28V31H20Z',.32) + line('M7 21Q15 13 24 16Q33 13 41 21M7 21L24 29L41 21M24 6V38M20 16H28M20 22H28',1.4)),
+    grenadier: circle(23,29,10,.36) + line('M23 19Q25 11 32 10',1.6) + metal('M32 10L36 5L35 11L40 12L34 14L35 19L31 14Z',.55),
+    dragoon: horse + line('M6 19L24 12M11 17L13 21',1.8),
+    camel: metal('M10 38L12 24Q17 15 22 20Q27 12 32 19L37 16L40 20L36 24L35 38H30L30 29H18L16 38Z',.34) + line('M10 14L38 10',1.4),
+    chariot: metal('M12 22H32L35 31H10Z',.32) + wheel(22,33,7.5) + line('M32 25L44 21M10 33L3 36M29 33L37 36',1.6),
+
     // Modern & Buildings
     marine: metal('M8 25L30 22L38 24L38 28L28 29L25 36L20 36L21 29L8 30Z',.32) + line('M18 22V17H26V22M38 26H43M13 30L10 38',1.5),
     tank: metal('M8 26H40L43 32L39 37H9L5 32Z',.38) + metal('M15 17H31L33 26H13Z',.3) + line('M31 20H45M11 33H37M14 35A2 2 0 1 0 14 31M24 35A2 2 0 1 0 24 31M34 35A2 2 0 1 0 34 31',1.5),
@@ -590,6 +1078,7 @@ const presets=[
     med_tent: metal('M7 39L24 12L41 39Z',.26) + line('M24 23V35M18 29H30M7 39H41',2.0),
 
     // Naval ships
+    transport: metal('M6 27H40L44 33L39 37H9L5 32Z',.38) + metal('M10 19H26V27H10Z',.3) + line('M39 27L45 21M14 23H22M28 24H37M10 33H38',1.5) + waves,
     galley: metal('M6 29L40 29L44 33L37 36L11 36L7 32Z',.35) + metal('M17 12Q25 14 31 13L29 26Q22 25 16 26Z',.25) + line('M23 8V29M13 33L10 38M19 33L16 38M25 33L22 38M31 33L28 38',1.4) + waves,
     fireship: metal('M8 30L39 30L35 37L12 37Z',.35) + metal('M19 29Q14 20 21 12Q21 17 25 15Q28 9 27 4Q36 15 30 25Q34 22 34 29Z',.45) + line('M23 26Q24 19 28 16',1.2) + waves,
     tower_ship: metal('M7 30L41 30L37 37L11 37Z',.32) + metal('M14 22H34V30H14ZM17 14H31V22H17Z',.26) + line('M12 22L36 22M15 14L33 14M20 9L28 9L24 6ZM24 6V14M19 26H21M27 26H29',1.35) + waves,
@@ -633,7 +1122,7 @@ const presets=[
     gen_arthur: sword + metal('M8 14L13 18L16 11L19 17L16 22L11 21ZM40 14L35 18L32 11L29 17L32 22L37 21Z') + line('M12 24L17 25M31 25L36 24M9 31L7 32M8 10L6 8M39 10L41 8M12 39L9 42M36 39L39 42',1.15),
     skeleton: metal('M9 20Q9 8 23 7Q39 7 39 20Q38 27 31 29L30 36L27 39H19L16 36L16 30Q10 27 9 20Z') + circle(17,21,3.5,.55) + circle(30,21,3.5,.55) + line('M21 28L24 24L26 28M20 33V37M24 33V37M28 33V37')
   };
-  window.insignia = id => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (art[id] || sword) + '</svg>';
+  window.insignia = id => { const key = (typeof defs!=='undefined' && defs[id] && defs[id].ico) ? defs[id].ico : id; return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (art[key] || art[id] || sword) + '</svg>'; };
 })();
 </script>
 
@@ -854,7 +1343,17 @@ const presets=[
     if (map.strait) horizontalStrait(c, map.strait, W, p, rand);
     for (const o of map.obstacles || []) {
       const {x, y, r} = o;
-      if (o.type === "island") {
+      if (o.type === "water") {
+        c.save(); const pts = [];
+        for (let i = 0; i <= 72; i++) {
+          const a = i * TAU / 72, sh = 1 + 0.05 * Math.cos(a * 4 + x * 0.01) + 0.03 * Math.sin(a * 7 + y * 0.01);
+          pts.push([x + r * sh * Math.cos(a), y + r * sh * Math.sin(a)]);
+        }
+        c.fillStyle = "#9ab6ae"; path(c, pts, true, true);
+        c.strokeStyle = "#5b7770"; c.lineWidth = 2.2; path(c, pts, false, true);
+        c.clip(); waterRipples(c, x - r, y - r, r * 2, r * 2, rand);
+        c.restore();
+      } else if (o.type === "island") {
         // Nautical archipelago island with shoal ring + lush inland
         c.save();
         const shoal = [], land = [];
@@ -930,68 +1429,77 @@ const presets=[
     }
   }
 
-  function getMapSheet(map, W, H) {
+  const baseSheetCache = new Map();
+  function getMapSheet(map, W, H, forceFresh = false) {
     const key = map.id + '_' + W + 'x' + H;
-    if (mapCache.has(key)) return mapCache.get(key);
+    if (!forceFresh && !map.isCustom && mapCache.has(key)) return mapCache.get(key);
     const maxW = 2560;
     const rs = W > maxW ? maxW / W : 1;
     const off = document.createElement('canvas');
     off.width = Math.round(W * rs); off.height = Math.round(H * rs);
     const c = off.getContext('2d');
-    c.scale(rs, rs);
-    const p = inks[map.id] || inks.plains;
+    const biomeId = map.biome || map.id;
+    const p = inks[biomeId] || inks.plains;
     let seed = 2847;
-    for (const ch of map.id || "plains") seed = (Math.imul(seed, 31) + ch.charCodeAt(0)) >>> 0;
+    for (const ch of biomeId || "plains") seed = (Math.imul(seed, 31) + ch.charCodeAt(0)) >>> 0;
     const rand = dice(seed);
 
+    // Cache heavy base parchment layer by biome+size so live custom terrain editing is instantaneous!
+    const bKey = biomeId + '_' + W + 'x' + H + (map.isCustom ? '_c' : '');
+    let baseOff = baseSheetCache.get(bKey);
+    if (!baseOff) {
+      baseOff = document.createElement('canvas');
+      baseOff.width = off.width; baseOff.height = off.height;
+      const bc = baseOff.getContext('2d');
+      bc.scale(rs, rs);
+      bc.beginPath(); bc.rect(0, 0, W, H); bc.clip();
+      bc.fillStyle = p[0]; bc.fillRect(0, 0, W, H);
+      wash(bc, W * 0.1, H * 0.15, W * 0.46, H * 0.62, p[2], 0.65);
+      wash(bc, W * 0.82, H * 0.6, W * 0.47, H * 0.65, p[1], 0.9);
+      for (let i = 0; i < Math.round(32 * (W / 2000)); i++) {
+        wash(bc, rand() * W, rand() * H, 90 + rand() * 260, 60 + rand() * 220, rand() > 0.42 ? p[1] : "#fff0ce", 0.17 + rand() * 0.18);
+      }
+      bc.fillStyle = p[3]; bc.globalAlpha = 0.14;
+      const flecks = Math.min(36000, Math.round(18000 * (W * H) / (2000 * 1200)));
+      for (let i = 0; i < flecks; i++) bc.fillRect(rand() * W, rand() * H, 0.7 + rand() * 1.4, 0.65 + rand() * 0.95);
+      bc.globalAlpha = 0.18; bc.strokeStyle = p[3]; bc.lineWidth = 1.35; bc.beginPath();
+      for (let x = 0; x <= W; x += 125) { bc.moveTo(x, 0); bc.lineTo(x, H); }
+      for (let y = 0; y <= H; y += 125) { bc.moveTo(0, y); bc.lineTo(W, y); }
+      bc.stroke(); bc.globalAlpha = 1;
+      if (map.isSea || biomeId === 'sea') {
+        waterRipples(bc, 0, 0, W, H, rand);
+      } else {
+        contours(bc, W, H, p[3], (seed % 379) / 73);
+        bc.strokeStyle = p[3]; bc.globalAlpha = 0.37; bc.lineWidth = 1.2;
+        const tufts = Math.min(1800, Math.round(900 * (W * H) / (2000 * 1200)));
+        for (let i = 0; i < tufts; i++) {
+          const x = rand() * W, y = rand() * H;
+          bc.beginPath(); bc.moveTo(x - 3, y - 1); bc.lineTo(x, y); bc.lineTo(x - 1, y - 4 - rand() * 2);
+          bc.moveTo(x + 2, y); bc.lineTo(x + 5, y - 2); bc.stroke();
+        }
+        bc.globalAlpha = 1;
+        if (!map.isCustom && biomeId !== "colosseum" && biomeId !== "redcliffs") {
+          road(bc, [[-20, H*0.72], [W*0.1, H*0.69, W*0.15, H*0.56, W*0.24, H*0.58], [W*0.36, H*0.61, W*0.4, H*0.43, W*0.5, H*0.43],
+            [W*0.6, H*0.43, W*0.68, H*0.27, W*0.78, H*0.31], [W*0.86, H*0.35, W*0.92, H*0.2, W+20, H*0.23]], p[3]);
+          const sand = biomeId === "desert" ? 0.72 : 1;
+          ridge(bc, 2, H * 0.21, 380 * (W/2000), -0.58, 1.15 * sand, p, rand);
+          ridge(bc, W * 0.72, 65, 450 * (W/2000), 0.24, 1.12 * sand, p, rand);
+          ridge(bc, 2, H * 0.89, 440 * (W/2000), 0.24, 1.12 * sand, p, rand);
+          ridge(bc, W * 0.84, H * 0.78, 340 * (W/2000), -0.64, sand, p, rand);
+        } else if (biomeId === "colosseum") {
+          bc.save(); bc.strokeStyle = p[3]; bc.globalAlpha = 0.25; bc.lineWidth = 3;
+          bc.beginPath(); bc.ellipse(W/2, H/2, W*0.36, H*0.36, 0, 0, TAU); bc.stroke();
+          bc.lineWidth = 1.2; bc.beginPath(); bc.ellipse(W/2, H/2, W*0.34, H*0.33, 0, 0, TAU); bc.stroke();
+          bc.restore();
+        }
+      }
+      baseSheetCache.set(bKey, baseOff);
+    }
+
+    c.drawImage(baseOff, 0, 0);
     c.save();
-    c.beginPath(); c.rect(0, 0, W, H); c.clip();
-    c.fillStyle = p[0]; c.fillRect(0, 0, W, H);
-    wash(c, W * 0.1, H * 0.15, W * 0.46, H * 0.62, p[2], 0.65);
-    wash(c, W * 0.82, H * 0.6, W * 0.47, H * 0.65, p[1], 0.9);
-    for (let i = 0; i < Math.round(32 * (W / 2000)); i++) {
-      wash(c, rand() * W, rand() * H, 90 + rand() * 260, 60 + rand() * 220, rand() > 0.42 ? p[1] : "#fff0ce", 0.17 + rand() * 0.18);
-    }
-    // Paper grain scales with real area (capped for crisp fast paint)
-    c.fillStyle = p[3]; c.globalAlpha = 0.14;
-    const flecks = Math.min(36000, Math.round(18000 * (W * H) / (2000 * 1200)));
-    for (let i = 0; i < flecks; i++) c.fillRect(rand() * W, rand() * H, 0.7 + rand() * 1.4, 0.65 + rand() * 0.95);
-
-    // Fixed physical 125px survey grid -> Larger maps visibly have MORE grid cells!
-    c.globalAlpha = 0.18; c.strokeStyle = p[3]; c.lineWidth = 1.35; c.beginPath();
-    for (let x = 0; x <= W; x += 125) { c.moveTo(x, 0); c.lineTo(x, H); }
-    for (let y = 0; y <= H; y += 125) { c.moveTo(0, y); c.lineTo(W, y); }
-    c.stroke(); c.globalAlpha = 1;
-
-    if (map.isSea) {
-      waterRipples(c, 0, 0, W, H, rand);
-    } else {
-      contours(c, W, H, p[3], (seed % 379) / 73);
-      c.strokeStyle = p[3]; c.globalAlpha = 0.37; c.lineWidth = 1.2;
-      const tufts = Math.min(1800, Math.round(900 * (W * H) / (2000 * 1200)));
-      for (let i = 0; i < tufts; i++) {
-        const x = rand() * W, y = rand() * H;
-        c.beginPath(); c.moveTo(x - 3, y - 1); c.lineTo(x, y); c.lineTo(x - 1, y - 4 - rand() * 2);
-        c.moveTo(x + 2, y); c.lineTo(x + 5, y - 2); c.stroke();
-      }
-      c.globalAlpha = 1;
-      if (map.id !== "colosseum" && map.id !== "redcliffs") {
-        road(c, [[-20, H*0.72], [W*0.1, H*0.69, W*0.15, H*0.56, W*0.24, H*0.58], [W*0.36, H*0.61, W*0.4, H*0.43, W*0.5, H*0.43],
-          [W*0.6, H*0.43, W*0.68, H*0.27, W*0.78, H*0.31], [W*0.86, H*0.35, W*0.92, H*0.2, W+20, H*0.23]], p[3]);
-        const sand = map.id === "desert" ? 0.72 : 1;
-        ridge(c, 2, H * 0.21, 380 * (W/2000), -0.58, 1.15 * sand, p, rand);
-        ridge(c, W * 0.72, 65, 450 * (W/2000), 0.24, 1.12 * sand, p, rand);
-        ridge(c, 2, H * 0.89, 440 * (W/2000), 0.24, 1.12 * sand, p, rand);
-        ridge(c, W * 0.84, H * 0.78, 340 * (W/2000), -0.64, sand, p, rand);
-      } else if (map.id === "colosseum") {
-        c.save(); c.strokeStyle = p[3]; c.globalAlpha = 0.25; c.lineWidth = 3;
-        c.beginPath(); c.ellipse(W/2, H/2, W*0.36, H*0.36, 0, 0, TAU); c.stroke();
-        c.lineWidth = 1.2; c.beginPath(); c.ellipse(W/2, H/2, W*0.34, H*0.33, 0, 0, TAU); c.stroke();
-        c.restore();
-      }
-    }
-
-    terrain(c, map, W, H, p, rand);
+    c.scale(rs, rs);
+    terrain(c, map, W, H, p, dice(seed + 99));
 
     // Map-specific classical typography anchored cleanly to current W, H
     const cx = W / 2, cy = H / 2;
@@ -1023,7 +1531,7 @@ const presets=[
     compass(c, W - 135, H - 145, p[3], map.isSea, W, H);
     c.restore();
 
-    mapCache.set(key, off);
+    if (!map.isCustom) mapCache.set(key, off);
     return off;
   }
   window.getMapSheet = getMapSheet;
@@ -1036,7 +1544,7 @@ const clamp=(v,l,h)=>Math.max(l,Math.min(h,v));
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 const game={
   phase:'setup', paused:false, team:'blue', unit:'gen_guanyu', form:'single',
-  erase:false, panMode:false, cat:'all', sizeId:'medium', baseMap:MAPS[0], map:buildMapForSize(MAPS[0],1),
+  erase:false, panMode:false, brushMode:false, mapEdit:false, edBrush:'forest', edSize:95, cat:'all', sizeId:'medium', baseMap:MAPS[0], map:buildMapForSize(MAPS[0],1),
   units:[], snapshot:[], shots:[], effects:[], particles:[], floats:[], scars:[], order:'charge',
   controlled:null, keys:{},
   diplomacy:{
@@ -1115,12 +1623,12 @@ function floatText(x,y,text,color){
 // Water / Land domain checks for Naval & Amphibious gameplay
 function isWaterAt(x, y, map = game.map){
   if(map.isSea){
-    // Sea everywhere except on islands
     for(const o of map.obstacles) if(o.type==='island' && Math.hypot(x-o.x, y-o.y) < o.r + 6) return false;
     return true;
   }
-  if(map.strait) return y >= map.strait.y && y <= map.strait.y + map.strait.h;
-  if(map.river) return x >= map.river.x && x <= map.river.x + map.river.w;
+  if(map.strait && y >= map.strait.y && y <= map.strait.y + map.strait.h) return true;
+  if(map.river && x >= map.river.x && x <= map.river.x + map.river.w) return true;
+  for(const o of map.obstacles) if(o.type==='water' && Math.hypot(x-o.x, y-o.y) < o.r) return true;
   return false;
 }
 
@@ -1154,9 +1662,11 @@ function blocked(x, y, r, isNaval = false, isAir = false){
     if(m.obstacles.some(o => (terrainSolid(o) || o.type==='island') && Math.hypot(x-o.x, y-o.y) < o.r + r)) return true;
     return false;
   }else{
-    // Land units cannot be placed in open deep sea or Yangtze main channel (except bridges on river map)
-    if(m.isSea && isWaterAt(x, y, m)) return true;
-    if(m.strait && y + r*0.4 > m.strait.y && y - r*0.4 < m.strait.y + m.strait.h) return true;
+    if(game.phase === 'setup'){
+      if(m.isSea && isWaterAt(x, y, m)) return true;
+      if(m.strait && y + r*0.4 > m.strait.y && y - r*0.4 < m.strait.y + m.strait.h) return true;
+      if(m.obstacles.some(o => o.type==='water' && Math.hypot(x-o.x, y-o.y) < o.r - 4)) return true;
+    }
     return m.obstacles.some(o => terrainSolid(o) && Math.hypot(x-o.x, y-o.y) < o.r + r) ||
       (m.walls||[]).some(w => x+r>w.x && x-r<w.x+w.w && y+r>w.y && y-r<w.y+w.h);
   }
@@ -1167,7 +1677,7 @@ function spawn(id,team,x,y){
   if(!d||game.units.filter(u=>u.alive&&u.team===team&&(id==='skeleton'||u.d.id!=='skeleton')).length>=max)return;
   const u={
     uid:++uid, d, team, x:clamp(x,24,WORLD_W-24), y:clamp(y,24,WORLD_H-24), alive:true, hp:d.hp, stuckTime:0, lastX:x, lastY:y, flankSign:(uid%2?1:-1),
-    cd:Math.random()*.3, skill:(d.ult||0)*.45, summon:d.id==='carrier'?1.2:(d.summon||0)*.5, hangar:d.hangarCap||0, ammo:0, homeCarrier:null, rtb:false,
+    cd:Math.random()*.3, skill:(d.ult||0)*.45, summon:d.id==='carrier'?1.2:(d.summon||0)*.5, hangar:d.hangarCap||0, ammo:0, homeCarrier:null, rtb:false, embarked:false,
     burn:0, burnDps:0, burnOwner:null, slow:0, haste:0, shield:0,
     vx:0, vy:0, charge:0, kills:0, damage:0, flash:0, lunge:0,
     face:team==='blue'?0:Math.PI
@@ -1202,20 +1712,32 @@ function ground(u){
     return {speed:1.05, hill:false};
   }
 
-  // Land unit terrain constraints
-  if(m.strait && u.y > m.strait.y - r && u.y < m.strait.y + m.strait.h + r){
-    const mid = m.strait.y + m.strait.h / 2;
-    u.y = u.y < mid ? m.strait.y - r : m.strait.y + m.strait.h + r;
-  }
-  if(m.isSea){
-    // Keep land unit on its nearest island
-    let best=null, minD=Infinity;
-    for(const o of m.obstacles)if(o.type==='island'){const d=Math.hypot(u.x-o.x,u.y-o.y);if(d<minD){minD=d;best=o}}
-    if(best && minD > best.r - r){
-      const a=Math.atan2(u.y-best.y,u.x-best.x); u.x=best.x+Math.cos(a)*(best.r-r); u.y=best.y+Math.sin(a)*(best.r-r);
+  const onBridge = m.river && m.river.bridges.some(b => u.y > b.y && u.y < b.y + b.h);
+  const inWater = !onBridge && isWaterAt(u.x, u.y, m);
+  if(game.phase === 'setup' || u.d.building){
+    u.embarked = false;
+    if(m.strait && u.y > m.strait.y - r && u.y < m.strait.y + m.strait.h + r){
+      const mid = m.strait.y + m.strait.h / 2;
+      u.y = u.y < mid ? m.strait.y - r : m.strait.y + m.strait.h + r;
+    }
+    if(m.isSea){
+      let best=null, minD=Infinity;
+      for(const o of m.obstacles)if(o.type==='island'){const d=Math.hypot(u.x-o.x,u.y-o.y);if(d<minD){minD=d;best=o}}
+      if(best && minD > best.r - r){
+        const a=Math.atan2(u.y-best.y,u.x-best.x); u.x=best.x+Math.cos(a)*(best.r-r); u.y=best.y+Math.sin(a)*(best.r-r);
+      }
+    }
+  }else{
+    if(inWater){
+      if(!u.embarked) spark(u.x, u.y, '#e8f1ee', 4, 35, 2.4, .35);
+      u.embarked = true;
+      speed *= 0.68;
+      if(Math.random() < 0.09) spark(u.x - Math.cos(u.face)*r, u.y - Math.sin(u.face)*r, '#e8f1ee', 1, 12, 2.0, .35);
+    }else{
+      if(u.embarked) spark(u.x, u.y, '#e8f1ee', 5, 40, 2.4, .35);
+      u.embarked = false;
     }
   }
-  if(m.river&&u.x>m.river.x&&u.x<m.river.x+m.river.w&&!m.river.bridges.some(b=>u.y>b.y&&u.y<b.y+b.h))speed*=.5;
   for(const o of m.obstacles){
     const dx=u.x-o.x, dy=u.y-o.y, d=Math.hypot(dx,dy);
     if(terrainSolid(o)&&d<r+o.r){
@@ -1324,9 +1846,10 @@ function special(u){
   for(const e of enemies.slice(0,30)){const n=enemies.filter(v=>distance(e,v)<130).length;if(n>best){best=n;target=e}}
   u.skill=u.d.ult; u.lunge=.25; game.shake=Math.max(game.shake,8);
   tone('ult'); toast(u.d.name+' · '+u.d.role);
-  const a=Math.atan2(target.y-u.y,target.x-u.x), id=u.d.id;
-  switch(id){
-  case 'gen_zhouyu':
+  const a=Math.atan2(target.y-u.y,target.x-u.x);
+  const ut=u.d.ultType||({gen_zhouyu:'fireships',gen_nelson:'navalbarrage',gen_guanyu:'slash',gen_lubu:'leap',gen_zhuge:'firestorm',gen_caesar:'rally',gen_joan:'holy',gen_napoleon:'barrage',gen_genghis:'arrowrain',gen_arthur:'beam'}[u.d.id]||'leap');
+  switch(ut){
+  case 'fireships':
     // 召唤4艘烈焰火船直扑敌阵！
     ring(u.x,u.y,170,'#d46a2c',.55);
     for(let k=0;k<4;k++){
@@ -1335,27 +1858,27 @@ function special(u){
       if(fs){ground(fs); spark(fs.x,fs.y,'#e07530',6,75,3.2,.45);}
     }
     break;
-  case 'gen_nelson':
+  case 'navalbarrage':
     // 特拉法尔加 12发舰炮覆盖齐射
     for(let k=0;k<12;k++)launch(u,clamp(target.x+(Math.random()-.5)*260,40,WORLD_W-40),clamp(target.y+(Math.random()-.5)*220,40,WORLD_H-40),
       {type:'cannonball',sx:u.x,sy:u.y+(k%3-1)*18,dur:.65+Math.random()*.25,t:-k*.08,dmg:125,aoe:55,pierce:2,ap:.8,kb:55});
     break;
-  case 'gen_guanyu':
+  case 'slash':
     game.effects.push({type:'arc',x:u.x,y:u.y,r:235,a,color:'#2f7d60',life:.65,t:.65});
     spark(u.x+Math.cos(a)*60,u.y+Math.sin(a)*60,'#3c9575',14,130,3.8,.55);
     for(const e of enemies){const da=Math.atan2(e.y-u.y,e.x-u.x)-a;if(distance(u,e)<235&&Math.cos(da)>Math.cos(.85))hit(u,e,240,.7,75)}
     break;
-  case 'gen_lubu':
+  case 'leap':
     if(distance(u,target)<340){u.x=clamp(target.x+10,30,WORLD_W-30);u.y=clamp(target.y,30,WORLD_H-30);ground(u)}
     ring(u.x,u.y,210,'#b03832',.55); spark(u.x,u.y,'#c44943',18,150,4,.55);
     for(const e of enemies)if(distance(u,e)<210){hit(u,e,270,.65,95);e.slow=2.5}
     break;
-  case 'gen_zhuge':
+  case 'firestorm':
     game.effects.push({type:'fire',x:target.x,y:target.y,r:175,owner:u,color:'#b15b28',life:4.5,t:4.5,tick:0});
     spark(target.x,target.y,'#d97834',16,120,4,.65);
     break;
-  case 'gen_caesar': case 'gen_joan':{
-    const joan=id==='gen_joan';
+  case 'rally': case 'holy':{
+    const joan=ut==='holy';
     ring(u.x,u.y,265,'#c9a959',.6);
     for(const v of allies)if(distance(u,v)<(joan?260:270)){
       v.hp=Math.min(v.d.hp,v.hp+v.d.hp*(joan?.35:.28)+(joan?80:50)); v.shield=5;
@@ -1364,12 +1887,12 @@ function special(u){
     }
     if(joan)for(const e of enemies)if(distance(u,e)<180)hit(u,e,110,.5,90);
     break;}
-  case 'gen_napoleon': case 'gen_genghis':{
-    const gun=id==='gen_napoleon';
+  case 'barrage': case 'arrowrain':{
+    const gun=ut==='barrage';
     for(let k=0;k<(gun?10:24);k++)launch(u,clamp(target.x+(Math.random()-.5)*250,40,WORLD_W-40),clamp(target.y+(Math.random()-.5)*210,40,WORLD_H-40),
       {type:gun?'boulder':'arrow',sx:gun?(u.team==='blue'?40:WORLD_W-40):u.x,dur:gun?.9:.65,t:-k*(gun?.12:.03),dmg:gun?130:68,aoe:gun?75:30,ap:gun?.8:.5,kb:gun?65:0,slow:!gun});
     break;}
-  case 'gen_arthur':
+  case 'beam':
     game.effects.push({type:'beam',x:u.x,y:u.y,r:950,a,color:'#e3c066',life:.75,t:.75});
     for(const e of enemies){
       const dx=e.x-u.x, dy=e.y-u.y, d=clamp(dx*Math.cos(a)+dy*Math.sin(a),0,950);
@@ -1485,8 +2008,8 @@ function simulate(dt){
       const spId = d.spawnUnit || 'skeleton';
       const spDef = defs[spId];
       if(d.hangarCap){
-        // Finite Carrier Air Wing: only launch jets actually in the hangar!
-        const launchCnt = Math.min(2, u.hangar);
+        const batch = spId==='jet' ? 2 : 3;
+        const launchCnt = Math.min(batch, u.hangar);
         if(launchCnt > 0){
           for(let k=0;k<launchCnt;k++){
             const lateral = (k ? 1 : -1) * 15;
@@ -1495,14 +2018,19 @@ function simulate(dt){
             const child = spawn(spId,u.team,sx,sy);
             if(child){
               u.hangar--;
-              child.homeCarrier = u;
-              child.ammo = 4;
-              child.rtb = false;
-              child.face = u.face;
-              child.vx = Math.cos(u.face) * 165;
-              child.vy = Math.sin(u.face) * 165;
-              spark(u.x, u.y, '#f1f5f9', 6, 45, 3.2, .45);
-              spark(sx, sy, '#f59e0b', 5, 80, 2.8, .35);
+              if(spId==='jet'){
+                child.homeCarrier = u;
+                child.ammo = 4;
+                child.rtb = false;
+                child.face = u.face;
+                child.vx = Math.cos(u.face) * 165;
+                child.vy = Math.sin(u.face) * 165;
+                spark(u.x, u.y, '#f1f5f9', 6, 45, 3.2, .45);
+                spark(sx, sy, '#f59e0b', 5, 80, 2.8, .35);
+              }else{
+                child.embarked = isWaterAt(sx, sy);
+                spark(sx, sy, '#e8f1ee', 5, 45, 2.6, .4);
+              }
             }
           }
           ring(u.x+Math.cos(u.face)*d.radius, u.y+Math.sin(u.face)*d.radius, 34, '#e2e8f0', .3);
@@ -1598,7 +2126,7 @@ function simulate(dt){
       if(!v.alive)continue;
       let score=distance(u,v);
       if(!d.proj && v.d.air) continue;
-      if(!d.proj && !!d.naval !== !!v.d.naval) score += 1600;
+      if(!d.proj && !!d.naval !== !!v.d.naval) score += (d.naval ? 1400 : 260);
       if(d.back&&(['ranged','siege'].includes(v.d.cat)||v.d.healer))score*=.55;
       if(blueOrder==='snipe' && v.d.ult && (d.proj || d.cav || d.back)) score *= 0.32;
       if(score<min){min=score;target=v}
@@ -1721,6 +2249,7 @@ const icons={
  scroll:'<path d="M6 5h13a2 2 0 0 1 2 2v2h-4V7a2 2 0 0 1 2-2M6 5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11V9M4 16h10v2a2 2 0 0 0 3 2"/>',
  terrain:'<path d="m1 18 7-11 4 7 3-5 8 10H2m3-5 3-2 3 2m2 0 2-1 2 1"/><circle cx="16" cy="5" r="2"/>',
  fit:'<path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5"/><circle cx="12" cy="12" r="2"/>',
+ brush:'<path d="M18.4 2.6a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4Z"/><path d="M4 20h16"/>',
  hand:'<path d="M18 11V6a2 2 0 0 0-4 0v4m0-5V4a2 2 0 0 0-4 0v6m0-4a2 2 0 0 0-4 0v8l-1.6-1.6a2 2 0 0 0-2.8 2.8l5 5A6 6 0 0 0 11 22h2a6 6 0 0 0 6-6v-5a2 2 0 0 0-1-1.7"/>',
  heart:'<path d="M12 20C8 17 1 12 3 7c2-5 7-4 9-1 3-4 8-4 10 1 1 5-6 10-10 13Z"/>',
  mouse:'<rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 3v6"/>',
@@ -1825,25 +2354,50 @@ function place(w,erase){
   stats();
 }
 
-function list(){
-  const display=game.cat==='all'?UNITS:UNITS.filter(d=>d.cat===game.cat);
-  $('roster-count').textContent=display.length+' 种';
-  $('cards').replaceChildren(...display.map(d=>{
-    const b=document.createElement('button');
-    b.className='card'+(d.ult?' gen':'')+(d.naval?' naval':'')+(d.cat==='modern'?' modern':'')+(d.building?' building':'')+(d.id===game.unit&&!game.erase&&!game.panMode?' on':'');
-    b.innerHTML='<span class="card-art">'+insignia(d.id)+'</span><span class="cost"><i class="coin"></i>'+d.cost+'</span><b>'+d.name+'</b><small>'+d.role+'</small>';
-    b.title=d.name+' · '+d.desc; b.onclick=()=>selectUnit(d.id);
-    b.setAttribute('aria-pressed',String(d.id===game.unit&&!game.erase));
-    return b;
-  }));
+let rosterList=[], rosterRendered=0;
+function makeCard(d){
+  const b=document.createElement('button');
+  b.className='card'+(d.ult?' gen':'')+(d.naval?' naval':'')+(d.cat==='modern'?' modern':'')+(d.building?' building':'')+(d.id===game.unit&&!game.erase&&!game.panMode?' on':'');
+  b.innerHTML='<span class="card-art">'+insignia(d.id)+'</span><span class="cost"><i class="coin"></i>'+d.cost+'</span><b>'+d.name+'</b><small>'+d.role+'</small>';
+  b.title=d.name+' · '+d.desc; b.onclick=()=>selectUnit(d.id);
+  b.setAttribute('aria-pressed',String(d.id===game.unit&&!game.erase));
+  return b;
 }
+function appendMoreCards(batch=60){
+  const slice=rosterList.slice(rosterRendered, rosterRendered+batch);
+  if(!slice.length)return;
+  const frag=document.createDocumentFragment();
+  for(const d of slice)frag.append(makeCard(d));
+  $('cards').append(frag);
+  rosterRendered+=slice.length;
+}
+function list(){
+  const q=($('unitSearch')?$('unitSearch').value.trim().toLowerCase():'');
+  let display=game.cat==='all'?UNITS:UNITS.filter(d=>d.cat===game.cat);
+  if(q)display=display.filter(d=>d.name.toLowerCase().includes(q)||d.role.toLowerCase().includes(q)||d.desc.toLowerCase().includes(q));
+  rosterList=display; rosterRendered=0;
+  $('roster-count').textContent=display.length+' 種';
+  $('cards').innerHTML='';
+  appendMoreCards(80);
+}
+$('cards').addEventListener('scroll',()=>{
+  const el=$('cards');
+  if(el.scrollTop+el.clientHeight>=el.scrollHeight-120)appendMoreCards(60);
+});
+$('unitSearch').oninput=()=>{list(); $('cards').scrollTop=0;};
 function setPanMode(on){
   game.panMode=on;
-  if(on){game.erase=false; $('erase').classList.remove('on');}
+  if(on){game.erase=false; $('erase').classList.remove('on'); game.brushMode=false; $('brushBtn').classList.remove('on');}
   $('panBtn').classList.toggle('on', on);
   $('panSide').classList.toggle('on', on);
   canvas.style.cursor = on ? 'grab' : (game.phase==='setup' ? 'crosshair' : 'grab');
   list();
+}
+function setBrushMode(on){
+  game.brushMode=on;
+  if(on){game.erase=false; $('erase').classList.remove('on'); if(game.panMode)setPanMode(false);}
+  $('brushBtn').classList.toggle('on', on);
+  canvas.style.cursor = game.phase==='setup' ? 'crosshair' : 'grab';
 }
 function selectUnit(id){
   game.unit=id; game.erase=false; $('erase').classList.remove('on');
@@ -1913,7 +2467,7 @@ function atmosphere(){
 }
 
 function drawWarship(u, r, color, light, general){
-  const d = u.d, id = d.id, t = performance.now() * 0.006;
+  const d = u.d, id = d.renderAs || d.id, t = performance.now() * 0.006;
   const deckWood = u.flash > 0 ? '#f7ecc8' : '#b79769';
   const darkWood = '#4a3a28';
   const sailCream = '#f5ecd5';
@@ -1981,7 +2535,17 @@ function drawWarship(u, r, color, light, general){
   };
 
   // 2. Class-Specific Hull & Superstructure
-  if (id === 'galley') {
+  if (id === 'transport') {
+    ctx.beginPath();
+    ctx.moveTo(r * 1.38, -r * 0.56); ctx.lineTo(r * 1.38, r * 0.56);
+    ctx.lineTo(-r * 1.25, r * 0.62); ctx.lineTo(-r * 1.4, r * 0.35);
+    ctx.lineTo(-r * 1.4, -r * 0.35); ctx.lineTo(-r * 1.25, -r * 0.62); ctx.closePath();
+    ctx.fillStyle = u.flash > 0 ? '#f3e5b8' : color; ctx.fill();
+    ctx.strokeStyle = '#333630'; ctx.lineWidth = 2.2; ctx.stroke();
+    ctx.fillStyle = '#5c584c'; ctx.fillRect(-r * 0.85, -r * 0.4, r * 1.85, r * 0.8);
+    ctx.fillStyle = '#9e9784'; ctx.fillRect(r * 1.15, -r * 0.45, r * 0.28, r * 0.9);
+    ctx.fillStyle = darkWood; ctx.fillRect(-r * 1.18, -r * 0.36, r * 0.35, r * 0.72);
+  } else if (id === 'galley') {
     // Animated rowing oars (5 pairs)
     const oarSweep = game.phase === 'battle' ? Math.sin(t * 2.2 + u.uid) * 0.35 : 0;
     ctx.strokeStyle = '#6c563a'; ctx.lineWidth = 1.3;
@@ -2156,10 +2720,21 @@ function unitToken(u){
   }
   const r=d.radius*(general?1.15:1.13);
 
-  // Detailed Top-Down Warship Renderer (7 bespoke historical ship silhouettes)
+  // Detailed Top-Down Warship Renderer + Embarked Landing Craft for Sea-Crossing Land Units!
   if(d.naval){
     drawWarship(u, r, color, light, general);
   }else{
+    if(u.embarked){
+      ctx.save(); ctx.rotate(u.face);
+      ctx.strokeStyle='rgba(238,246,242,0.5)'; ctx.lineWidth=1.4;
+      ctx.beginPath(); ctx.moveTo(r*1.55,0); ctx.lineTo(-r*1.2,-r*1.05); ctx.moveTo(r*1.55,0); ctx.lineTo(-r*1.2,r*1.05); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(r*1.5,0); ctx.quadraticCurveTo(r*.75,-r*1.05,-r*1.25,-r*.78);
+      ctx.lineTo(-r*1.35,r*.78); ctx.quadraticCurveTo(r*.75,r*1.05,r*1.5,0); ctx.closePath();
+      ctx.fillStyle='#967852'; ctx.fill();
+      ctx.strokeStyle='#4a3925'; ctx.lineWidth=1.8; ctx.stroke();
+      ctx.restore();
+    }
     ctx.fillStyle='#483c3348'; ctx.beginPath(); ctx.ellipse(2,r*.75,r*1.05,r*.52,0,0,7); ctx.fill();
   }
 
@@ -2189,14 +2764,15 @@ function unitToken(u){
   }
 
   if(!d.naval){
-    if(d.id==='tank' || d.id==='mlrs'){
+    const rid = d.renderAs || d.id;
+    if(rid==='tank' || rid==='mlrs'){
       ctx.save(); ctx.rotate(u.face);
       const recoil=u.lunge>0?-u.lunge*14:0;
       ctx.fillStyle='#2a2d28';
       ctx.fillRect(-r*.95,-r*.78,r*1.9,r*.32); ctx.fillRect(-r*.95,r*.46,r*1.9,r*.32);
       ctx.fillStyle=u.flash>0?'#f3e5b8':color; ctx.strokeStyle='#2c2f2a'; ctx.lineWidth=1.8;
       ctx.fillRect(-r*.82,-r*.58,r*1.64,r*1.16); ctx.strokeRect(-r*.82,-r*.58,r*1.64,r*1.16);
-      if(d.id==='tank'){
+      if(rid==='tank'){
         ctx.fillStyle='#464d47'; ctx.strokeStyle='#d6cfb9'; ctx.lineWidth=1.2;
         ctx.beginPath(); ctx.arc(recoil*0.3,0,r*.44,0,7); ctx.fill(); ctx.stroke();
         ctx.strokeStyle='#232624'; ctx.lineWidth=3.8;
@@ -2213,7 +2789,7 @@ function unitToken(u){
       ctx.fillStyle='rgba(20,25,22,0.28)';
       ctx.beginPath(); ctx.ellipse(10,16,r*.85,r*.48,u.face,0,7); ctx.fill();
       ctx.rotate(u.face);
-      if(d.id==='jet'){
+      if(rid==='jet'){
         ctx.beginPath();
         ctx.moveTo(r*1.45,0); ctx.lineTo(r*.2,-r*.28); ctx.lineTo(-r*.45,-r*1.18); ctx.lineTo(-r*.78,-r*1.18);
         ctx.lineTo(-r*.45,-r*.24); ctx.lineTo(-r*1.15,-r*.46); ctx.lineTo(-r*1.15,r*.46);
@@ -2251,7 +2827,7 @@ function unitToken(u){
         ctx.strokeStyle='#f5ecd5'; ctx.lineWidth=1.8;
         ctx.beginPath(); ctx.moveTo(-r*.45,-r*.1); ctx.lineTo(0,-r*.55); ctx.lineTo(r*.45,-r*.1); ctx.stroke();
       }
-    }else if(d.id==='elephant'){
+    }else if(rid==='elephant'){
       ctx.save(); ctx.rotate(u.face);
       ctx.fillStyle=u.flash>0?'#f3e5b8':'#6e6b62'; ctx.strokeStyle='#38352e'; ctx.lineWidth=1.8;
       ctx.beginPath(); ctx.ellipse(r*.35,-r*.7,r*.28,r*.42,.3,0,7); ctx.ellipse(r*.35,r*.7,r*.28,r*.42,-.3,0,7); ctx.fill(); ctx.stroke();
@@ -2394,9 +2970,9 @@ function draw(){
     if(p.type==='rocket'){
       ctx.strokeStyle='#e07530'; ctx.lineWidth=3.5; ctx.beginPath(); ctx.moveTo(-12,0); ctx.lineTo(6,0); ctx.stroke();
       ctx.fillStyle='#fce08b'; ctx.beginPath(); ctx.arc(-11,0,3,0,7); ctx.fill();
-    }else if(['boulder','cannonball','fireball','frostbolt','shadowbolt'].includes(p.type)){
+    }else if(['boulder','boulder_sm','cannonball','fireball','frostbolt','shadowbolt'].includes(p.type)){
       ctx.fillStyle=({fireball:'#d26b24',frostbolt:'#5b98ad',shadowbolt:'#845887'})[p.type]||'#544c41';
-      ctx.arc(0,0,6.5,0,7); ctx.fill();
+      ctx.arc(0,0,p.type==='boulder_sm'?3.8:6.5,0,7); ctx.fill();
     }else{ctx.moveTo(-10,0);ctx.lineTo(7,0);ctx.stroke()}
     ctx.restore();
   }
@@ -2413,7 +2989,13 @@ function draw(){
   }
 
   atmosphere();
-  if(game.phase==='setup'&&!game.panMode&&pointer.inside&&!pointer.space&&pointer.mode!=='pan'){
+  if(game.phase==='setup'&&game.mapEdit&&pointer.inside&&!pointer.space&&pointer.mode!=='pan'){
+    const w=world(pointer.x,pointer.y);
+    ctx.save(); ctx.strokeStyle=game.edBrush==='erase'?'#d64538':'#dfbd77'; ctx.lineWidth=2.5; ctx.setLineDash([6,4]);
+    if(game.edBrush==='wall'){ctx.strokeRect(w.x-game.edSize*0.6,w.y-23,game.edSize*1.2,46);}
+    else{ctx.beginPath(); ctx.arc(w.x,w.y,game.edSize,0,7); ctx.stroke();}
+    ctx.restore();
+  }else if(game.phase==='setup'&&!game.panMode&&pointer.inside&&!pointer.space&&pointer.mode!=='pan'){
     const w=world(pointer.x,pointer.y), d=defs[game.unit];
     const hoverUnit=game.units.find(u=>u.alive&&distance(w,u)<=Math.max(14,u.d.radius+6));
     ctx.save();
@@ -2465,8 +3047,289 @@ function drawMinimap(z){
   mctx.strokeRect((cam.x-vw/2)*sx,(cam.y-vh/2)*sy,vw*sx,vh*sy);
 }
 
-for(const m of MAPS)$('maps').add(new Option(m.name,m.id));
-$('maps').onchange=e=>{if(game.phase!=='setup')restore();setMap(e.target.value);custom();toast(game.map.desc)};
+const CMAP_KEY='iron_sandbox_custom_maps_v1';
+function readCustomMaps(){try{const a=JSON.parse(localStorage.getItem(CMAP_KEY)||'[]');return Array.isArray(a)?a:[]}catch{return []}}
+function writeCustomMaps(a){try{localStorage.setItem(CMAP_KEY,JSON.stringify(a));return true}catch{return false}}
+function rebuildMapDropdown(){
+  const sel=$('maps'), cur=sel.value;
+  sel.innerHTML='';
+  for(const m of MAPS)sel.add(new Option(m.name,m.id));
+  const cmaps=readCustomMaps();
+  if(cmaps.length){
+    const grp=document.createElement('optgroup'); grp.label='我的自定义地图';
+    for(const cm of cmaps)grp.append(new Option('★ '+cm.name, cm.id));
+    sel.append(grp);
+  }
+  if(cur)sel.value=cur;
+}
+rebuildMapDropdown();
+
+const origSetMap = setMap;
+setMap = function(id){
+  const cmaps=readCustomMaps();
+  const cm=cmaps.find(x=>x.id===id);
+  if(cm){
+    game.baseMap={...cm, isCustom:true};
+    game.map=buildMapForSize(game.baseMap, MAP_SCALE);
+    game.map.biome=cm.biome||'plains';
+    game.map.isCustom=true;
+    $('maps').value=cm.id; $('mapName').textContent=cm.name;
+    $('mapEnglish').textContent='CUSTOM MAP · '+WORLD_W+'×'+WORLD_H;
+    document.querySelector('.map-plaque').title='自定义地图';
+    currentSheet=window.getMapSheet(game.map, WORLD_W, WORLD_H, true);
+    game.units.forEach(ground);
+    return;
+  }
+  origSetMap(id);
+};
+$('maps').onchange=e=>{if(game.phase!=='setup')restore();setMap(e.target.value);custom();toast(game.map.desc||'已切换自定义地图')};
+
+let lastPaintPos=null;
+function paintCustomTerrain(w, erase){
+  const r=Number($('edSize').value)||95;
+  if(lastPaintPos && Math.hypot(w.x-lastPaintPos.x,w.y-lastPaintPos.y)<r*0.42)return;
+  lastPaintPos={x:w.x,y:w.y};
+  game.map.isCustom=true;
+  if(!game.map.biome)game.map.biome=game.baseMap.biome||game.baseMap.id;
+  if(erase){
+    game.map.obstacles=game.map.obstacles.filter(o=>Math.hypot(o.x-w.x,o.y-w.y)>Math.max(r,o.r*0.75));
+    if(game.map.walls)game.map.walls=game.map.walls.filter(wl=>!(w.x>wl.x-30&&w.x<wl.x+wl.w+30&&w.y>wl.y-30&&w.y<wl.y+wl.h+30));
+  }else if(game.edBrush==='wall'){
+    if(!game.map.walls)game.map.walls=[];
+    game.map.walls.push({x:Math.round(w.x-r*0.6),y:Math.round(w.y-23),w:Math.round(r*1.2),h:46});
+  }else{
+    const obs={type:game.edBrush,x:Math.round(w.x),y:Math.round(w.y),r:r,rx:r};
+    if(game.edBrush==='hill'||game.edBrush==='ice')obs.ry=Math.round(r*0.72);
+    game.map.obstacles.push(obs);
+  }
+  currentSheet=window.getMapSheet(game.map, WORLD_W, WORLD_H, true);
+  game.units.forEach(ground);
+  tone('place');
+}
+window.addEventListener('pointerup',()=>{lastPaintPos=null});
+
+// Dedicated Full-Screen Map Studio Engine
+const stCanvas=$('studioCanvas'), stCtx=stCanvas.getContext('2d');
+const studio={
+  open:false, brush:'forest', radius:95, drawing:false, erasing:false,
+  editingId:null, lastPt:null, hover:null, undoStack:[],
+  draft:{id:'draft', name:'', biome:'plains', isSea:false, isCustom:true, obstacles:[], walls:[]}
+};
+
+function stSnapshot(){
+  studio.undoStack.push(JSON.stringify({biome:studio.draft.biome, isSea:studio.draft.isSea, obstacles:studio.draft.obstacles, walls:studio.draft.walls}));
+  if(studio.undoStack.length>30)studio.undoStack.shift();
+}
+function renderStudioCanvas(){
+  if(!studio.open)return;
+  const sheet=window.getMapSheet(studio.draft, BASE_W, BASE_H, true);
+  stCtx.clearRect(0,0,BASE_W,BASE_H);
+  stCtx.drawImage(sheet,0,0,BASE_W,BASE_H);
+  // Subtle center deployment guide line
+  stCtx.save(); stCtx.strokeStyle='rgba(98,94,70,0.45)'; stCtx.lineWidth=2; stCtx.setLineDash([10,10]);
+  stCtx.beginPath(); stCtx.moveTo(BASE_W/2,0); stCtx.lineTo(BASE_W/2,BASE_H); stCtx.stroke(); stCtx.restore();
+  if(studio.hover){
+    const {x,y}=studio.hover, r=studio.radius;
+    stCtx.save(); stCtx.strokeStyle=studio.brush==='erase'?'#c93b2b':'#dfbd77'; stCtx.lineWidth=3; stCtx.setLineDash([7,5]);
+    if(studio.brush==='wall_h'){stCtx.strokeRect(x-r*0.75,y-23,r*1.5,46);}
+    else if(studio.brush==='wall_v'){stCtx.strokeRect(x-23,y-r*0.75,46,r*1.5);}
+    else{stCtx.beginPath(); stCtx.arc(x,y,r,0,7); stCtx.stroke();}
+    stCtx.restore();
+  }
+}
+function renderStudioSavedList(){
+  const list=readCustomMaps(), box=$('stSavedList'); box.innerHTML='';
+  if(!list.length){
+    box.innerHTML='<div style="font-size:11px;color:var(--muted);padding:8px 2px">暂无自定义地图，画好后点击右上角「保存并使用」即可。</div>';
+    return;
+  }
+  for(const cm of list){
+    const row=document.createElement('div'); row.className='st-saved-item';
+    row.innerHTML='<span>★ '+cm.name.replace(/</g,'&lt;')+'</span><button data-st-edit="'+cm.id+'">编辑</button><button data-st-use="'+cm.id+'" class="primary">使用</button><button data-st-del="'+cm.id+'" style="color:#e89b8e">删</button>';
+    box.append(row);
+  }
+  box.querySelectorAll('[data-st-edit]').forEach(b=>b.onclick=()=>{
+    const cm=readCustomMaps().find(x=>x.id===b.dataset.stEdit); if(!cm)return;
+    studio.editingId=cm.id;
+    studio.draft=JSON.parse(JSON.stringify(cm));
+    studio.undoStack=[];
+    $('stMapName').value=cm.name;
+    $('stBiome').value=cm.biome||'plains';
+    renderStudioCanvas();
+    toast('已载入「'+cm.name+'」继续编辑');
+  });
+  box.querySelectorAll('[data-st-use]').forEach(b=>b.onclick=()=>{
+    closeMapStudio();
+    setMap(b.dataset.stUse); custom();
+    toast('已切换到自定义地图');
+  });
+  box.querySelectorAll('[data-st-del]').forEach(b=>b.onclick=()=>{
+    const next=readCustomMaps().filter(x=>x.id!==b.dataset.stDel);
+    writeCustomMaps(next); rebuildMapDropdown(); renderStudioSavedList();
+    toast('已删除自定义地图');
+  });
+}
+function openMapStudio(){
+  if(game.phase!=='setup')restore();
+  studio.open=true; studio.editingId=null; studio.undoStack=[];
+  studio.draft={id:'draft', name:'', biome:'plains', isSea:false, isCustom:true, obstacles:[], walls:[]};
+  $('stMapName').value='自定义战场 #'+(readCustomMaps().length+1);
+  $('stBiome').value='plains';
+  $('mapStudio').hidden=false;
+  renderStudioSavedList();
+  renderStudioCanvas();
+}
+function closeMapStudio(){
+  studio.open=false; studio.drawing=false; studio.hover=null;
+  $('mapStudio').hidden=true;
+}
+function studioPt(e){
+  const rect=stCanvas.getBoundingClientRect();
+  return {x:(e.clientX-rect.left)/rect.width*BASE_W, y:(e.clientY-rect.top)/rect.height*BASE_H};
+}
+function applyStudioStroke(pt, erase){
+  const r=studio.radius;
+  if(studio.lastPt && Math.hypot(pt.x-studio.lastPt.x,pt.y-studio.lastPt.y)<r*0.38)return;
+  studio.lastPt={x:pt.x,y:pt.y};
+  if(erase || studio.brush==='erase'){
+    studio.draft.obstacles=studio.draft.obstacles.filter(o=>Math.hypot(o.x-pt.x,o.y-pt.y)>Math.max(r,o.r*0.75));
+    studio.draft.walls=studio.draft.walls.filter(wl=>!(pt.x>wl.x-28&&pt.x<wl.x+wl.w+28&&pt.y>wl.y-28&&pt.y<wl.y+wl.h+28));
+  }else if(studio.brush==='wall_h'){
+    studio.draft.walls.push({x:Math.round(pt.x-r*0.75),y:Math.round(pt.y-23),w:Math.round(r*1.5),h:46});
+  }else if(studio.brush==='wall_v'){
+    studio.draft.walls.push({x:Math.round(pt.x-23),y:Math.round(pt.y-r*0.75),w:46,h:Math.round(r*1.5)});
+  }else{
+    const obs={type:studio.brush,x:Math.round(pt.x),y:Math.round(pt.y),r:r,rx:r};
+    if(studio.brush==='hill'||studio.brush==='ice')obs.ry=Math.round(r*0.72);
+    studio.draft.obstacles.push(obs);
+  }
+  renderStudioCanvas();
+  tone('place');
+}
+stCanvas.oncontextmenu=e=>e.preventDefault();
+stCanvas.onpointerdown=e=>{
+  if(!e.isPrimary)return;
+  stCanvas.setPointerCapture(e.pointerId);
+  stSnapshot();
+  studio.drawing=true; studio.erasing=(e.button===2); studio.lastPt=null;
+  const pt=studioPt(e); studio.hover=pt;
+  applyStudioStroke(pt, studio.erasing);
+};
+stCanvas.onpointermove=e=>{
+  const pt=studioPt(e); studio.hover=pt;
+  if(studio.drawing)applyStudioStroke(pt, studio.erasing);
+  else renderStudioCanvas();
+};
+stCanvas.onpointerup=stCanvas.onpointercancel=()=>{studio.drawing=false; studio.lastPt=null;};
+stCanvas.onpointerleave=()=>{studio.hover=null; renderStudioCanvas();};
+
+document.querySelectorAll('#stBrushes [data-sb]').forEach(b=>b.onclick=()=>{
+  studio.brush=b.dataset.sb;
+  document.querySelectorAll('#stBrushes [data-sb]').forEach(el=>el.classList.toggle('on',el===b));
+});
+$('stRadius').oninput=e=>{studio.radius=Number(e.target.value); $('stRadiusVal').textContent=studio.radius;};
+for(const m of MAPS)$('stTemplate').add(new Option('载入：'+m.name, m.id));
+$('stTemplate').onchange=e=>{
+  const mid=e.target.value; if(!mid)return;
+  const base=MAPS.find(x=>x.id===mid); if(!base)return;
+  stSnapshot();
+  const built=buildMapForSize(base, 1);
+  studio.draft={
+    id:'draft', name:$('stMapName').value, biome:base.id, isSea:!!base.isSea, isCustom:true,
+    obstacles:JSON.parse(JSON.stringify(built.obstacles||[])),
+    walls:JSON.parse(JSON.stringify(built.walls||[])),
+    river:built.river?JSON.parse(JSON.stringify(built.river)):undefined,
+    strait:built.strait?JSON.parse(JSON.stringify(built.strait)):undefined
+  };
+  $('stBiome').value=['plains','sea','desert','snow','volcano','colosseum'].includes(base.id)?base.id:'plains';
+  renderStudioCanvas();
+  $('stTemplate').value='';
+  toast('已载入初始地图「'+base.name+'」作为模板，可继续自由修改！');
+};
+$('stBiome').onchange=e=>{
+  stSnapshot();
+  studio.draft.biome=e.target.value;
+  studio.draft.isSea=(e.target.value==='sea');
+  renderStudioCanvas();
+};
+$('stUndo').onclick=()=>{
+  if(!studio.undoStack.length)return;
+  const prev=JSON.parse(studio.undoStack.pop());
+  studio.draft.biome=prev.biome; studio.draft.isSea=prev.isSea;
+  studio.draft.obstacles=prev.obstacles; studio.draft.walls=prev.walls;
+  $('stBiome').value=prev.biome;
+  renderStudioCanvas();
+};
+$('stClear').onclick=()=>{
+  stSnapshot();
+  studio.draft.obstacles=[]; studio.draft.walls=[]; delete studio.draft.river; delete studio.draft.strait;
+  renderStudioCanvas();
+};
+$('stSaveUse').onclick=()=>{
+  const list=readCustomMaps();
+  const name=$('stMapName').value.trim()||('自定义战场 #'+(list.length+1));
+  const id=studio.editingId||('cmap_'+Date.now());
+  const cm={
+    id, name, biome:studio.draft.biome, isSea:!!studio.draft.isSea, isCustom:true,
+    desc:'玩家在地图工坊绘制的专属战场',
+    obstacles:JSON.parse(JSON.stringify(studio.draft.obstacles)),
+    walls:JSON.parse(JSON.stringify(studio.draft.walls)),
+    river:studio.draft.river?JSON.parse(JSON.stringify(studio.draft.river)):undefined,
+    strait:studio.draft.strait?JSON.parse(JSON.stringify(studio.draft.strait)):undefined
+  };
+  const next=[cm, ...list.filter(x=>x.id!==id)];
+  if(writeCustomMaps(next)){
+    rebuildMapDropdown();
+    closeMapStudio();
+    setMap(cm.id); custom();
+    toast('💾 已保存并应用自定义地图「'+cm.name+'」！');
+  }else{toast('当前环境暂不支持本地保存地图')}
+};
+$('stClose').onclick=closeMapStudio;
+
+function setMapEdit(on){ if(on)openMapStudio(); else closeMapStudio(); }
+$('mapEditBtn').onclick=openMapStudio;
+$('edDone').onclick=()=>setMapEdit(false);
+document.querySelectorAll('#mapEditorBar [data-brush]').forEach(b=>b.onclick=()=>{
+  game.edBrush=b.dataset.brush;
+  document.querySelectorAll('#mapEditorBar [data-brush]').forEach(el=>el.classList.toggle('on',el===b));
+});
+$('edBiome').onchange=e=>{
+  const bm=e.target.value;
+  game.map.isCustom=true; game.map.biome=bm; game.map.isSea=(bm==='sea');
+  if(bm==='sea'){delete game.map.river; delete game.map.strait;}
+  currentSheet=window.getMapSheet(game.map, WORLD_W, WORLD_H, true);
+  toast('已切换底图地貌');
+};
+$('edClearTerrain').onclick=()=>{
+  game.map.isCustom=true; game.map.obstacles=[]; game.map.walls=[]; delete game.map.river; delete game.map.strait;
+  currentSheet=window.getMapSheet(game.map, WORLD_W, WORLD_H, true);
+  toast('已清空当前地图所有障碍与地形');
+};
+$('edSaveMap').onclick=()=>{
+  const list=readCustomMaps();
+  const idx=list.length+1;
+  const name='自定义沙盘 #'+idx;
+  // Normalize coordinates back to BASE_W × BASE_H so custom map scales to any size cleanly!
+  const sc=MAP_SCALE||1;
+  const cm={
+    id:'cmap_'+Date.now(),
+    name,
+    biome:game.map.biome||game.baseMap.id,
+    isSea:!!game.map.isSea,
+    isCustom:true,
+    desc:'玩家自定义绘制的专属战场',
+    obstacles:(game.map.obstacles||[]).map(o=>({...o,x:BASE_W/2+(o.x-WORLD_W/2)/sc,y:BASE_H/2+(o.y-WORLD_H/2)/sc,r:o.r,rx:o.rx||o.r,ry:o.ry})),
+    walls:(game.map.walls||[]).map(wl=>({x:BASE_W/2+(wl.x-WORLD_W/2)/sc,y:BASE_H/2+(wl.y-WORLD_H/2)/sc,w:wl.w,h:wl.h}))
+  };
+  list.unshift(cm);
+  if(writeCustomMaps(list)){
+    rebuildMapDropdown();
+    $('maps').value=cm.id;
+    $('mapName').textContent=cm.name;
+    toast('💾 已保存为「'+cm.name+'」，随时可在地图下拉列表切换！');
+  }else{toast('当前环境暂不支持本地保存地图')}
+};
 for(const sz of MAP_SIZES)$('mapSize').add(new Option(sz.label,sz.id));
 $('mapSize').value='medium';
 $('mapSize').onchange=e=>{if(game.phase!=='setup')restore();setMapSize(e.target.value)};
@@ -2480,7 +3343,8 @@ for(const [cat,name] of Object.entries(categories)){
 }
 document.querySelectorAll('[data-team]').forEach(b=>b.onclick=()=>{game.team=b.dataset.team;document.querySelectorAll('[data-team]').forEach(el=>el.classList.toggle('on',el===b))});
 document.querySelectorAll('[data-form]').forEach(b=>b.onclick=()=>{game.form=b.dataset.form;game.erase=false;$('erase').classList.remove('on');document.querySelectorAll('[data-form]').forEach(el=>el.classList.toggle('on',el===b));list()});
-$('erase').onclick=()=>{game.erase=!game.erase;if(game.erase&&game.panMode)setPanMode(false);$('erase').classList.toggle('on',game.erase);list()};
+$('erase').onclick=()=>{game.erase=!game.erase;if(game.erase){if(game.panMode)setPanMode(false);if(game.brushMode)setBrushMode(false);}$('erase').classList.toggle('on',game.erase);list()};
+$('brushBtn').onclick=()=>{setBrushMode(!game.brushMode); toast(game.brushMode?'🖌️ 连续部署已开启：单指或鼠标拖动即可成片刷兵（双指仍可缩放）':'已切回常规点击部署')};
 $('panBtn').onclick=()=>{setPanMode(!game.panMode); toast(game.panMode?'✋ 漫游模式：可自由拖拽与缩放地图，不会误放单位':'⚔️ 已切回布阵模式')};
 $('panSide').onclick=()=>$('panBtn').click();
 $('toggle').onclick=()=>document.body.classList.toggle('fold');
@@ -2501,27 +3365,130 @@ document.querySelectorAll('#orders button').forEach(b=>b.onclick=()=>{
   const msg={charge:'⚔️ 军令：全军自由突击！',hold:'🛡️ 军令：步兵固守防线，远程原地齐射！',snipe:'🎯 军令：精锐优先斩杀敌方将领！'}[game.order];
   toast(msg);
 });
-$('saveForm').onclick=()=>{
-  $('more').open=false;
+const FORM_KEY='iron_sandbox_formations_v2';
+function readFormations(){
   try{
-    const data={map:game.baseMap.id,size:game.sizeId,units:game.units.filter(u=>u.alive&&u.d.id!=='skeleton').map(u=>[u.d.id,u.team,Math.round(u.x),Math.round(u.y)])};
-    localStorage.setItem('iron_sandbox_saved_form',JSON.stringify(data));
-    toast('💾 已保存当前阵型（共 '+data.units.length+' 单位）');
-  }catch{toast('当前环境暂不支持本地存档')}
-};
-$('loadForm').onclick=()=>{
-  $('more').open=false;
-  try{
-    const raw=localStorage.getItem('iron_sandbox_saved_form');
-    if(!raw){toast('暂无已保存的阵型');return}
-    const data=JSON.parse(raw);
+    let list=JSON.parse(localStorage.getItem(FORM_KEY)||'[]');
+    if(!Array.isArray(list))list=[];
+    // Migrate legacy single save if present
+    const legacy=localStorage.getItem('iron_sandbox_saved_form');
+    if(legacy){
+      const d=JSON.parse(legacy);
+      if(d && Array.isArray(d.units) && d.units.length){
+        list.unshift({id:'legacy_'+Date.now(), name:'旧版默认阵容', scope:'all', map:d.map||'plains', size:d.size||'medium', w:BASE_W, h:BASE_H, units:d.units, ts:Date.now()});
+        localStorage.setItem(FORM_KEY, JSON.stringify(list));
+      }
+      localStorage.removeItem('iron_sandbox_saved_form');
+    }
+    return list;
+  }catch{return [];}
+}
+function writeFormations(list){
+  try{localStorage.setItem(FORM_KEY, JSON.stringify(list)); return true;}catch{return false;}
+}
+function renderFormationModal(){
+  const list=readFormations();
+  $('formCountLabel').textContent='已保存 '+list.length+' 个阵容（载入单方阵容将部署至当前选中的 '+TEAMS[game.team].name+'）';
+  const box=$('formList'); box.innerHTML='';
+  if(!list.length){
+    box.innerHTML='<div class="form-empty">暂无保存的阵容，在上方输入名称即可保存全场或单方阵容。</div>';
+    return;
+  }
+  for(const item of list){
+    const row=document.createElement('div'); row.className='form-item';
+    const scopeTxt=item.scope==='all'?'全场':('单方 · '+(TEAMS[item.scope]?TEAMS[item.scope].name:item.scope));
+    const mName=(MAPS.find(m=>m.id===item.map)||MAPS[0]).name;
+    row.innerHTML=
+      '<input type="checkbox" class="form-chk" data-fid="'+item.id+'" aria-label="选择删除">'+
+      '<div><b>'+item.name.replace(/</g,'&lt;')+'<span class="tag">'+scopeTxt+'</span></b>'+
+      '<small>'+item.units.length+' 单位 · '+mName+'</small></div>'+
+      '<button data-load="'+item.id+'" class="primary">载入</button>'+
+      '<button data-del="'+item.id+'" class="del-one">删除</button>';
+    box.append(row);
+  }
+  box.querySelectorAll('[data-load]').forEach(btn=>btn.onclick=()=>{
+    const item=readFormations().find(x=>x.id===btn.dataset.load);
+    if(!item)return;
     if(game.phase!=='setup')restore();
-    if(data.size)setMapSize(data.size);
-    if(data.map)setMap(data.map);
-    game.units=[];
-    for(const entry of data.units||[])spawn(...entry);
-    custom(); snapshot(); stats(); toast('📂 已载入保存的阵型');
-  }catch{toast('读取存档失败')}
+    if(item.scope==='all'){
+      if(item.size)setMapSize(item.size);
+      if(item.map)setMap(item.map);
+      if(item.diplomacy){
+        for(const t of TEAM_IDS) if(item.diplomacy[t]) game.diplomacy[t]={...item.diplomacy[t], active:true};
+      }
+      game.units=[];
+      for(const entry of item.units||[])spawn(...entry);
+      toast('📂 已载入全场阵容：'+item.name);
+    }else{
+      // Load single-faction formation into the currently selected game.team!
+      const targetTeam=game.team;
+      game.units=game.units.filter(u=>u.team!==targetTeam);
+      const srcW=item.w||WORLD_W, srcH=item.h||WORLD_H;
+      const srcWasLeft=(item.scope==='blue'||item.scope==='green');
+      const dstIsRight=(targetTeam==='red'||targetTeam==='gold');
+      const flipX=(srcWasLeft && dstIsRight) || (!srcWasLeft && !dstIsRight);
+      for(const [id,_t,ux,uy] of item.units||[]){
+        const nx=(ux/srcW)*WORLD_W, ny=(uy/srcH)*WORLD_H;
+        const u=spawn(id, targetTeam, flipX?(WORLD_W-nx):nx, ny);
+        if(u)ground(u);
+      }
+      toast('📂 已将「'+item.name+'」部署至 '+TEAMS[targetTeam].name);
+    }
+    custom(); snapshot(); stats(); $('formModal').close();
+  });
+  box.querySelectorAll('[data-del]').forEach(btn=>btn.onclick=()=>{
+    const next=readFormations().filter(x=>x.id!==btn.dataset.del);
+    writeFormations(next);
+    renderFormationModal();
+    toast('🗑️ 已删除该阵容');
+  });
+}
+function openFormationModal(focusName){
+  $('more').open=false;
+  $('formScope').value='all';
+  $('formNameInput').value='';
+  renderFormationModal();
+  $('formModal').showModal();
+  if(focusName)setTimeout(()=>$('formNameInput').focus(),50);
+}
+$('saveForm').onclick=()=>openFormationModal(true);
+$('loadForm').onclick=()=>openFormationModal(false);
+$('closeFormModal').onclick=()=>$('formModal').close();
+$('doSaveForm').onclick=()=>{
+  const scope=$('formScope').value;
+  const srcUnits=game.units.filter(u=>u.alive && u.d.id!=='skeleton' && (scope==='all'||u.team===scope));
+  if(!srcUnits.length){
+    toast(scope==='all'?'当前战场没有可保存的单位':(TEAMS[scope].name+'目前没有部署单位'));
+    return;
+  }
+  const rawName=$('formNameInput').value.trim();
+  const defName=game.baseMap.name+' · '+(scope==='all'?'全场':TEAMS[scope].name);
+  const name=rawName||defName;
+  const entry={
+    id:'f_'+Date.now()+'_'+Math.floor(Math.random()*999),
+    name, scope, map:game.baseMap.id, size:game.sizeId, w:WORLD_W, h:WORLD_H,
+    diplomacy: scope==='all' ? JSON.parse(JSON.stringify(game.diplomacy)) : null,
+    units: srcUnits.map(u=>[u.d.id, u.team, Math.round(u.x), Math.round(u.y)]),
+    ts: Date.now()
+  };
+  const list=readFormations();
+  list.unshift(entry);
+  if(writeFormations(list)){
+    $('formNameInput').value='';
+    renderFormationModal();
+    toast('💾 已保存阵容「'+name+'」（'+entry.units.length+' 单位）');
+  }else{
+    toast('当前环境暂不支持本地存档');
+  }
+};
+$('delSelectedForms').onclick=()=>{
+  const checked=[...document.querySelectorAll('.form-chk:checked')].map(el=>el.dataset.fid);
+  if(!checked.length){toast('请先勾选要删除的阵容');return}
+  const delSet=new Set(checked);
+  const next=readFormations().filter(x=>!delSet.has(x.id));
+  writeFormations(next);
+  renderFormationModal();
+  toast('🗑️ 已删除选中的 '+checked.length+' 个阵容');
 };
 $('clearSide').onclick=()=>{editField();game.units=game.units.filter(u=>u.team!==game.team);stats()};
 $('clearAll').onclick=()=>{editField();game.units=[];stats()};
@@ -2621,8 +3588,13 @@ canvas.onpointerdown=e=>{
   if(!e.isPrimary)return;
   const w=locate(e);
 
-  // Touchscreen 1-finger: defer tap action until pointerup; dragging immediately pans camera!
+  // Touchscreen 1-finger: if 连刷 (brushMode) is ON in setup, drag continuously deploys units! Otherwise drag pans camera.
   if(e.pointerType==='touch'){
+    if(game.phase==='setup' && !game.panMode && (game.brushMode || game.erase)){
+      pointer.mode=game.erase?'erase':'place';
+      place(w, game.erase);
+      return;
+    }
     touchStart={x:px, y:py, wx:w.x, wy:w.y, moved:false};
     pointer.mode='touch-pending';
     return;
@@ -2639,10 +3611,15 @@ canvas.onpointerdown=e=>{
   if(e.button===1||pointer.space||game.panMode||game.phase!=='setup'){
     pointer.mode='pan'; canvas.style.cursor='grabbing'; return;
   }
+  if(game.mapEdit){
+    pointer.mode=e.button===2?'map-erase':'map-paint';
+    paintCustomTerrain(w, pointer.mode==='map-erase'||game.edBrush==='erase');
+    return;
+  }
   if(e.button===2||game.erase){
     pointer.mode='erase'; place(w,true); return;
   }
-  const hitU=game.units.find(u=>u.alive&&distance(w,u)<=Math.max(14,u.d.radius+6));
+  const hitU=!game.brushMode && game.units.find(u=>u.alive&&distance(w,u)<=Math.max(14,u.d.radius+6));
   if(hitU){
     game.units=game.units.filter(u=>u!==hitU);
     pointer.mode='deleted'; custom(); stats(); tone('place');
@@ -2678,6 +3655,7 @@ canvas.onpointermove=e=>{
     }else return;
   }
   if(pointer.mode==='pan'){cam.x=clamp(cam.x-(pointer.x-x)/(cam.zoom*cam.base),0,WORLD_W);cam.y=clamp(cam.y-(pointer.y-y)/(cam.zoom*cam.base),0,WORLD_H)}
+  else if(pointer.mode==='map-paint'||pointer.mode==='map-erase')paintCustomTerrain(w,pointer.mode==='map-erase'||game.edBrush==='erase');
   else if(pointer.mode==='place'||pointer.mode==='erase')place(w,pointer.mode==='erase');
 };
 
@@ -2694,6 +3672,8 @@ function endPtr(e){
           game.controlled=hitBattle; updateCtrlHud();
           toast('🎮 已接管控制：'+hitBattle.d.name);
         }
+      }else if(game.phase==='setup' && game.mapEdit){
+        paintCustomTerrain(w, game.edBrush==='erase');
       }else if(game.phase==='setup' && !game.panMode){
         if(game.erase){
           place(w,true);
@@ -2764,7 +3744,7 @@ $('dip3v1').onclick=()=>{game.diplomacy.blue={ally:'A',trigger:'now',active:true
 $('dipAmbush').onclick=()=>{game.diplomacy.blue={ally:'A',trigger:'now',active:true};game.diplomacy.red={ally:'B',trigger:'now',active:true};game.diplomacy.green={ally:'C',trigger:'now',active:true};game.diplomacy.gold={ally:'D',trigger:'red',active:false}; renderDipModal()};
 
 window.onkeydown=e=>{
-  if(e.target.matches('select,input')||$('report').open||$('dipModal').open)return;
+  if(e.target.matches('select,input')||$('report').open||$('dipModal').open||$('formModal').open||studio.open)return;
   if(e.code==='KeyP' && game.phase==='battle'){begin(); return;}
   if(e.code==='Escape' && game.controlled){game.controlled=null; game.keys={}; updateCtrlHud(); toast('已交還 AI 作戰'); return;}
   if(game.controlled && game.phase==='battle'){
