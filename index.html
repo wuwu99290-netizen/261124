@@ -85,6 +85,14 @@ nav button.on{color:var(--gold);border-color:#6a5c3d;background:#353126}
 .card.modern .card-art{color:#a8c5d9}
 .card.building{border-color:#6b5c43}
 .card.building .card-art{color:#d9c498}
+.card.xianxia{border-color:#5b4b7a}
+.card.xianxia .card-art{color:#c9b3f5}
+.corps-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:6px}
+.corps-bar button{height:26px;font-size:11px;padding:0;color:var(--muted)}
+.corps-bar button.on{color:var(--gold);border-color:var(--gold);background:#3a3423;font-weight:700}
+.cmd-corps{display:flex;gap:4px;padding-right:8px;border-right:1px solid #524d3d;align-items:center}
+.cmd-corps button{padding:4px 7px;font-size:11px;color:#b8b3a2;border-color:#4c483a;white-space:nowrap}
+.cmd-corps button.on{color:#28241a;background:var(--gold);border-color:var(--gold);font-weight:700}
 .dip-grid{display:grid;gap:8px;margin:12px 0}
 .dip-row{display:grid;grid-template-columns:64px 1fr 1.3fr;gap:8px;align-items:center;padding:8px 10px;background:#1d201b;border:1px solid var(--line);border-radius:4px}
 .dip-presets{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
@@ -235,6 +243,27 @@ body.fold aside{display:none}
 @media(max-width:760px) and (orientation:portrait){
  body{height:auto;min-height:100dvh}header{position:sticky;top:0}main{display:flex;flex-direction:column;flex:none}aside{position:static;order:2;width:auto;margin:0 10px 14px;padding:14px;border:1px solid var(--line);border-radius:4px;box-shadow:none}.workspace{flex:none}.map-frame{flex:none;aspect-ratio:1.56;min-height:0}.map-foot>span{max-width:48%}.map-plaque{padding:3px 6px;gap:4px}.map-plaque span#mapName{font-size:13px}.map-plaque small{font-size:6px}.plaque-icon svg{width:18px;height:18px}#zoomTools{right:5px;bottom:5px}#zoomTools button{width:27px;height:25px}.side-head h2{font-size:21px}.side-head{margin-bottom:9px}.section-mark{top:4px}.forms button{flex-direction:row;height:36px}.side-caption{margin-top:10px}.roster-title{margin-top:11px;padding-top:9px}#cards{flex:none;max-height:260px;grid-template-columns:repeat(3,minmax(0,1fr))}.card b{font-size:13px}.card small{font-size:10px}.cost{font-size:11px}#inspect{margin-top:8px}
 }
+
+.card.scifi{border-color:#2d6a7a;background:linear-gradient(180deg,#1d2e35,#192328)}
+.card.scifi b{color:#7de2f8}
+.card.alien{border-color:#683d82;background:linear-gradient(180deg,#2b1f36,#1f1826)}
+.card.alien b{color:#d8a4ff}
+#ordnanceBar{position:absolute;bottom:98px;left:50%;transform:translateX(-50%);background:#1f231cf2;border:1px solid #a88f59;padding:5px 8px;max-width:96%;display:flex;gap:5px;align-items:center;overflow-x:auto;font-size:12px;border-radius:4px;box-shadow:0 4px 16px #0007;z-index:3}
+#ordnanceBar[hidden]{display:none}
+#ordnanceBar button{padding:5px 9px;font-size:11px;white-space:nowrap;border:1px solid #59523d;background:#2a2e25;color:#e5dec8;border-radius:3px;cursor:pointer;transition:all .15s}
+#ordnanceBar button:hover{border-color:#dfbd77;color:#fff}
+#ordnanceBar button.on{background:#5a3324;border-color:#f59e0b;color:#fde68a;box-shadow:0 0 10px #f59e0b55}
+#ordnanceBar button.live-on{background:#234436;border-color:#6ee7b7;color:#a7f3d0;box-shadow:0 0 10px #34d39955}
+#ordnanceBar .ord-sep{width:1px;height:18px;background:#59523d;flex-shrink:0}
+@media(max-width:760px){#ordnanceBar{bottom:100px;padding:4px 6px}#ordnanceBar button{padding:4px 7px;font-size:10px}}
+
+.city-bar{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;padding:6px;background:#22251e;border:1px solid #6b5c3e;border-radius:4px}
+.city-bar[hidden]{display:none}
+.city-bar button{flex:1 1 46%;padding:5px 4px;font-size:11px;border:1px solid #4d4838;background:#2b2f26;color:#d6d0bc;border-radius:3px;cursor:pointer;white-space:nowrap}
+.city-bar button.on{border-color:var(--gold);background:#403824;color:var(--gold);box-shadow:0 0 8px #dfbd7733}
+
+.card.warhammer{border-color:#8a3b3b;background:linear-gradient(180deg,#2e1d1d,#211717)}
+.card.warhammer b{color:#f5c26b}
 </style>
 </head>
 <body>
@@ -246,7 +275,7 @@ body.fold aside{display:none}
  <div class="actions">
   <span class="phase" id="phase">布阵阶段</span>
   <button id="sound" class="icon-btn" title="切换音效" aria-label="切换音效" data-icon="sound"></button>
-  <button id="mapEditBtn" title="自由绘制自定义地图地形、水域、城墙与岛屿"><i data-icon="map"></i>编辑地图</button><button id="dipBtn" title="設置同盟、多打一與中立觀望觸發條件"><i data-icon="flag"></i>外交</button><button id="reset"><i data-icon="reset"></i>还原</button>
+  <button id="cmdModeBtn" title="亲自指挥 1~4 号军团：点击空地集结，点击敌军全军集火！"><i data-icon="swords"></i>军团指挥</button><button id="mapEditBtn" title="自由绘制自定义地图地形、水域、城墙与岛屿"><i data-icon="map"></i>编辑地图</button><button id="dipBtn" title="設置同盟、多打一與中立觀望觸發條件"><i data-icon="flag"></i>外交</button><button id="reset"><i data-icon="reset"></i>还原</button>
   <button id="speed">1.0×</button>
   <button id="fight" class="primary"><i data-icon="swords"></i><span>开战</span></button>
  </div>
@@ -260,16 +289,29 @@ body.fold aside{display:none}
    <button data-team="green"><i data-icon="flag"></i>绿方</button>
    <button data-team="gold"><i data-icon="flag"></i>黄方</button>
   </div>
-  <div class="side-caption"><b>部署阵型</b><span style="display:flex;gap:7px"><button id="brushBtn" title="开启后单指/鼠标滑动即可连续刷兵部署"><i data-icon="brush"></i>连刷</button><button id="panSide" title="浏览/拖拽镜头模式（不会放置单位）"><i data-icon="hand"></i>漫游</button><button id="erase" title="切换擦除工具"><i data-icon="eraser"></i>擦除</button></span></div>
+  <div class="side-caption"><b>部署阵型</b><span style="display:flex;gap:7px"><button id="cityBtn" title="一键建造完整城池（含城墙、城门、角楼与主殿）">🏰建城</button><button id="moveBtn" title="开启后可拖动已部署的单位调整位置"><i data-icon="move"></i>移动</button><button id="brushBtn" title="开启后单指/鼠标滑动即可连续刷兵部署"><i data-icon="brush"></i>连刷</button><button id="panSide" title="浏览/拖拽镜头模式（不会放置单位）"><i data-icon="hand"></i>漫游</button><button id="erase" title="切换擦除工具"><i data-icon="eraser"></i>擦除</button></span></div>
   <div class="forms">
    <button data-form="single" class="on"><i data-icon="single"></i>单兵</button>
    <button data-form="line"><i data-icon="line"></i>横列</button>
    <button data-form="square"><i data-icon="square"></i>方阵</button>
    <button data-form="wedge"><i data-icon="wedge"></i>楔阵</button>
   </div>
+  <div class="city-bar" id="cityBar" hidden title="选择要一键建造的城池蓝图，点击战场即可落城">
+   <button data-city="outpost" class="on">🏯 边关堡垒</button>
+   <button data-city="grand">🏰 雄关巨城</button>
+   <button data-city="oriental">⛩️ 东方王城</button>
+   <button data-city="modern_base">🛡️ 现代基地</button>
+   <button data-city="scifi_citadel">🛸 星际要塞</button>
+  </div>
+  <div class="corps-bar" id="setupCorpsBar" title="部署单位时自动编入所选军团">
+   <button data-corps="1" class="on">1军团</button>
+   <button data-corps="2">2军团</button>
+   <button data-corps="3">3军团</button>
+   <button data-corps="4">4军团</button>
+  </div>
   <div class="roster-title"><h3>兵种名册</h3><span id="roster-count"></span></div>
   <nav id="categories" aria-label="兵种分类"></nav>
-  <div class="search-wrap"><input id="unitSearch" type="search" placeholder="🔍 搜尋 518 種兵種、建築、文明或武器..."></div>
+  <div class="search-wrap"><input id="unitSearch" type="search" placeholder="🔍 搜尋 725+ 種戰錘／航母／建築／古今／未來..."></div>
   <div id="cards" aria-label="兵种名册"></div>
   <section id="inspect" aria-label="兵种详情"></section>
  </aside>
@@ -294,7 +336,8 @@ body.fold aside{display:none}
     <button id="fit" aria-label="全图总览" title="全图总览" data-icon="fit"></button>
     <button id="hp" aria-label="切换生命条" title="切换生命条" data-icon="heart"></button>
    </div>
-   <div id="dock" hidden><div class="orders" id="orders"><button data-order="charge" class="on" title="全军自由进攻">突击</button><button data-order="hold" title="近战坚守阵地，远程原地齐射">固守</button><button data-order="snipe" title="骑兵、刺客与远程优先集火敌方将领">斩将</button></div><label><input id="auto" type="checkbox" checked> 自动绝技</label><div id="skills"></div></div>
+   <div id="ordnanceBar" hidden><button id="liveDeployBtn" title="开启后可在战斗进行中直接点击战场投放左侧选中的部队！">➕ 战中放兵</button><span class="ord-sep"></span><button data-strike="artillery" title="155mm 重炮齐射：6发高抛物线榴弹轰炸目标区域">💣 炮弹</button><button data-strike="guided" title="激光精确制导导弹：3枚自动追踪锁定敌方高价值目标">🎯 制导</button><button data-strike="bomber" title="战略轰炸机编队空袭：3架轰炸机计算提前量抛物线投弹">✈️ 轰炸机</button><button data-strike="nuke" title="战略核打击：弹道核导弹、蘑菇云冲击波与辐射焦土">☢️ 核弹</button><button data-strike="droplet" title="三体强互作用力水滴：超高速锐角穿刺敌阵">💧 水滴</button><button data-strike="foil" title="歌者二向箔：展开二维化跌落力场，将范围内单位压扁吞噬">🌌 二向箔</button></div>
+   <div id="dock" hidden><div class="cmd-corps" id="battleCorpsBar"><button data-bc="0" class="on">全军</button><button data-bc="1">1军</button><button data-bc="2">2军</button><button data-bc="3">3军</button><button data-bc="4">4军</button></div><div class="orders" id="orders"><button data-order="charge" class="on" title="全军自由进攻">突击</button><button data-order="hold" title="近战坚守阵地，远程原地齐射">固守</button><button data-order="snipe" title="骑兵、刺客与远程优先集火敌方将领">斩将</button></div><label><input id="auto" type="checkbox" checked> 自动绝技</label><div id="skills"></div></div>
    <div id="ctrlHud" hidden>
     <div class="ctrl-head"><span id="ctrlName">控制中</span><button id="exitCtrl">退出(Esc)</button></div>
     <div class="ctrl-pad">
@@ -579,7 +622,7 @@ const TEAMS = {
   gold:  {id:'gold',  name:'黄方', token:'#9e7a2c', dead:'#91753855', aura:'#ba964380', hp:'#e6c56c', banner:'#4d3d1b', bar:'#c9a349', mini:'#eab308'}
 };
 const TEAM_IDS = ['blue','red','green','gold'];
-const categories={all:'全部',general:'將領',modern:'現代',building:'建築',navy:'海軍',infantry:'步兵',ranged:'遠程',cavalry:'騎兵',siege:'器械',mythic:'奇幻'};
+const categories={all:'全部',general:'將領',warhammer:'戰錘',scifi:'未來',alien:'外星',xianxia:'修仙',modern:'現代',building:'建築',navy:'海軍',infantry:'步兵',ranged:'遠程',cavalry:'騎兵',siege:'器械',mythic:'奇幻'};
 const UNITS=[];
 function roster(cat,rows){
  for(const [id,name,role,cost,hp,atk,def,range,speed,cd,radius,mass,special,desc] of rows)
@@ -600,7 +643,31 @@ roster('building',[
  ['artillery_tower','要塞重砲台','鋼筋碉堡 · 遠程重砲',320,1250,104,24,570,0,3.2,21,999,{building:true,proj:'boulder',ps:460,aoe:72,kb:68,ap:.8,block:.65},'【建築】重型要塞砲台，超遠射程轟炸敵軍集結地。'],
  ['flak_tower','防空機砲塔','專克空軍 · 高速掃射',240,880,38,18,450,0,.52,18,999,{building:true,proj:'bullet',ps:920,ap:.7,antiAir:2.4},'【建築】高射速防空陣地，對戰鬥機與直升機造成 240% 毀滅打擊！'],
  ['barracks','前線兵營','持續徵兵 · 源源不絕',380,1350,0,16,0,0,1.0,24,999,{building:true,spawnUnit:'legionary',summon:7.0},'【建築】每 7 秒自動訓練 2 名羅馬重盾衛投入戰場！'],
- ['med_tent','戰地醫療營','陣地回血 · 淨化灼燒',260,820,0,12,240,0,2.2,20,999,{building:true,healer:true},'【建築】固定戰地醫院，週期性為周圍大片友軍大幅恢復生命並滅火。']
+ ['med_tent','戰地醫療營','陣地回血 · 淨化灼燒',260,820,0,12,240,0,2.2,20,999,{building:true,healer:true},'【建築】固定戰地醫院，週期性為周圍大片友軍大幅恢復生命並滅火。'],
+ ['city_wall','青石城牆段','堅固城垣 · 阻敵推進',90,1650,0,32,0,0,2.0,18,999,{building:true,block:.75,ico:'watchtower',renderAs:'city_wall'},'【城池】厚重青石砌築的城牆段，可阻擋敵軍步騎推進並承受猛烈砲火。'],
+ ['city_gate','甕城堅固大門','友軍通行 · 拒敵於外',180,2400,26,30,310,0,1.2,22,999,{building:true,isGate:true,proj:'arrow',ps:540,block:.72,ico:'watchtower',renderAs:'city_gate'},'【城池】城門樓要衝：己方與同盟部隊可自由出入，敵軍會被城門死死擋住並遭門樓箭雨反擊！'],
+ ['city_keep','城池主殿·都督府','核心中樞 · 徵兵回血',520,3600,44,30,400,0,1.3,28,999,{building:true,proj:'arrow',ps:580,salvo:3,aura:'heal',reach:280,spawnUnit:'legionary',summon:8.5,block:.7,ico:'barracks',renderAs:'city_keep'},'【城池】城池心臟主殿：三連箭雨防衛、持續治療城內守軍，並定時訓練重盾衛出戰！'],
+ ['city_bastion','城防重砲角樓','角樓重砲 · 俯瞰轟炸',360,1950,112,28,560,0,3.0,22,999,{building:true,proj:'cannonball',ps:620,aoe:66,kb:65,ap:.84,block:.7,ico:'artillery_tower',renderAs:'city_bastion'},'【城池】建於城池四角的重裝砲台角樓，居高臨下轟擊來犯敵陣。'],
+ ['city_drum','城池鐘鼓樓','戰鼓助威 · 全城加速',260,1500,0,22,0,0,2.0,20,999,{building:true,aura:'haste',reach:380,block:.55,ico:'watchtower',renderAs:'city_drum'},'【城池】擂動震天戰鼓，大幅提升城內與周邊 380 範圍內所有友軍的攻速與移速！'],
+ ['bunker_wall','鋼筋防爆掩體牆','現代工事 · 超高護甲',120,2400,0,38,0,0,2.0,18,999,{building:true,block:.82,ico:'watchtower',renderAs:'bunker_wall'},'【城池】鋼筋混凝土防爆牆體，現代軍事基地的堅固防線。'],
+ ['energy_wall','等離子能量護盾牆','力場屏障 · 科技城垣',160,2850,0,36,0,0,2.0,18,999,{building:true,block:.84,ico:'flak_tower',renderAs:'energy_wall'},'【城池】未來與星際要塞的高能等離子屏障，閃耀著藍色力場光芒。'],
+ ['star_citadel','星際要塞核心','等離子防衛 · 增幅徵兵',760,4800,138,36,540,0,1.6,29,999,{building:true,proj:'frostbolt',ps:1020,aoe:95,slow:true,ap:.92,aura:'atk',reach:380,spawnUnit:'sf_0',summon:7.0,block:.78,ico:'flak_tower',renderAs:'star_citadel'},'【城池】未來星際要塞核心中樞：高能等離子脈衝反擊、強化全軍火力並持續部署外骨骼磁軌步兵！'],
+ ['b_runway','大型戰略空軍基地','跑道機庫10架 · 戰機維修站',780,2600,38,24,480,0,1.1,30,999,{building:true,isAirbase:true,proj:'bullet',ps:920,antiAir:2.4,spawnUnit:'jet',summon:4.2,hangarCap:10,block:.68,ico:'barracks',renderAs:'airfield_runway'},'【建築】陸上大型軍用機場，擁有 10 架機庫容量，且所有友軍戰機與轟炸機皆可降落跑道休息、維修並補彈！'],
+ ['b_helipad','武裝直升機起降坪','直升機整備 · 4架機庫',460,1450,28,18,400,0,1.2,23,999,{building:true,isAirbase:true,proj:'bullet',ps:880,antiAir:1.8,spawnUnit:'heli',summon:5.0,hangarCap:4,block:.6,ico:'barracks',renderAs:'airfield_runway'},'【建築】前線直升機起降坪，定時起飛武裝直升機並為返航友軍空軍提供快速維修補給。'],
+ ['b_silo','洲際核彈地下發射井','深地碉堡 · 戰略核打擊',920,3200,320,38,1050,0,8.5,24,999,{building:true,proj:'nuke',ps:360,aoe:220,burn:24,ap:.98,block:.82,ico:'mlrs',renderAs:'missile_silo'},'【建築】深埋地下的抗核加固發射井，全圖超遠程發射戰略核導彈！'],
+ ['b_thaad','薩德反導防空陣地','制導防空 · 專克空軍',420,1380,145,22,680,0,1.6,21,999,{building:true,proj:'guided',ps:760,salvo:2,aoe:52,antiAir:3.6,ap:.92,block:.65,ico:'flak_tower',renderAs:'missile_silo'},'【建築】遠程區域防空反導陣地，雙聯精準制導飛彈鎖殺一切空中威脅！'],
+ ['b_radar','相控陣預警雷達站','580大範圍 · 全軍攻速增幅',380,1350,0,20,0,0,2.0,22,999,{building:true,aura:'haste',reach:580,block:.62,ico:'flak_tower',renderAs:'radar_station'},'【建築】大型旋轉相控陣雷達站，為周圍 580 範圍內所有友軍提供強大攻速與移速增幅！'],
+ ['b_tankfac','重型裝甲兵工廠','持續量產主戰坦克',640,2200,32,26,320,0,1.5,26,999,{building:true,proj:'bullet',ps:860,spawnUnit:'tank',summon:9.5,block:.72,ico:'barracks',renderAs:'tank_factory'},'【建築】自動化重工業兵工廠，每 9.5 秒生產一輛主戰坦克開赴前線！'],
+ ['b_mechbay','泰坦機甲整備庫','量產未來重裝機甲',780,2500,45,28,360,0,1.5,27,999,{building:true,proj:'bolt',ps:1020,spawnUnit:'sf_3',summon:11.5,block:.74,ico:'barracks',renderAs:'tank_factory'},'【建築】高科技機甲總裝車間，定期部署泰坦重裝機甲投入戰場！'],
+ ['b_navaldock','海軍船塢造船廠','水域修船 · 持續下水戰艦',580,2100,42,24,420,0,1.6,27,999,{naval:true,building:true,proj:'cannonball',ps:620,aura:'heal',reach:340,spawnUnit:'frigate',summon:10.5,block:.7,ico:'carrier',renderAs:'naval_dock'},'【海軍建築】部署於水域的軍港船塢，持續修復周圍受損艦船並定時下水風帆戰列艦！'],
+ ['b_trebtower','城頭配重投石樓','高聳木石樓 · 巨石轟擊',310,1280,118,22,600,0,3.4,21,999,{building:true,proj:'boulder',ps:450,aoe:86,kb:78,ap:.78,block:.62,ico:'artillery_tower',renderAs:'city_bastion'},'【建築】架設於高台之上的巨型配重投石機防禦樓，遠距砸碎敵軍陣型。'],
+ ['b_flametower','希臘火噴焰碉堡','近中距烈焰 · 焚燒步兵',290,1320,46,24,250,0,.55,19,999,{building:true,proj:'fireball',ps:420,aoe:62,burn:24,ap:.66,block:.68,ico:'watchtower',renderAs:'city_bastion'},'【建築】噴吐猛火油的堅固碉堡，瞬間將湧向城牆的步兵化作火海！'],
+ ['b_tesla','磁暴線圈防禦塔','高壓電弧 · 破甲癱瘓',420,1480,126,24,430,0,1.45,20,999,{building:true,proj:'frostbolt',ps:1180,aoe:78,slow:true,ap:.94,block:.68,ico:'flak_tower',renderAs:'tesla_coil'},'【建築】經典高壓磁暴線圈防禦塔，釋放致盲藍白電弧重創並癱瘓敵方裝甲！'],
+ ['b_prismtower','光稜聚焦防禦塔','超高能光束 · 貫穿折射',460,1420,165,22,520,0,1.85,20,999,{building:true,proj:'frostbolt',ps:1350,pierce:5,aoe:68,burn:16,ap:.96,block:.65,ico:'flak_tower',renderAs:'tesla_coil'},'【建築】未來光稜聚焦防禦塔，發射貫穿 5 名敵軍的高能灼熱光束！'],
+ ['b_shielddome','全域等離子護盾穹頂','380大範圍回血與庇護',520,2400,0,34,0,0,2.0,24,999,{building:true,healer:true,aura:'heal',reach:380,block:.82,ico:'med_tent',renderAs:'shield_dome'},'【建築】巨型能量穹頂發生器，為 380 範圍內所有友軍持續高速回血！'],
+ ['b_warpgate','星際折躍傳送門','異星折躍 · 源源喚出空軍',680,2350,55,26,380,0,1.6,25,999,{building:true,proj:'shadowbolt',ps:820,spawnUnit:'al_7',summon:6.2,block:.7,ico:'necro',renderAs:'warp_gate'},'【外星建築】閃耀紫光的空間折躍門，源源不斷傳送蟲族飛龍群支援空戰！'],
+ ['b_gothic','戰錘帝國哥特堡壘','重型爆彈碉堡 · 徵召星際戰士',690,2950,74,34,440,0,.95,25,999,{building:true,proj:'bullet',ps:1020,salvo:2,ap:.8,spawnUnit:'wh_0',summon:8.0,block:.78,ico:'watchtower',renderAs:'city_keep'},'【戰錘建築】帝國哥特式重甲碉堡，雙聯重爆彈掃射並持續增援原鑄星際戰士！'],
+ ['b_armory','軍械鍛造坊·糧倉','380範圍攻擊加成與補給',340,1450,0,20,0,0,2.0,22,999,{building:true,aura:'atk',reach:380,block:.58,ico:'barracks',renderAs:'city_drum'},'【建築】城內軍械庫與糧倉，為周圍 380 範圍內友軍提供持久攻擊力強化！']
 ]);
 roster('navy',[
  ['transport','两栖登陆舰','载兵 12 人 · 抢滩登陆',280,960,26,18,220,76,1.4,24,10.0,{naval:true,proj:'bullet',ps:760,block:.6,spawnUnit:'marine',summon:3.8,hangarCap:12},'【海军】重甲两栖运兵登陆舰，舱内满载 12 名特种突击兵（不无限再生），抵近岸边或接敌时连续投放抢滩登陆部队！'],
@@ -608,7 +675,14 @@ roster('navy',[
  ['fireship','赤壁火船','冲阵自爆 · 连环火海',160,210,75,4,34,124,0.9,14,2.8,{naval:true,suicideBoom:true,aoe:105,burn:16},'【海军】满载猛火油的艨艟火船，接敌或沉没时引爆烈焰火海！'],
  ['tower_ship','楼船水师','重甲巨舰 · 箭雨压制',230,640,30,14,300,62,1.1,22,7.5,{naval:true,proj:'arrow',ps:460,block:.45},'【海军】古代多层楼船，高甲抗箭，搭载精锐弓弩持续压制水面与沿岸。'],
  ['frigate','风帆战列舰','舷侧重炮 · 直线穿透',350,860,98,13,480,54,3.2,24,9.5,{naval:true,proj:'cannonball',ps:660,pierce:4,aoe:44,kb:60,ap:.8},'【海军】近代木质主力战舰，超远射程重炮穿透轰碎敌舰与岸防方阵。'],
- ['ironclad','铁甲无畏舰','钢铁堡垒 · 重炮轰炸',490,1380,122,22,540,46,3.6,27,13.0,{naval:true,proj:'boulder',ps:440,aoe:84,kb:75,ap:.85,block:.65},'【海军】蒸汽铁甲巨舰，极高护甲与远程减伤，主炮引发大范围毁灭炮击。']
+ ['ironclad','铁甲无畏舰','钢铁堡垒 · 重炮轰炸',490,1380,122,22,540,46,3.6,27,13.0,{naval:true,proj:'boulder',ps:440,aoe:84,kb:75,ap:.85,block:.65},'【海军】蒸汽铁甲巨舰，极高护甲与远程减伤，主炮引发大范围毁灭炮击。'],
+ ['cv_fujian','福建艦電磁彈射航母','3條電磁彈射 · 載機10架',1180,3400,58,30,600,42,.95,36,24.0,{naval:true,kite:true,isAirbase:true,proj:'bullet',ps:920,ap:.7,block:.76,spawnUnit:'jet',summon:2.6,hangarCap:10,ico:'carrier',renderAs:'carrier_emals'},'【現代航母】平直甲板搭配三條電磁彈射器，載機 10 架並可供所有友軍戰機降落休息、維修與補彈！'],
+ ['cv_nimitz','尼米茲級核動力航母','經典超級航母 · 載機9架',1080,3150,54,28,580,44,1.0,35,23.0,{naval:true,kite:true,isAirbase:true,proj:'bullet',ps:900,ap:.68,block:.74,spawnUnit:'jet',summon:2.8,hangarCap:9,ico:'carrier',renderAs:'carrier'},'【現代航母】核動力超級航母，機庫搭載 9 架艦載機，任何適配友軍飛機均可返航停靠整補！'],
+ ['cv_queen','伊麗莎白女王級雙島航母','雙艦島滑躍甲板 · 載機8架',980,2950,52,27,560,44,1.05,34,22.0,{naval:true,kite:true,isAirbase:true,proj:'bullet',ps:880,ap:.68,block:.72,spawnUnit:'jet',summon:2.9,hangarCap:8,ico:'carrier',renderAs:'carrier_twin'},'【現代航母】標誌性雙艦島設計與滑躍甲板，搭載 8 架戰機並支援友軍機群甲板整備！'],
+ ['cv_kuznetsov','庫茲涅佐夫級載機巡洋艦','滑躍甲板+反艦飛彈 · 8架',1040,3050,92,28,620,42,1.65,35,23.0,{naval:true,kite:true,isAirbase:true,proj:'rocket',ps:760,salvo:2,aoe:66,ap:.84,block:.74,spawnUnit:'jet',summon:3.1,hangarCap:8,ico:'carrier',renderAs:'carrier_ski'},'【現代航母】重武裝載機巡洋艦，自帶反艦飛彈齊射與 8 架艦載機機庫，並支援友軍戰機返航整補！'],
+ ['cv_shandong','山東艦滑躍式航母','近防火力強勁 · 載機8架',960,2900,56,28,570,45,.95,34,22.0,{naval:true,kite:true,isAirbase:true,proj:'bullet',ps:900,antiAir:2.2,ap:.68,block:.74,spawnUnit:'jet',summon:2.9,hangarCap:8,ico:'carrier',renderAs:'carrier_ski'},'【現代航母】國產滑躍式主力航母，防空近防砲密集，搭載 8 架戰機並支援友軍機群降落維修！'],
+ ['cv_enterprise','企業號二戰功勳航母','經典木質直甲板 · 載機8架',760,2350,46,22,520,48,1.05,33,19.0,{naval:true,kite:true,isAirbase:true,proj:'bullet',ps:820,antiAir:2.0,ap:.6,block:.66,spawnUnit:'jet',summon:3.2,hangarCap:8,ico:'carrier',renderAs:'carrier_ww2'},'【二戰航母】傳奇功勳航空母艦，直通木質甲板與密集高射砲，支援友軍戰機返航維修補彈！'],
+ ['cv_i400','伊-400潛水航空母艦','隱蔽突襲 · 載機5架',720,1750,64,20,520,58,1.4,28,14.0,{naval:true,kite:true,isAirbase:true,proj:'rocket',ps:720,aoe:55,ap:.8,block:.62,spawnUnit:'jet',summon:3.6,hangarCap:5,ico:'carrier',renderAs:'carrier_sub'},'【特種航母】巨型潛水航空母艦，高速隱蔽機動並搭載 5 架艦載機，同樣可供友軍戰機降落整備！']
 ]);
 roster('infantry',[
  ['spearman','民兵长矛手','反骑兵 · 廉价前排',40,115,16,4,36,62,1.05,10,1,{antiCav:1.8},'对骑兵与战象造成 180% 穿刺伤害。'],
@@ -1137,9 +1211,224 @@ defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,a
     ['F-15鷹式制空戰機','超音速雙發空優機',620,96,13,450,275,1.15,{air:true,kite:true,airDodge:.46,proj:'rocket',ps:760,salvo:2,aoe:72,antiAir:1.6,ap:.86,ico:'jet',renderAs:'jet'}],
     ['蘇-27側衛重戰機','眼鏡蛇機動重型機',650,98,14,445,270,1.18,{air:true,kite:true,airDodge:.48,proj:'rocket',ps:760,salvo:2,aoe:76,antiAir:1.5,ap:.86,ico:'jet',renderAs:'jet'}],
     ['F-22猛禽隱形戰機','五代隱形空中霸主',720,118,16,490,305,1.1,{air:true,kite:true,airDodge:.56,proj:'rocket',ps:840,salvo:2,aoe:82,antiAir:1.8,ap:.92,ico:'jet',renderAs:'jet'}],
-    ['殲-20威龍隱形戰機','鴨翼隱形遠程打擊',740,120,16,505,300,1.12,{air:true,kite:true,airDodge:.56,proj:'rocket',ps:850,salvo:2,aoe:84,antiAir:1.8,ap:.92,ico:'jet',renderAs:'jet'}]
+    ['殲-20威龍隱形戰機','鴨翼隱形遠程打擊',740,120,16,505,300,1.12,{air:true,kite:true,airDodge:.56,proj:'rocket',ps:850,salvo:2,aoe:84,antiAir:1.8,ap:.92,ico:'jet',renderAs:'stealth'}],
+    ['AK-47突擊步兵','經典高威突擊步槍',195,28,6,275,84,.46,{proj:'bullet',ps:820,ap:.6,ico:'marine'}],
+    ['M4A1卡賓特種兵','精準戰術卡賓步槍',200,26,7,295,86,.4,{proj:'bullet',ps:860,ap:.62,ico:'marine'}],
+    ['HK416海豹突擊隊','特戰精銳高速壓制',245,30,10,305,92,.36,{proj:'bullet',ps:880,ap:.68,crit:.22,ico:'marine'}],
+    ['SCAR-H重型步槍手','7.62大口徑破甲槍',220,38,8,335,80,.55,{proj:'bullet',ps:900,ap:.76,ico:'marine'}],
+    ['AUG無托突擊手','緊湊高射速無托槍',195,25,7,290,88,.38,{proj:'bullet',ps:860,ap:.6,ico:'marine'}],
+    ['95式突擊步槍兵','高機動標準步槍兵',205,26,7,290,86,.4,{proj:'bullet',ps:850,ap:.62,ico:'marine'}],
+    ['MP5衝鋒槍特警','近戰極速衝鋒掃射',210,19,9,215,96,.24,{proj:'bullet',ps:800,ap:.48,ico:'marine'}],
+    ['P90穿甲衝鋒兵','高容量穿甲衝鋒槍',215,21,9,235,98,.22,{proj:'bullet',ps:830,ap:.64,ico:'marine'}],
+    ['M249班用機槍手','百發彈鏈壓制火力',230,23,8,335,66,.24,{proj:'bullet',ps:860,ap:.6,ico:'marine'}],
+    ['PKM通用機槍組','重口徑持續火網',245,29,9,355,60,.28,{proj:'bullet',ps:880,ap:.68,ico:'marine'}],
+    ['M2白朗寧重機槍','12.7毫米點五零神槍',280,44,12,410,48,.34,{proj:'bullet',ps:940,ap:.8,antiAir:1.6,ico:'marine'}],
+    ['巴雷特M82A1狙擊','重型反器材大狙',145,175,4,610,58,2.6,{proj:'bullet',ps:1180,ap:.96,crit:.45,back:true,ico:'sniper'}],
+    ['AWM雪地狙擊手','超精準遠距點殺',135,148,4,580,66,2.1,{proj:'bullet',ps:1120,ap:.9,crit:.5,back:true,ico:'sniper'}],
+    ['SVD精確射手','半自動連發狙擊槍',155,78,5,485,72,1.15,{proj:'bullet',ps:1020,ap:.84,crit:.32,ico:'sniper'}],
+    ['AT4無後座力筒','便攜反裝甲火箭筒',170,132,5,345,74,2.4,{proj:'rocket',ps:640,aoe:54,ap:.92,antiLarge:1.85,ico:'mlrs'}],
+    ['陶氏反坦克飛彈','遠程線導重反坦',195,185,6,495,52,3.1,{proj:'rocket',ps:720,aoe:60,ap:.96,antiLarge:2.1,ico:'mlrs'}],
+    ['T-90M突破主戰坦','爆反裝甲俄系精銳',1340,152,31,455,84,2.3,{proj:'cannonball',ps:820,aoe:62,ap:.92,block:.72,ico:'tank',renderAs:'tank'}],
+    ['挑戰者2重型坦克','喬巴姆裝甲鐵龜坦',1680,148,36,455,70,2.5,{proj:'cannonball',ps:810,aoe:60,ap:.92,block:.8,ico:'tank',renderAs:'tank'}],
+    ['勒克萊爾主戰坦','自動裝彈高速法坦',1280,150,29,465,94,2.05,{proj:'cannonball',ps:830,aoe:58,ap:.92,block:.68,ico:'tank',renderAs:'tank'}],
+    ['K2黑豹主戰坦克','山地液壓高速重坦',1320,154,30,465,92,2.15,{proj:'cannonball',ps:830,aoe:60,ap:.93,block:.7,ico:'tank',renderAs:'tank'}],
+    ['10式輕快主戰坦','高射速靈巧主戰坦',1180,146,27,455,98,1.95,{proj:'cannonball',ps:820,aoe:56,ap:.91,block:.65,ico:'tank',renderAs:'tank'}],
+    ['虎王重型坦克','二戰終極裝甲巨獸',1650,168,34,455,54,2.95,{proj:'cannonball',ps:780,aoe:68,ap:.92,block:.75,ico:'tank',renderAs:'tank'}],
+    ['丘吉爾重型步兵坦','厚重裝甲緩行堡壘',1520,112,35,365,50,2.4,{proj:'cannonball',ps:700,aoe:52,ap:.84,block:.78,ico:'tank',renderAs:'tank'}],
+    ['雪曼螢火蟲反坦','17磅長管獵虎中坦',940,136,22,425,86,2.25,{proj:'cannonball',ps:800,aoe:50,ap:.9,ico:'tank',renderAs:'tank'}],
+    ['M26潘興重型坦克','90毫米重砲美式坦',1240,142,27,415,72,2.55,{proj:'cannonball',ps:760,aoe:58,ap:.88,ico:'tank',renderAs:'tank'}],
+    ['半人馬輪式突擊砲','超高速反坦輪式砲',760,126,18,445,124,2.15,{proj:'cannonball',ps:800,aoe:50,ap:.88,kite:true,ico:'tank',renderAs:'ifv'}],
+    ['04A履帶步兵戰車','百毫米低壓砲步戰',860,96,22,415,96,1.6,{proj:'cannonball',ps:740,aoe:56,ap:.84,ico:'tank',renderAs:'ifv'}],
+    ['美洲獅重型步戰車','高防護機砲步戰車',940,64,25,405,94,.75,{proj:'bullet',ps:920,aoe:38,ap:.82,block:.65,ico:'tank',renderAs:'ifv'}],
+    ['紅旗-9遠程防空車','超遠防空攔截飛彈',580,152,13,680,58,2.2,{proj:'rocket',ps:960,aoe:60,antiAir:3.6,ap:.92,ico:'flak_tower',renderAs:'sam'}],
+    ['S-400防空飛彈陣','全空域禁飛區重車',640,165,14,720,52,2.3,{proj:'rocket',ps:980,aoe:64,antiAir:3.8,ap:.94,ico:'flak_tower',renderAs:'sam'}],
+    ['薩德反導防空車','極速高空攔截系統',620,175,14,760,54,2.5,{proj:'rocket',ps:1060,aoe:62,antiAir:4.0,ap:.95,ico:'flak_tower',renderAs:'sam'}],
+    ['TOS-1A溫壓火箭車','近中程毀滅溫壓彈',980,115,24,440,68,3.8,{proj:'fireball',ps:480,salvo:4,aoe:86,burn:24,ap:.88,ico:'mlrs',renderAs:'mlrs'}],
+    ['PHL-03遠程火箭砲','十二管重型飽和打擊',480,74,10,820,66,4.6,{proj:'rocket',ps:580,salvo:6,aoe:74,burn:14,ap:.86,ico:'mlrs',renderAs:'mlrs'}],
+    ['東風戰術彈道飛彈','全圖毀滅單發巨彈',520,380,12,920,56,6.8,{proj:'rocket',ps:680,aoe:145,kb:110,burn:24,ap:.98,ico:'mlrs',renderAs:'sam'}],
+    ['F-14雄貓可變翼機','艦載重型長程攔截',640,98,13,475,280,1.2,{air:true,kite:true,airDodge:.46,proj:'rocket',ps:800,salvo:2,aoe:72,antiAir:1.7,ap:.86,ico:'jet',renderAs:'jet'}],
+    ['F-16戰隼多用途機','極致靈巧輕型戰機',520,84,11,425,275,1.05,{air:true,kite:true,airDodge:.5,proj:'rocket',ps:760,salvo:2,aoe:66,ap:.84,ico:'jet',renderAs:'jet'}],
+    ['F/A-18超級大黃蜂','全能艦載多用途機',620,94,13,445,265,1.12,{air:true,kite:true,airDodge:.45,proj:'rocket',ps:780,salvo:2,aoe:74,ap:.86,ico:'jet',renderAs:'jet'}],
+    ['F-35閃電II隱形機','艦載五代隱形打擊',680,114,15,485,280,1.15,{air:true,kite:true,airDodge:.54,proj:'rocket',ps:840,salvo:2,aoe:82,ap:.92,ico:'jet',renderAs:'stealth'}],
+    ['殲-10C猛龍戰機','鴨翼高機動中型機',560,90,12,440,280,1.08,{air:true,kite:true,airDodge:.49,proj:'rocket',ps:780,salvo:2,aoe:70,ap:.86,ico:'jet',renderAs:'jet'}],
+    ['殲-16重型炸彈卡車','雙座重載對地打擊',720,96,15,455,255,1.28,{air:true,kite:true,airDodge:.42,proj:'rocket',ps:760,salvo:3,aoe:76,ap:.88,ico:'jet',renderAs:'jet'}],
+    ['殲-35艦載隱形機','海空隱形雙發戰機',700,116,15,495,295,1.12,{air:true,kite:true,airDodge:.55,proj:'rocket',ps:840,salvo:2,aoe:82,antiAir:1.8,ap:.92,ico:'jet',renderAs:'stealth'}],
+    ['蘇-35側衛E重戰機','矢量推力超機動',680,102,14,465,285,1.15,{air:true,kite:true,airDodge:.5,proj:'rocket',ps:800,salvo:2,aoe:76,antiAir:1.6,ap:.88,ico:'jet',renderAs:'jet'}],
+    ['蘇-57重型隱形機','雙發隱形空優重機',730,118,16,495,300,1.12,{air:true,kite:true,airDodge:.54,proj:'rocket',ps:840,salvo:2,aoe:84,antiAir:1.8,ap:.92,ico:'jet',renderAs:'stealth'}],
+    ['米格-29支點戰機','輕巧格鬥前線戰機',540,86,11,420,280,1.08,{air:true,kite:true,airDodge:.48,proj:'rocket',ps:760,salvo:2,aoe:66,antiAir:1.5,ap:.84,ico:'jet',renderAs:'jet'}],
+    ['陣風全能戰鬥機','法式全能艦載戰機',610,96,13,455,275,1.1,{air:true,kite:true,airDodge:.48,proj:'rocket',ps:790,salvo:2,aoe:74,ap:.88,ico:'jet',renderAs:'jet'}],
+    ['颱風歐洲戰鬥機','雙發超音速空優機',620,94,13,460,285,1.08,{air:true,kite:true,airDodge:.49,proj:'rocket',ps:800,salvo:2,aoe:70,antiAir:1.7,ap:.86,ico:'jet',renderAs:'jet'}],
+    ['B-2幽靈隱形轟炸','飛翼隱形拋物線投彈',1480,152,20,500,195,2.6,{air:true,kite:true,airDodge:.52,proj:'bomb',ps:460,salvo:4,aoe:116,burn:18,ap:.92,ico:'jet',renderAs:'stealth'}],
+    ['B-52同溫層堡壘','八發巨型地毯拋物線轟炸',1850,122,22,490,165,2.7,{air:true,kite:true,airDodge:.18,proj:'bomb',ps:440,salvo:6,aoe:108,burn:16,ap:.88,ico:'jet',renderAs:'bomber'}],
+    ['圖-160白天鵝轟炸','超音速重型拋物線轟炸',1680,138,20,520,235,2.6,{air:true,kite:true,airDodge:.28,proj:'bomb',ps:520,salvo:4,aoe:110,ap:.92,ico:'jet',renderAs:'bomber'}],
+    ['AC-130空中砲艇','盤旋重砲火網洗地',1620,76,22,430,145,.55,{air:true,kite:true,airDodge:.18,proj:'cannonball',ps:820,aoe:62,ap:.88,ico:'jet',renderAs:'bomber'}],
+    ['直-10霹靂火武直','纖細精準反坦武直',640,68,14,395,182,.54,{air:true,kite:true,airDodge:.32,proj:'rocket',ps:780,aoe:48,ap:.84,ico:'heli',renderAs:'heli'}],
+    ['米-24雌鹿重武直','重甲飛行坦克直升機',960,64,20,375,165,.48,{air:true,kite:true,airDodge:.22,proj:'rocket',ps:740,aoe:50,ap:.82,ico:'heli',renderAs:'heli'}],
+    ['MQ-9死神無人機','長航時高空察打機',320,88,8,485,185,1.55,{air:true,kite:true,airDodge:.4,proj:'rocket',ps:720,aoe:58,ap:.86,ico:'jet',renderAs:'drone'}],
+    ['翼龍-2攻擊無人機','多掛載精準打擊機',340,84,8,475,180,1.45,{air:true,kite:true,airDodge:.4,proj:'rocket',ps:710,aoe:56,ap:.85,ico:'jet',renderAs:'drone'}],
+    ['柳葉刀巡飛彈機','自殺式精準撞擊機',140,185,3,38,245,.8,{air:true,airDodge:.45,suicideBoom:true,aoe:85,ap:.92,ico:'jet',renderAs:'drone'}],
+    ['EA-18G咆哮者電戰機','空中電磁壓制 · EMP干擾',680,78,14,470,270,1.25,{air:true,kite:true,airDodge:.48,proj:'frostbolt',ps:820,aoe:95,slow:true,ap:.88,aura:'fear',reach:340,ico:'jet',renderAs:'jet'}],
+    ['殲-16D電子戰機','反輻射電戰 · 大範圍癱瘓',740,86,15,485,265,1.25,{air:true,kite:true,airDodge:.45,proj:'frostbolt',ps:840,aoe:105,slow:true,ap:.9,aura:'fear',reach:360,ico:'jet',renderAs:'jet'}],
+    ['空警-500預警機','空戰大腦 · 全場雷達加速',980,28,16,420,185,1.4,{air:true,kite:true,airDodge:.3,proj:'bullet',ps:860,aura:'haste',reach:480,ico:'jet',renderAs:'bomber'}],
+    ['E-3望樓預警機','遠程空域指揮強化光環',1040,26,16,420,178,1.5,{air:true,kite:true,airDodge:.28,proj:'bullet',ps:860,aura:'atk',reach:480,ico:'jet',renderAs:'bomber'}],
+    ['運-9G高新干擾機','全頻段區域電子壓制',920,42,15,440,175,1.35,{air:true,kite:true,airDodge:.28,proj:'frostbolt',ps:760,aoe:125,slow:true,aura:'fear',reach:420,ico:'jet',renderAs:'bomber'}],
+    ['克拉蘇哈-4電戰車','地面電磁干擾 · 癱瘓敵陣',680,48,16,520,66,1.6,{proj:'frostbolt',ps:820,aoe:135,slow:true,ap:.8,aura:'fear',reach:380,ico:'flak_tower',renderAs:'sam'}],
+    ['高能微波反無人機車','HPM扇形微波 · 專燒空軍',760,96,18,465,72,1.1,{proj:'frostbolt',ps:1080,aoe:115,slow:true,antiAir:3.4,ap:.92,ico:'flak_tower',renderAs:'sam'}],
+    ['EMP電磁脈衝砲車','超高壓EMP癱瘓重裝甲',880,118,22,560,64,2.6,{proj:'frostbolt',ps:920,aoe:125,slow:true,ap:.96,antiLarge:1.6,ico:'tank',renderAs:'tank'}],
+    ['HARM反輻射飛彈車','超遠精準摧毀防空與雷達',560,165,12,720,68,2.8,{proj:'rocket',ps:880,aoe:66,ap:.96,back:true,ico:'mlrs',renderAs:'sam'}],
+    ['網電作戰指揮車','全場資料鏈攻速增幅',780,34,18,420,70,1.5,{proj:'bullet',ps:880,aura:'haste',reach:420,ico:'flak_tower',renderAs:'ifv'}],
+    ['東風-41戰略核導彈車','洲際核打擊 · 蘑菇雲毀滅',920,380,16,960,52,7.5,{proj:'nuke',ps:360,aoe:220,burn:24,ap:.98,ico:'mlrs',renderAs:'sam'}],
+    ['戰斧巡弋制導飛彈車','超遠精準制導鎖敵打擊',640,155,14,820,62,2.6,{proj:'guided',ps:540,salvo:2,aoe:78,ap:.94,ico:'mlrs',renderAs:'sam'}],
+    ['B-21突襲者隱形核轟機','次世代隱形拋物線投彈',1680,175,22,520,215,2.8,{air:true,kite:true,airDodge:.58,proj:'bomb',ps:480,salvo:5,aoe:124,burn:20,ap:.95,ico:'jet',renderAs:'stealth'}],
+    ['毒刺單兵制導防空兵','紅外追蹤飛彈 · 專克空軍',210,125,6,480,76,1.8,{proj:'guided',ps:620,aoe:42,antiAir:3.2,ap:.88,ico:'flak_tower'}]
   ];
+
+  // 10. +18 Unique Xianxia / Cultivation Units (New '修仙' Category + 3 Immortal Generals!)
+  addBatch('xianxia','xx',12,1.5,[
+    ['煉氣期外門弟子','御氣長劍 · 靈動突擊',165,28,6,34,92,.78,{crit:.22,ico:'samurai'}],
+    ['築基期御劍修士','飛劍中程斬殺',260,44,10,245,96,.95,{proj:'bolt',ps:680,ap:.55,crit:.25,ico:'gen_arthur'}],
+    ['金丹期御劍真人','御劍飛行 · 劍光破甲',480,68,14,320,175,.9,{air:true,kite:true,airDodge:.3,proj:'bolt',ps:760,salvo:2,ap:.68,ico:'gen_arthur',renderAs:'jet'}],
+    ['元嬰期劍道老祖','凌空虛渡 · 四劍齊飛',860,74,18,385,185,.95,{air:true,kite:true,airDodge:.36,proj:'bolt',ps:820,salvo:4,ap:.78,crit:.3,ico:'gen_arthur',renderAs:'jet'}],
+    ['化神期劍仙','一劍破萬法 · 貫穿劍氣',1280,138,22,430,210,1.05,{air:true,kite:true,airDodge:.42,proj:'cannonball',ps:960,pierce:6,aoe:58,ap:.9,crit:.38,ico:'gen_arthur',renderAs:'stealth'}],
+    ['渡劫期九天尊者','引動九霄神雷轟炸',1950,168,26,480,165,1.8,{air:true,kite:true,airDodge:.35,proj:'frostbolt',ps:720,aoe:118,slow:true,ap:.92,ico:'pyro',renderAs:'heli'}],
+    ['蜀山萬劍歸宗長老','六柄飛劍漫天齊射',780,58,15,395,125,1.15,{proj:'bolt',ps:800,salvo:6,ap:.74,ico:'gen_arthur'}],
+    ['丹鼎閣煉丹長老','九轉金丹群體大回血',420,38,12,320,76,1.35,{healer:true,aura:'heal',reach:260,ico:'cleric'}],
+    ['天機閣陣法宗師','八卦困陣範圍冰凍減速',460,64,14,375,72,1.5,{proj:'frostbolt',ps:560,aoe:115,slow:true,ap:.72,ico:'gen_zhuge'}],
+    ['茅山神符真人','三連烈焰神符爆破',380,56,10,340,80,1.25,{proj:'fireball',ps:540,salvo:3,aoe:62,burn:18,ap:.68,ico:'pyro'}],
+    ['金剛不壞體修','肉身成聖 · 震地巨力',1450,86,32,46,84,1.05,{cleave:76,kb:78,block:.72,ap:.65,ico:'titan'}],
+    ['傀儡宗機關真人','持續喚出青銅戰傀',540,48,14,340,68,1.5,{proj:'shadowbolt',ps:520,spawnUnit:'spartan',summon:6.5,ico:'necro'}],
+    ['魔道血煞老魔','血海狂斬 · 超高吸血',980,96,16,44,118,.74,{lifesteal:.55,cleave:64,berserk:true,crit:.35,ico:'gen_lubu'}],
+    ['合歡宗幻音仙子','範圍靡音減速控場',360,46,9,325,94,1.15,{proj:'frostbolt',ps:580,aoe:105,slow:true,ico:'frost'}],
+    ['雷部掌雷天師','掌心五雷轟頂破甲',520,108,12,390,82,1.55,{proj:'frostbolt',ps:820,aoe:76,ap:.88,ico:'pyro'}]
+  ]);
+  addBatch('general','gxx',18,6.0,[
+    ['青蓮劍仙·李太白','十步殺一人',2100,132,22,420,210,.9,{air:true,kite:true,airDodge:.42,proj:'bolt',ps:920,salvo:3,ap:.85,crit:.42,aura:'speed',reach:280,ult:10,ultType:'beam',ico:'gen_arthur',renderAs:'stealth'},'【修仙名將】御劍凌空，大招釋放貫穿全圖的青蓮劍光！'],
+    ['通天劍尊','誅仙四劍陣',2450,148,25,440,185,1.0,{air:true,kite:true,airDodge:.38,proj:'fireball',ps:780,salvo:2,aoe:78,ap:.9,aura:'atk',reach:300,ult:11,ultType:'arrowrain',ico:'gen_arthur',renderAs:'stealth'},'【修仙名將】強化周圍攻擊，大招召喚 24 道誅仙劍雨覆蓋敵陣！'],
+    ['太清道德天尊','太極兩儀陣',2600,115,28,390,155,1.15,{air:true,kite:true,airDodge:.35,proj:'frostbolt',ps:720,aoe:95,slow:true,aura:'heal',reach:340,ult:11,ultType:'holy',ico:'gen_zhuge',renderAs:'heli'},'【修仙名將】超大範圍持續回血，大招太極神光庇護全軍並震退敵魔！']
+  ]);
   addBatch('modern','mx',16,4.0,modNames);
+
+  // 11. +18 Unique Future Tech Units (New '未來' scifi Category!)
+  addBatch('scifi','sf',15,4.2,[
+    ['外骨骼磁軌步兵','動力外骨骼 · 高斯穿甲步槍',340,48,14,340,104,.55,{proj:'bullet',ps:1120,ap:.78,ico:'marine'}],
+    ['光學隱形特工','光學迷彩 · 等離子光刃背刺',290,115,10,42,145,.68,{back:true,crit:.48,ap:.88,ico:'assassin'}],
+    ['高能雷射突擊隊','脈衝雷射束 · 高速點殺',360,54,14,380,96,.62,{proj:'bolt',ps:1250,ap:.85,ico:'marine'}],
+    ['泰坦重裝機甲','雙聯磁軌砲 · 鋼鐵巨神',1980,165,30,430,74,1.6,{large:true,proj:'cannonball',ps:920,salvo:2,aoe:68,ap:.9,block:.68,ico:'titan',renderAs:'mech'}],
+    ['暴風軌道空降機甲','高機動噴射機甲 · 電漿重刃',1520,138,24,52,126,.85,{large:true,cleave:78,kb:80,ap:.85,charge:1.8,ico:'titan',renderAs:'mech'}],
+    ['等離子步行戰車','四足步行機甲 · 雙電漿砲',1420,128,26,410,78,1.35,{large:true,proj:'fireball',ps:760,salvo:2,aoe:76,burn:18,ap:.88,ico:'tank',renderAs:'mech'}],
+    ['磁軌主戰坦克','超電磁軌道主砲 · 貫穿裝甲',1680,195,32,520,86,2.2,{proj:'cannonball',ps:1250,pierce:5,aoe:64,ap:.96,block:.72,ico:'tank',renderAs:'hovertank'}],
+    ['光稜折射戰車','高能光稜主砲 · 折射灼燒',1120,175,20,510,82,2.1,{proj:'frostbolt',ps:1200,pierce:4,aoe:88,burn:16,ap:.94,ico:'tank',renderAs:'prism'}],
+    ['反物質重砲車','超遠反物質拋物線砲轟',980,265,18,680,66,3.4,{proj:'boulder',ps:560,aoe:138,kb:90,ap:.96,ico:'mlrs',renderAs:'prism'}],
+    ['能量護盾發生車','力場護盾 · 大範圍持續修復',1240,36,26,320,76,1.4,{healer:true,aura:'heal',reach:340,block:.75,ico:'med_tent',renderAs:'shieldgen'}],
+    ['納米蟲群矩陣車','釋放自主納米獵殺無人機',1050,62,22,400,72,1.5,{proj:'bullet',ps:920,spawnUnit:'sf_16',summon:5.5,ico:'mlrs',renderAs:'shieldgen'}],
+    ['反重力懸浮戰列艦','空天巡洋艦 · 全向雷射齊射',2450,142,28,510,125,1.25,{air:true,kite:true,airDodge:.28,proj:'guided',ps:720,salvo:3,aoe:74,ap:.92,ico:'carrier',renderAs:'hovertank'}],
+    ['軌道雷射信標車','鎖定敵陣引導軌道制導光束',820,210,16,660,72,2.8,{proj:'guided',ps:820,aoe:110,burn:22,ap:.96,ico:'flak_tower',renderAs:'prism'}],
+    ['曲率突擊戰機','亞光速躍遷 · 制導等離子彈',880,132,18,520,320,.95,{air:true,kite:true,airDodge:.6,proj:'guided',ps:860,salvo:2,aoe:76,antiAir:2.2,ap:.94,ico:'jet',renderAs:'stealth'}],
+    ['等離子戰略轟炸機','高空拋物線投擲等離子炸彈',1920,188,24,540,225,2.4,{air:true,kite:true,airDodge:.45,proj:'bomb',ps:500,salvo:5,aoe:132,burn:22,ap:.95,ico:'jet',renderAs:'bomber'}],
+    ['浮空母艦·天空要塞','空中機庫 8 架 · 制霸蒼穹',3600,88,30,560,78,1.1,{air:true,kite:true,airDodge:.15,proj:'guided',ps:780,ap:.88,block:.72,spawnUnit:'sf_13',summon:3.0,hangarCap:8,ico:'carrier',renderAs:'carrier_air'}],
+    ['自爆反物質無人機','高速俯衝 · 反物質湮滅爆破',180,260,4,40,295,.8,{air:true,airDodge:.52,suicideBoom:true,aoe:125,ap:.98,ico:'jet',renderAs:'drone'}],
+    ['AI蜂群指揮主機','量子算力 · 全場極限加速光環',1180,45,22,420,74,1.3,{proj:'frostbolt',ps:950,aura:'haste',reach:480,ico:'flak_tower',renderAs:'shieldgen'}]
+  ]);
+
+  // 12. +15 Unique Alien Tech Units (New '外星' alien Category — incl. 水滴 & 二向箔!)
+  addBatch('alien','al',16,4.8,[
+    ['三體水滴探測器','強互作用力 · 超高速穿刺毀滅',3200,245,42,320,360,.45,{air:true,airDodge:.74,proj:'cannonball',ps:1500,pierce:8,aoe:62,ap:.99,kb:95,ico:'jet',renderAs:'droplet'}],
+    ['歌者二向箔投擲器','發射二向箔 · 展開二維化跌落',2100,195,28,620,165,5.2,{air:true,kite:true,airDodge:.48,proj:'foil',ps:420,aoe:155,ap:.99,ico:'pyro',renderAs:'foil_unit'}],
+    ['智子干擾核心','質子展開 · 全場電磁恐懼癱瘓',1480,72,24,520,185,1.4,{air:true,kite:true,airDodge:.52,proj:'frostbolt',ps:980,aoe:145,slow:true,aura:'fear',reach:520,ap:.92,ico:'frost',renderAs:'ufo'}],
+    ['星際飛碟母艦(UFO)','經典外星幽浮 · 電漿死光掃射',2850,158,28,500,155,1.15,{air:true,kite:true,airDodge:.36,proj:'frostbolt',ps:960,salvo:3,aoe:86,ap:.92,spawnUnit:'al_7',summon:6.5,ico:'carrier',renderAs:'ufo'}],
+    ['外星三腳架步行機','高熱死光掃蕩 · 護盾裝甲',2150,168,26,480,92,1.45,{large:true,proj:'fireball',ps:940,pierce:4,aoe:88,burn:24,ap:.92,block:.65,ico:'titan',renderAs:'tripod'}],
+    ['蟲族利維坦巨獸','深空生物母艦 · 源源湧出飛龍',3100,118,24,420,115,1.35,{air:true,large:true,proj:'shadowbolt',ps:620,salvo:3,aoe:82,spawnUnit:'al_7',summon:5.2,ico:'necro',renderAs:'alien_bio'}],
+    ['蟲族雷獸重甲蟲','巨型鐮刀甲蟲 · 範圍撕裂',2250,136,34,54,104,.9,{large:true,cleave:86,kb:85,ap:.8,block:.62,ico:'titan',renderAs:'alien_bio'}],
+    ['蟲族飛龍群','高速生物空軍 · 酸液刃彈射',480,68,10,330,225,.82,{air:true,kite:true,airDodge:.42,proj:'shadowbolt',ps:760,pierce:3,ap:.78,ico:'jet',renderAs:'alien_bio'}],
+    ['星靈黃金航母','折躍 8 架攔截機 · 黃金艦隊',3400,64,30,540,105,1.2,{air:true,kite:true,airDodge:.24,proj:'frostbolt',ps:860,block:.74,spawnUnit:'al_7',summon:2.8,hangarCap:8,ico:'carrier',renderAs:'ufo'}],
+    ['星靈巨像步行機','雙熱能射線 · 橫掃成片步兵',1950,152,24,490,84,1.55,{large:true,proj:'fireball',ps:960,salvo:2,aoe:96,burn:20,ap:.88,ico:'titan',renderAs:'tripod'}],
+    ['虛空輝光戰艦','稜鏡聚焦射線 · 專熔巨艦與泰坦',1680,178,22,470,155,1.1,{air:true,kite:true,airDodge:.34,proj:'frostbolt',ps:1080,antiLarge:2.2,ap:.95,ico:'jet',renderAs:'ufo'}],
+    ['晶能方尖碑防禦塔','外星水晶巨塔 · 高壓電弧守衛',2400,185,32,560,0,1.5,{building:true,proj:'frostbolt',ps:1150,aoe:92,slow:true,antiAir:2.2,ap:.94,block:.7,ico:'flak_tower',renderAs:'obelisk'}],
+    ['異形皇后母體','強酸血液 · 高速近戰獵殺',1450,118,20,48,132,.72,{lifesteal:.35,cleave:66,crit:.38,ap:.86,ico:'berserker',renderAs:'alien_bio'}],
+    ['暗物質殲星艦','軌道暗物質核彈 · 滅世巨艦',4400,295,36,640,92,4.6,{air:true,kite:true,large:true,proj:'nuke',ps:420,aoe:205,burn:24,ap:.98,ico:'carrier',renderAs:'ufo'}],
+    ['矽基晶體泰坦','純晶體生命 · 震盪衝擊波',2650,148,38,56,76,1.15,{large:true,cleave:94,kb:95,block:.78,ap:.88,ico:'titan',renderAs:'tripod'}]
+  ]);
+
+
+  // 14. +50 Unique Warhammer 40K & Fantasy Units (New '戰錘' warhammer Category — all with bespoke Canvas 2D models!)
+  addBatch('warhammer','wh',14,3.8,[
+    // Imperium of Man (40K)
+    ['原鑄星際戰士','爆彈槍 · 帝皇天使',420,58,18,340,94,.62,{proj:'bullet',ps:1020,ap:.74,block:.45,ico:'marine',renderAs:'wh_marine'}],
+    ['終結者重甲老兵','戰術無畏甲 · 風暴爆彈',960,82,30,290,64,.82,{proj:'bullet',ps:920,salvo:2,ap:.8,block:.74,cleave:46,ico:'titan',renderAs:'wh_terminator'}],
+    ['跳包突擊星際戰士','噴氣跳包 · 鏈鋸劍突襲',480,74,16,44,185,.66,{air:true,airDodge:.28,charge:1.9,cleave:52,ap:.76,ico:'berserker',renderAs:'wh_jump'}],
+    ['紅emptor無畏機甲','石棺步行機 · 等離子重砲',2150,158,34,420,66,1.6,{large:true,proj:'fireball',ps:780,aoe:78,burn:18,ap:.9,block:.74,ico:'titan',renderAs:'wh_dread'}],
+    ['帝國禁軍衛士','黃金精金甲 · 守衛者長矛',1680,136,34,260,115,.72,{proj:'bolt',ps:980,cleave:64,ap:.9,block:.72,crit:.32,ico:'gen_arthur',renderAs:'wh_custodes'}],
+    ['灰騎士獵魔聖武士','銀白靈能甲 · 專克惡魔',1250,112,28,280,102,.8,{proj:'frostbolt',ps:920,aoe:54,antiLarge:1.8,ap:.88,block:.68,ico:'paladin',renderAs:'wh_custodes'}],
+    ['戰鬥修女聖焰軍團','帝皇聖火 · 重型噴火淨化',360,54,15,210,88,.62,{proj:'fireball',ps:480,aoe:56,burn:22,ap:.7,ico:'flamethrower',renderAs:'wh_marine'}],
+    ['機械教護教軍游俠','伽馬步槍 · 歐姆彌賽亞',260,64,11,450,86,1.05,{proj:'bullet',ps:1140,ap:.84,crit:.28,ico:'sniper',renderAs:'wh_skitarii'}],
+    ['克里格死亡兵團','防毒面具 · 狂熱戰壕齊射',165,32,9,310,82,.65,{proj:'bullet',ps:880,ap:.55,ico:'marine',renderAs:'wh_guard'}],
+    ['黎曼魯斯主戰坦克','帝國鋼鐵洪流 · 戰砲轟鳴',1720,148,32,460,68,2.4,{proj:'cannonball',ps:740,aoe:78,kb:70,ap:.88,block:.72,ico:'tank',renderAs:'wh_lemanruss'}],
+    ['毒刃超重型坦克','十一管巨砲 · 移動鋼鐵堡壘',3850,198,40,560,46,2.8,{large:true,proj:'cannonball',ps:780,salvo:3,aoe:105,kb:90,ap:.94,block:.8,ico:'tank',renderAs:'wh_baneblade'}],
+    ['帝國騎士戰爭機甲','熱熔巨砲 · 離子護盾巨神',3400,210,36,480,82,2.1,{large:true,proj:'fireball',ps:860,aoe:105,burn:22,ap:.94,block:.76,ico:'titan',renderAs:'wh_knight'}],
+    ['戰將級帝皇泰坦','雙聯火山砲 · 神之戰爭機器',6800,340,46,660,42,3.4,{large:true,proj:'nuke',ps:460,aoe:195,burn:26,ap:.98,block:.84,ico:'titan',renderAs:'wh_titan'}],
+    ['雷鷹砲艇運輸機','空天重砲 · 投放星際戰士',2450,128,28,500,195,1.6,{air:true,kite:true,airDodge:.28,proj:'rocket',ps:760,salvo:3,aoe:86,ap:.9,spawnUnit:'wh_0',summon:6.5,hangarCap:6,ico:'jet',renderAs:'wh_thunderhawk'}],
+
+    // Chaos Space Marines & Daemons
+    ['混沌星際戰士','褻瀆爆彈 · 黑暗異端軍團',430,62,18,330,94,.64,{proj:'bullet',ps:980,ap:.74,ico:'marine',renderAs:'wh_chaos_marine'}],
+    ['恐虐狂戰士','血祭血神 · 雙持鏈鋸斧',580,96,17,44,128,.62,{cleave:58,berserk:true,crit:.36,lifesteal:.22,ap:.78,ico:'berserker',renderAs:'wh_chaos_marine'}],
+    ['納垢瘟疫戰士','腐朽劇毒 · 極致耐打死守',880,52,28,260,62,1.0,{proj:'shadowbolt',ps:620,aoe:62,slow:true,aura:'fear',reach:180,block:.68,ico:'necro',renderAs:'wh_plague'}],
+    ['千子紅字軍團巫師','亞空間魔火 · 奸奇秘術',560,78,20,390,78,1.15,{proj:'frostbolt',ps:840,aoe:74,ap:.88,ico:'pyro',renderAs:'wh_tzeentch'}],
+    ['色孽噪音戰士','聲波爆能砲 · 震盪音波',440,74,15,370,96,.85,{proj:'frostbolt',ps:880,aoe:84,kb:65,ap:.8,ico:'pyro',renderAs:'wh_chaos_marine'}],
+    ['恐虐嗜血狂魔','八重巨斧 · 飛翼毀滅大魔',3200,195,28,62,175,.85,{air:true,large:true,cleave:92,kb:95,berserk:true,crit:.4,ap:.92,ico:'gen_lubu',renderAs:'wh_daemon_wing'}],
+    ['納垢大不淨者','慈父瘟疫鐘 · 召喚毒霧回血',4200,124,34,260,58,1.5,{large:true,proj:'shadowbolt',ps:520,aoe:125,slow:true,aura:'heal',reach:260,block:.7,ico:'titan',renderAs:'wh_plague'}],
+    ['奸奇萬變魔君','雙頭巨鳥大魔 · 亞空間雷暴',2850,172,24,490,155,1.45,{air:true,kite:true,airDodge:.34,proj:'frostbolt',ps:880,salvo:3,aoe:105,ap:.94,ico:'pyro',renderAs:'wh_tzeentch'}],
+    ['色孽守密者','四臂極速魔爪 · 魅惑斬殺',2450,164,22,52,215,.55,{large:true,cleave:76,crit:.48,lifesteal:.32,ap:.9,ico:'assassin',renderAs:'wh_daemon_wing'}],
+    ['混沌地獄飛龍','生化魔龍 · 煉獄吐息空襲',2250,142,24,410,220,1.25,{air:true,kite:true,airDodge:.36,proj:'fireball',ps:780,aoe:102,burn:24,ap:.88,ico:'jet',renderAs:'wh_daemon_wing'}],
+
+    // Xenos (Orks, Necrons, Tyranids, Aeldari, T'au)
+    ['綠皮獸人砍砍小子','WAAAGH衝鋒 · 砍刀突突槍',240,46,8,38,108,.72,{berserk:true,charge:1.5,ico:'berserker',renderAs:'wh_ork'}],
+    ['綠皮巨型戰爭老大','巨型動力爪 · 全場WAAAGH加速',1480,128,24,52,102,.88,{large:true,cleave:78,kb:85,aura:'haste',reach:300,ap:.84,ico:'titan',renderAs:'wh_ork'}],
+    ['綠皮踩踩巨神機甲','廢鐵巨神 · 亂轟火箭與巨鋸',4600,192,36,520,44,2.2,{large:true,proj:'rocket',ps:620,salvo:5,aoe:112,kb:90,ap:.9,block:.76,ico:'titan',renderAs:'wh_stompa'}],
+    ['太空死靈不朽者','活體金屬 · 翠綠高斯剝離槍',480,68,20,380,74,.9,{proj:'frostbolt',ps:1040,ap:.92,lifesteal:.18,ico:'marine',renderAs:'wh_necron'}],
+    ['太空死靈黑石方尖碑','懸浮金字塔 · 傳送召喚死靈',3800,165,36,480,58,1.9,{air:true,large:true,proj:'frostbolt',ps:980,aoe:110,ap:.95,spawnUnit:'wh_27',summon:5.8,block:.78,ico:'flak_tower',renderAs:'wh_monolith'}],
+    ['星神碎片·擁夜者','死神鐮刀 · 吞噬靈魂星神',3100,215,28,360,165,1.05,{air:true,airDodge:.46,proj:'shadowbolt',ps:1020,pierce:5,lifesteal:.45,ap:.98,ico:'necro',renderAs:'wh_ctan'}],
+    ['泰倫蟲群刀蟲','無窮蟲海 · 極速利爪撕咬',155,36,5,34,142,.56,{charge:1.6,crit:.25,ico:'assassin',renderAs:'wh_tyranid'}],
+    ['泰倫劊子手巨獸','活體攻城錘 · 重甲衝撞',2100,148,32,54,96,.95,{large:true,charge:2.2,cleave:82,kb:95,ap:.86,ico:'titan',renderAs:'wh_carnifex'}],
+    ['泰倫蟲巢暴君','心靈網路核心 · 飛翼生物巨君',2650,156,28,360,155,1.0,{air:true,large:true,proj:'shadowbolt',ps:820,salvo:2,aoe:78,aura:'atk',reach:340,ap:.9,ico:'necro',renderAs:'wh_carnifex'}],
+    ['靈族冥骨幽靈騎士','優雅冥骨巨神 · 幽靈重劍',2950,192,28,480,122,1.35,{large:true,proj:'bolt',ps:1180,pierce:5,aoe:76,ap:.95,crit:.38,ico:'gen_arthur',renderAs:'wh_eldar'}],
+    ['靈族丑角劇團影舞者','全息幻影 · 致命舞步背刺',420,124,10,42,172,.52,{back:true,crit:.55,ap:.88,ico:'assassin',renderAs:'wh_eldar'}],
+    ['鈦帝國火戰士小隊','脈衝步槍 · 超遠為了上上善道',265,58,12,445,86,.82,{proj:'frostbolt',ps:1100,ap:.82,ico:'marine',renderAs:'wh_tau'}],
+    ['鈦帝國激流戰鬥服','離子加速器 · 噴射機甲風箏',2250,168,28,540,128,1.5,{large:true,kite:true,proj:'frostbolt',ps:1080,aoe:94,ap:.92,block:.7,ico:'titan',renderAs:'wh_tau_suit'}],
+    ['鈦帝國風暴潮重型機甲','脈衝爆裂巨砲 · 雙聯飛彈艙',3450,228,34,640,68,2.2,{large:true,proj:'guided',ps:760,salvo:3,aoe:112,ap:.95,block:.76,ico:'mlrs',renderAs:'wh_tau_suit'}],
+
+    // Warhammer Fantasy / Old World
+    ['帝國半獅鷲騎士','板甲騎槍 · 巨獸衝鋒破陣',680,78,22,46,142,.92,{cav:true,charge:2.3,kb:68,ap:.74,ico:'lancer',renderAs:'wh_fantasy_cav'}],
+    ['帝國蒸汽坦克','黃銅鍋爐鐵獸 · 重砲碾壓',1950,138,34,460,64,2.5,{large:true,proj:'cannonball',ps:680,aoe:76,kb:80,ap:.86,block:.78,ico:'tank',renderAs:'wh_steamtank'}],
+    ['矮人屠夫王室衛隊','莫西干紅髮 · 雙符文斧屠龍',520,86,12,38,94,.66,{berserk:true,antiLarge:2.4,crit:.38,ap:.82,ico:'berserker',renderAs:'wh_dwarf'}],
+    ['矮人旋翼轟炸機','蒸氣旋翼 · 拋物線投擲符文彈',780,96,16,380,172,2.0,{air:true,kite:true,airDodge:.3,proj:'bomb',ps:420,salvo:3,aoe:86,burn:14,ap:.82,ico:'heli',renderAs:'wh_gyro'}],
+    ['高等精靈鳳凰守衛','阿蘇焉聖焰 · 堅不可摧長戟',640,74,24,46,98,.78,{antiCav:2.0,antiLarge:1.6,block:.72,ap:.76,ico:'spearman',renderAs:'wh_eldar'}],
+    ['蜥蜴人恐龍巨蜥暴龍','古聖戰爭暴龍 · 撕裂巨獸',2250,152,26,56,124,.95,{large:true,charge:2.0,antiLarge:1.9,cleave:84,kb:90,ap:.82,ico:'titan',renderAs:'wh_dino'}],
+    ['鼠人末日滾輪','次元石閃電巨輪 · 瘋狂輾壓',1450,118,20,280,152,.9,{large:true,charge:2.2,proj:'frostbolt',ps:780,aoe:72,kb:78,ap:.86,ico:'tank',renderAs:'wh_doomwheel'}],
+    ['鼠人次元石加特林','瘋狂掃射 · 翠綠次元子彈',260,36,6,370,74,.28,{proj:'frostbolt',ps:920,ap:.78,ico:'marine',renderAs:'wh_skaven'}],
+    ['吸血鬼鮮血騎士','猩紅古龍騎士 · 致命吸血衝鋒',820,96,24,48,148,.82,{cav:true,charge:2.4,lifesteal:.38,ap:.78,ico:'lancer',renderAs:'wh_fantasy_cav'}],
+    ['古墓王死靈斯芬克斯','黑曜石巨像 · 展翼斬首巨刃',2650,168,34,58,136,1.0,{air:true,large:true,antiLarge:2.2,cleave:88,block:.72,ap:.88,ico:'titan',renderAs:'wh_sphinx'}],
+    ['震旦天朝陶俑哨兵','翡翠兵馬巨神 · 巨型偃月刀',2850,164,34,62,82,1.05,{large:true,cleave:96,kb:92,block:.76,ap:.86,ico:'gen_guanyu',renderAs:'wh_cathay'}],
+    ['震旦天朝孔明燈戰船','浮空巨燈砲台 · 連環火箭洗地',1650,92,20,520,105,2.2,{air:true,kite:true,proj:'rocket',ps:620,salvo:5,aoe:88,burn:16,ap:.84,ico:'mlrs',renderAs:'wh_skyjunk'}]
+  ]);
+
+  // 15. +8 Iconic Warhammer Legendary Generals & Primarchs (in '將領' Category!)
+  addBatch('general','gwh',20,7.5,[
+    ['人類帝皇','靈能黃金烈焰',5200,245,38,440,145,.82,{proj:'fireball',ps:1020,aoe:95,cleave:96,ap:.98,block:.8,aura:'atk',reach:420,ult:10,ultType:'beam',ico:'gen_arthur',renderAs:'wh_emperor'},'【戰錘40K帝皇】人類之主，身披璀璨黃金靈能光環，大招釋放貫穿全圖的帝皇靈能聖焰！'],
+    ['極限戰士原體·基里曼','帝皇之劍',3400,175,34,260,125,.78,{proj:'fireball',ps:920,cleave:82,ap:.94,block:.76,aura:'haste',reach:380,ult:10,ultType:'rally',ico:'gen_caesar',renderAs:'wh_primarch'},'【戰錘40K原體】馬庫拉格之主，大幅提升全軍戰術攻速，大招集結庇護周圍帝國大軍！'],
+    ['戰帥·荷魯斯·盧佩卡爾','世界粉碎者',3800,198,36,240,128,.82,{proj:'bullet',ps:960,salvo:2,cleave:88,kb:90,ap:.95,block:.76,aura:'atk',reach:360,ult:10,ultType:'leap',ico:'gen_lubu',renderAs:'wh_chaos_primarch'},'【戰錘40K原體】叛亂戰帥，揮舞世界粉碎者重錘與荷魯斯之爪，大招毀天滅地躍擊敵陣！'],
+    ['猩紅之王·馬格努斯','亞空間風暴',3200,185,28,500,165,1.1,{air:true,kite:true,airDodge:.38,proj:'frostbolt',ps:960,salvo:3,aoe:105,ap:.96,aura:'fear',reach:380,ult:10,ultType:'firestorm',ico:'pyro',renderAs:'wh_tzeentch'},'【戰錘40K原體】千子魔君原體，御風施展亞空間秘術，大招降下毀滅靈能風暴！'],
+    ['吞世者原體·安格隆','屠夫之釘狂怒',3600,218,30,62,185,.65,{air:true,large:true,cleave:96,berserk:true,lifesteal:.35,crit:.44,ap:.95,aura:'speed',reach:320,ult:9,ultType:'slash',ico:'gen_lubu',renderAs:'wh_daemon_wing'},'【戰錘40K原體】血神惡魔原體，高速飛翼衝陣、超高吸血狂斬！'],
+    ['掠奪者·阿巴頓','黑暗遠征戰帥',3350,182,34,260,122,.78,{proj:'bullet',ps:940,salvo:2,cleave:84,ap:.94,block:.74,aura:'atk',reach:340,ult:10,ultType:'slash',ico:'gen_lubu',renderAs:'wh_chaos_primarch'},'【戰錘40K傳奇】黑色軍團之主，手持魔劍德拉查延與荷魯斯之爪橫掃戰場！'],
+    ['帝國皇帝·卡爾·弗蘭茨','死亡之爪俯衝',2950,158,30,64,175,.82,{air:true,large:true,cleave:84,kb:88,ap:.9,aura:'atk',reach:360,ult:10,ultType:'rally',ico:'gen_arthur',renderAs:'wh_griffon'},'【中古戰錘】騎乘巨型獅鷲「死亡之爪」，手握戰錘蓋爾·瑪拉茲號令帝國！'],
+    ['永世神選·艾查恩','終焉之主',3550,188,34,260,132,.8,{proj:'fireball',ps:860,aoe:82,cleave:88,burn:22,ap:.94,block:.74,aura:'fear',reach:360,ult:10,ultType:'firestorm',ico:'gen_lubu',renderAs:'wh_chaos_primarch'},'【中古戰錘】混沌四神共同賜福的永世神選，大招召喚終焉烈焰席捲全場！']
+  ]);
+
+  // 13. +2 Sci-Fi / Alien Legendary Generals
+  addBatch('general','gsf',19,6.5,[
+    ['執劍人·羅輯','黑暗森林威懾',2500,145,26,480,145,1.0,{proj:'guided',ps:820,salvo:2,aoe:78,ap:.94,aura:'atk',reach:340,ult:11,ultType:'nukestrike',ico:'gen_zhuge',renderAs:'shieldgen'},'【科幻名將】手握黑暗森林座標威懾，大招召喚戰略核打擊毀滅敵陣！'],
+    ['歌者文明清理員','二向箔降維打擊',2900,165,30,520,175,1.1,{air:true,kite:true,airDodge:.45,proj:'frostbolt',ps:920,aoe:95,ap:.96,aura:'fear',reach:360,ult:12,ultType:'foilstrike',ico:'pyro',renderAs:'foil_unit'},'【外星名將】宇宙清理者，大招向敵軍核心投擲一枚真正的二向箔！']
+  ]);
+
 
   // 8. +25 100%-Unique Mythic & Fantasy Units (Total 30)
   addBatch('mythic','myx',13,1.8,[
@@ -1201,6 +1490,12 @@ defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,a
 })();
 
 const presets=[
+ ['戰錘40K：泰拉圍城','citadel','人類帝國大軍','混沌與異形聯軍',
+  [['gwh_0',520,600],['gwh_1',600,480],['wh_12',420,600],['wh_10',540,760],['wh_11',560,360],['wh_3',680,440,2,320],['wh_4',720,460,4,90],['wh_0',780,320,8,75],['wh_1',740,520,4,85],['wh_13',460,260]],
+  [['gwh_2',1480,600],['gwh_4',1400,420],['gwh_3',1540,760],['wh_26',1580,580],['wh_28',1520,340],['wh_19',1340,480,2,240],['wh_14',1240,320,8,75],['wh_15',1280,440,6,70],['wh_27',1320,760,5,65],['wh_31',1220,600,3,130]]],
+ ['中古戰錘：終焉之時','plains','帝國震旦矮人聯軍','混沌鼠人亡靈大軍',
+  [['gwh_6',580,600],['wh_48',640,460,2,280],['wh_39',540,360,2,480],['wh_38',680,320,4,170],['wh_40',720,420,6,70],['wh_42',660,380,5,105],['wh_41',480,320,3,260],['wh_49',440,600,2,220]],
+  [['gwh_7',1420,600],['wh_47',1360,460,2,280],['wh_43',1320,600,2,260],['wh_44',1380,340,3,240],['wh_46',1280,320,5,140],['wh_45',1480,360,6,90],['wh_20',1460,720]]],
  ['虎牢关','plains','武圣联军','鬼神吕布',
   [['gen_guanyu',660,600],['gen_zhuge',440,600],['legionary',610,380,6,85],['spearman',540,400,5,95],['archer',370,350,6,95],['lancer',520,210,3,45],['lancer',520,910,3,45]],
   [['gen_lubu',1320,600],['berserker',1380,360,6,90],['greatsword',1450,400,5,95],['crossbow',1580,380,5,105],['horsearcher',1420,210,3,50],['horsearcher',1420,900,3,50],['catapult',1680,600]]],
@@ -1776,8 +2071,8 @@ const clamp=(v,l,h)=>Math.max(l,Math.min(h,v));
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 const game={
   phase:'setup', paused:false, team:'blue', unit:'gen_guanyu', form:'single',
-  erase:false, panMode:false, brushMode:false, mapEdit:false, edBrush:'forest', edSize:95, cat:'all', sizeId:'medium', baseMap:MAPS[0], map:buildMapForSize(MAPS[0],1),
-  units:[], snapshot:[], shots:[], effects:[], particles:[], floats:[], scars:[], order:'charge',
+  erase:false, panMode:false, brushMode:false, moveMode:false, cmdMode:false, liveDeploy:false, activeStrike:null, cityMode:false, cityType:'grand', activeCorps:1, battleCorps:0, corpsOrders:{1:null,2:null,3:null,4:null}, carrierPlane:'jet', mapEdit:false, edBrush:'forest', edSize:95, cat:'all', sizeId:'medium', baseMap:MAPS[0], map:buildMapForSize(MAPS[0],1),
+  units:[], snapshot:[], shots:[], flybys:[], effects:[], particles:[], floats:[], scars:[], order:'charge',
   controlled:null, keys:{},
   diplomacy:{
     blue:  {ally:'A', trigger:'now', active:true},
@@ -1905,11 +2200,11 @@ function blocked(x, y, r, isNaval = false, isAir = false){
 }
 
 function spawn(id,team,x,y){
-  const d=defs[id], cap=Math.min(800,Math.round(260*Math.max(1,MAP_SCALE*1.3))), max=id==='skeleton'?cap+50:cap;
+  const d=defs[id], cap=2000, max=id==='skeleton'?2200:cap;
   if(!d||game.units.filter(u=>u.alive&&u.team===team&&(id==='skeleton'||u.d.id!=='skeleton')).length>=max)return;
   const u={
     uid:++uid, d, team, x:clamp(x,24,WORLD_W-24), y:clamp(y,24,WORLD_H-24), alive:true, hp:d.hp, stuckTime:0, lastX:x, lastY:y, flankSign:(uid%2?1:-1),
-    cd:Math.random()*.3, skill:(d.ult||0)*.45, summon:d.id==='carrier'?1.2:(d.summon||0)*.5, hangar:d.hangarCap||0, ammo:0, homeCarrier:null, rtb:false, embarked:false,
+    cd:Math.random()*.3, skill:(d.ult||0)*.45, summon:d.id==='carrier'?1.2:(d.summon||0)*.5, hangar:d.hangarCap||0, ammo:d.air?5:0, homeCarrier:null, restCarrier:null, resting:0, rtb:false, embarked:false, corps:game.activeCorps||1, customSpawn:(d.spawnUnit==='jet'?game.carrierPlane:null),
     burn:0, burnDps:0, burnOwner:null, slow:0, haste:0, shield:0,
     vx:0, vy:0, charge:0, kills:0, damage:0, flash:0, lunge:0,
     face:team==='blue'?0:Math.PI
@@ -1988,9 +2283,9 @@ function ground(u){
   return {speed,hill};
 }
 
-function snapshot(){game.snapshot=game.units.filter(u=>u.d.id!=='skeleton').map(u=>[u.d.id,u.team,u.x,u.y])}
-function restore(){game.units=[];for(const entry of game.snapshot)spawn(...entry);setup()}
-function setup(){game.phase='setup';game.paused=false;game.controlled=null;game.shots=[];game.effects=[];game.particles=[];game.floats=[];game.scars=[];game.eliminated.clear();game.shake=0;game.time=0;for(const t of TEAM_IDS)game.diplomacy[t].active=true;syncUI()}
+function snapshot(){game.snapshot=game.units.filter(u=>u.d.id!=='skeleton').map(u=>[u.d.id,u.team,u.x,u.y,u.corps||1,u.customSpawn||null])}
+function restore(){game.units=[];for(const [id,t,x,y,cp,cs] of game.snapshot){const u=spawn(id,t,x,y);if(u){if(cp)u.corps=cp;if(cs)u.customSpawn=cs;}}game.corpsOrders={1:null,2:null,3:null,4:null};setup()}
+function setup(){game.phase='setup';game.paused=false;game.controlled=null;game.shots=[];game.flybys=[];game.effects=[];game.particles=[];game.floats=[];game.scars=[];game.eliminated.clear();game.shake=0;game.time=0;for(const t of TEAM_IDS)game.diplomacy[t].active=true;syncUI()}
 
 function begin(){
   if(game.phase==='ended'){restore();return}
@@ -2061,12 +2356,191 @@ function hit(a,b,power,ap=0,kb=0,ranged=false,dot=false){
 }
 
 function launch(u,tx,ty,extra){
-  const d=u.d;
-  game.shots.push({
-    owner:u, x:u.x, y:u.y, sx:u.x, sy:u.y, tx, ty, t:0,
-    dur:clamp(Math.hypot(tx-u.x,ty-u.y)/(d.ps||450),.12,2.2),
-    type:d.proj, dmg:d.atk, ap:d.ap||0, kb:d.kb||0, aoe:d.aoe||0,
-    pierce:d.pierce||0, burn:d.burn, slow:d.slow, hit:new Set(), ...extra
+  const d=u?u.d:{proj:'boulder',ps:450,atk:120,ap:.8,kb:40,aoe:60};
+  const type=(extra&&extra.type)||d.proj;
+  const sx=(extra&&extra.sx!==undefined)?extra.sx:(u?u.x:tx);
+  const sy=(extra&&extra.sy!==undefined)?extra.sy:(u?u.y:ty);
+  const shot={
+    owner:u||{team:game.team,d:{name:'战术打击',antiAir:1.5,cat:'modern'},damage:0,kills:0},
+    x:sx, y:sy, sx, sy, tx, ty, t:0,
+    dur:clamp(Math.hypot(tx-sx,ty-sy)/(d.ps||450),.14,2.4),
+    type, dmg:d.atk, ap:d.ap||0, kb:d.kb||0, aoe:d.aoe||0,
+    pierce:d.pierce||0, burn:d.burn, slow:d.slow, hit:new Set(), trail:[], ...extra
+  };
+  if(type==='bomb'){
+    // True 3D ballistic parabola: z(t) = z0 - 0.5*g*t^2, horizontal drift = vx*t, vy*t
+    const z0 = (extra && extra.z0) || 96;
+    const g = (extra && extra.g) || 340;
+    const T = Math.sqrt(2 * z0 / g);
+    shot.z = z0; shot.z0 = z0; shot.g = g; shot.vz = 0; shot.dur = T;
+    shot.vx = (tx - sx) / T;
+    shot.vy = (ty - sy) / T;
+  }else if(type==='guided'){
+    const ang = Math.atan2(ty - sy, tx - sx);
+    const spd = (extra && extra.ps) || d.ps || 560;
+    shot.vx = Math.cos(ang) * spd;
+    shot.vy = Math.sin(ang) * spd;
+    shot.spd = spd;
+    shot.dur = 3.2;
+    if(!shot.target){
+      const enemies = game.units.filter(v=>v.alive && !areAllies(shot.owner.team,v.team) && !isTeamNeutral(v.team));
+      let best=null, minD=Infinity;
+      for(const e of enemies){const dd=Math.hypot(e.x-tx,e.y-ty); if(dd<minD){minD=dd; best=e;}}
+      if(best && minD < 260) shot.target = best;
+    }
+  }else if(type==='nuke'){
+    shot.dur = clamp(Math.hypot(tx-sx,ty-sy)/340, 1.1, 2.6);
+  }
+  game.shots.push(shot);
+  return shot;
+}
+
+function detonateNuke(x, y, owner){
+  const r = 225;
+  game.shake = Math.max(game.shake, 20);
+  tone('cannon');
+  ring(x, y, r * 1.35, '#fffbeb', .75);
+  ring(x, y, r, '#f97316', .95);
+  ring(x, y, r * 0.65, '#ef4444', .65);
+  game.effects.push({type:'nuke_cloud', x, y, r, t:4.5, life:4.5, color:'#f97316', owner, tick:0.4});
+  spark(x, y, '#fef08a', 26, 210, 6.5, .85);
+  spark(x, y, '#ea580c', 22, 160, 5.5, .95);
+  if(!isWaterAt(x,y)) addScar('crater', x, y, r * 0.55);
+  const victims = game.units.filter(v=>v.alive && !areAllies(owner.team, v.team) && !isTeamNeutral(v.team));
+  for(const e of victims){
+    const d = Math.hypot(e.x - x, e.y - y);
+    if(d < r + e.d.radius){
+      const falloff = Math.max(0.32, 1 - d / (r + e.d.radius));
+      hit(owner, e, 920 * falloff, 0.98, 120 * falloff, true);
+      e.burn = 5.5; e.burnDps = 34; e.burnOwner = owner;
+    }
+  }
+}
+
+function detonateFoil(x, y, owner){
+  const maxR = 235;
+  game.shake = Math.max(game.shake, 10);
+  tone('ult');
+  ring(x, y, 160, '#67e8f9', .7);
+  game.effects.push({type:'foil_zone', x, y, r:26, maxR, t:6.0, life:6.0, color:'#38bdf8', owner, tick:0.22});
+  toast('🌌 二向箔已展开！局部空间正在向二维跌落...');
+}
+
+function triggerPlayerStrike(type, w){
+  const owner = {team:game.team, d:{name:'战术司令部', antiAir:2.2, cat:'modern'}, damage:0, kills:0};
+  const x = clamp(w.x, 25, WORLD_W - 25), y = clamp(w.y, 25, WORLD_H - 25);
+  const sideX = (game.team==='blue'||game.team==='green') ? 30 : WORLD_W - 30;
+  if(type==='artillery'){
+    tone('cannon');
+    for(let k=0;k<6;k++){
+      const tx = clamp(x + (Math.random()-.5)*165, 30, WORLD_W-30);
+      const ty = clamp(y + (Math.random()-.5)*145, 30, WORLD_H-30);
+      launch(owner, tx, ty, {type:'boulder', sx:sideX, sy:clamp(y+(k-2.5)*45, 40, WORLD_H-40), t:-k*0.14, dur:0.95+Math.random()*0.25, dmg:145, aoe:82, ap:.88, kb:65, burn:10});
+    }
+    ring(x, y, 90, '#dfbd77', .45);
+    toast('💣 155mm 重炮营 6 连发齐射！');
+  }else if(type==='guided'){
+    tone('cannon');
+    const enemies = game.units.filter(v=>v.alive && !areAllies(game.team,v.team) && !isTeamNeutral(v.team))
+      .sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y));
+    for(let k=0;k<3;k++){
+      const tgt = enemies[k % Math.max(1, enemies.length)] || null;
+      const tx = tgt ? tgt.x : x + (Math.random()-.5)*60;
+      const ty = tgt ? tgt.y : y + (Math.random()-.5)*60;
+      launch(owner, tx, ty, {type:'guided', sx:sideX, sy:clamp(y+(k-1)*70, 50, WORLD_H-50), t:-k*0.18, ps:600, dmg:240, aoe:76, ap:.96, kb:55, target:tgt});
+    }
+    ring(x, y, 52, '#f59e0b', .4);
+    toast('🎯 3 枚激光制导导弹已发射锁定！');
+  }else if(type==='bomber'){
+    tone('horn');
+    const dir = (game.team==='blue'||game.team==='green') ? 1 : -1;
+    const startX = dir > 0 ? -90 : WORLD_W + 90;
+    const spd = 340, alt = 108, g = 340;
+    const leadDist = spd * Math.sqrt(2 * alt / g); // Exact ballistic lead distance!
+    for(let k=-1; k<=1; k++){
+      const laneY = clamp(y + k * 58, 55, WORLD_H - 55);
+      const dropCenter = x - dir * leadDist;
+      const dropXs = [-75, -25, 25, 75].map(off => dropCenter + dir * off);
+      game.flybys.push({
+        kind:'bomber', owner, team:game.team, x:startX - dir * Math.abs(k) * 55, y:laneY,
+        vx:dir * spd, vy:0, dir, alt, g, dropXs, dropped:0, alive:true
+      });
+    }
+    ring(x, y, 110, '#dfbd77', .55);
+    toast('✈️ 战略轰炸机编队进场！按抛物线提前量精准投弹！');
+  }else if(type==='nuke'){
+    tone('horn');
+    launch(owner, x, y, {type:'nuke', sx:sideX, sy:30, dmg:920, aoe:225, ap:.98, kb:120});
+    ring(x, y, 130, '#ef4444', .85);
+    toast('☢️ 警告：战略核导弹已升空，预计 2 秒后命中目标！');
+  }else if(type==='droplet'){
+    tone('ult');
+    game.flybys.push({
+      kind:'droplet', owner, team:game.team, x:sideX, y:clamp(y, 60, WORLD_H-60),
+      vx:(x-sideX)>0?880:-880, vy:0, tx:x, ty:y, hitsLeft:12, hitIds:new Set(), trail:[], alive:true, t:0
+    });
+    ring(x, y, 75, '#67e8f9', .5);
+    toast('💧 三体水滴已切入战场！全速锐角穿刺敌阵！');
+  }else if(type==='foil'){
+    tone('ult');
+    launch(owner, x, y, {type:'foil', sx:sideX, sy:clamp(y-120, 40, WORLD_H-40), dur:0.75, dmg:100, aoe:180, ap:.99});
+    ring(x, y, 95, '#38bdf8', .6);
+    toast('🌌 歌者已投出二向箔！准备维度跌落！');
+  }
+}
+
+function updateFlybys(dt){
+  game.flybys = game.flybys.filter(f=>{
+    if(!f.alive) return false;
+    if(f.kind==='bomber'){
+      f.x += f.vx * dt; f.y += f.vy * dt;
+      while(f.dropped < f.dropXs.length){
+        const nextDrop = f.dropXs[f.dropped];
+        const passed = f.dir > 0 ? (f.x >= nextDrop) : (f.x <= nextDrop);
+        if(!passed) break;
+        const T = Math.sqrt(2 * f.alt / f.g);
+        const landX = clamp(f.x + f.vx * T + (Math.random()-.5)*18, 24, WORLD_W-24);
+        const landY = clamp(f.y + (Math.random()-.5)*22, 24, WORLD_H-24);
+        launch(f.owner, landX, landY, {type:'bomb', sx:f.x, sy:f.y, z0:f.alt, g:f.g, dmg:185, aoe:96, ap:.92, kb:70, burn:16});
+        f.dropped++;
+      }
+      if((f.dir > 0 && f.x > WORLD_W + 140) || (f.dir < 0 && f.x < -140)) return false;
+      return true;
+    }else if(f.kind==='droplet'){
+      f.t += dt;
+      f.trail.push({x:f.x, y:f.y});
+      if(f.trail.length > 26) f.trail.shift();
+      const enemies = game.units.filter(v=>v.alive && !areAllies(f.owner.team,v.team) && !isTeamNeutral(v.team));
+      if(f.hitsLeft > 0 && enemies.length > 0){
+        let tgt = enemies.find(e=>!f.hitIds.has(e.uid));
+        if(!tgt){ f.hitIds.clear(); tgt = enemies[0]; }
+        // Pick nearest unhit enemy
+        let best=tgt, minD=Infinity;
+        for(const e of enemies){
+          if(f.hitIds.has(e.uid)) continue;
+          const dd = Math.hypot(e.x - f.x, e.y - f.y);
+          if(dd < minD){ minD = dd; best = e; }
+        }
+        const ang = Math.atan2(best.y - f.y, best.x - f.x);
+        const spd = 980;
+        f.vx = Math.cos(ang) * spd; f.vy = Math.sin(ang) * spd;
+        f.x += f.vx * dt; f.y += f.vy * dt;
+        if(Math.hypot(best.x - f.x, best.y - f.y) < best.d.radius + 24){
+          hit(f.owner, best, 680, 0.99, 95, true);
+          spark(best.x, best.y, '#67e8f9', 10, 140, 4.2, .45);
+          ring(best.x, best.y, 44, '#e0f2fe', .35);
+          game.shake = Math.max(game.shake, 5);
+          tone('hit');
+          f.hitIds.add(best.uid);
+          f.hitsLeft--;
+        }
+      }else{
+        f.x += f.vx * dt * 1.3; f.y += f.vy * dt * 1.3;
+        if(f.x < -120 || f.x > WORLD_W + 120 || f.y < -120 || f.y > WORLD_H + 120 || f.t > 7) return false;
+      }
+      return f.t < 9;
+    }
+    return false;
   });
 }
 
@@ -2081,6 +2555,12 @@ function special(u){
   const a=Math.atan2(target.y-u.y,target.x-u.x);
   const ut=u.d.ultType||({gen_zhouyu:'fireships',gen_nelson:'navalbarrage',gen_guanyu:'slash',gen_lubu:'leap',gen_zhuge:'firestorm',gen_caesar:'rally',gen_joan:'holy',gen_napoleon:'barrage',gen_genghis:'arrowrain',gen_arthur:'beam'}[u.d.id]||'leap');
   switch(ut){
+  case 'nukestrike':
+    launch(u, target.x, target.y, {type:'nuke', sx:u.x, sy:u.y, dmg:820, aoe:215, ap:.98, kb:110});
+    break;
+  case 'foilstrike':
+    launch(u, target.x, target.y, {type:'foil', sx:u.x, sy:u.y, dur:0.75, dmg:100, aoe:180, ap:.99});
+    break;
   case 'fireships':
     // 召唤4艘烈焰火船直扑敌阵！
     ring(u.x,u.y,170,'#d46a2c',.55);
@@ -2146,26 +2626,74 @@ function shotHit(p,e){
 function updateShots(dt){
   game.shots=game.shots.filter(p=>{
     const ox=p.x, oy=p.y; p.t+=dt; if(p.t<0)return true;
-    const f=Math.min(1,p.t/p.dur); p.x=p.sx+(p.tx-p.sx)*f; p.y=p.sy+(p.ty-p.sy)*f;
     const enemies=game.units.filter(v=>v.alive&&!areAllies(p.owner.team,v.team)&&!isTeamNeutral(v.team));
-    if(p.pierce){
-      const dx=p.x-ox, dy=p.y-oy, len=dx*dx+dy*dy||1;
-      for(const e of enemies){
-        if(p.hit.has(e.uid))continue;
-        const k=clamp(((e.x-ox)*dx+(e.y-oy)*dy)/len,0,1);
-        if(Math.hypot(e.x-ox-k*dx,e.y-oy-k*dy)<e.d.radius+8){
-          shotHit(p,e); p.hit.add(e.uid);
-          if(!--p.pierce){p.tx=p.x;p.ty=p.y;break}
-        }
+    let landed = false;
+
+    if(p.type==='bomb'){
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.vz -= p.g * dt;
+      p.z += p.vz * dt;
+      p.trail.push({x:p.x, y:p.y - Math.max(0, p.z)});
+      if(p.trail.length > 18) p.trail.shift();
+      if(p.z <= 0){ p.z = 0; p.tx = p.x; p.ty = p.y; landed = true; }
+    }else if(p.type==='guided'){
+      if(!p.target || !p.target.alive){
+        let best=null, minD=Infinity;
+        for(const e of enemies){const dd=Math.hypot(e.x-p.x,e.y-p.y); if(dd<minD){minD=dd; best=e;}}
+        p.target = best;
       }
-      if(!p.pierce&&!p.aoe)return false;
+      if(p.target && p.target.alive){
+        p.tx = p.target.x; p.ty = p.target.y;
+        const desired = Math.atan2(p.ty - p.y, p.tx - p.x);
+        const cur = Math.atan2(p.vy, p.vx);
+        let diff = desired - cur;
+        while(diff > Math.PI) diff -= Math.PI * 2;
+        while(diff < -Math.PI) diff += Math.PI * 2;
+        const turn = clamp(diff, -5.8 * dt, 5.8 * dt);
+        const na = cur + turn;
+        p.vx = Math.cos(na) * p.spd;
+        p.vy = Math.sin(na) * p.spd;
+      }
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      p.trail.push({x:p.x, y:p.y});
+      if(p.trail.length > 16) p.trail.shift();
+      if(Math.hypot(p.tx - p.x, p.ty - p.y) < 22 || p.t >= p.dur) landed = true;
+    }else{
+      const f=Math.min(1,p.t/p.dur); p.x=p.sx+(p.tx-p.sx)*f; p.y=p.sy+(p.ty-p.sy)*f;
+      if(p.pierce){
+        const dx=p.x-ox, dy=p.y-oy, len=dx*dx+dy*dy||1;
+        for(const e of enemies){
+          if(p.hit.has(e.uid))continue;
+          const k=clamp(((e.x-ox)*dx+(e.y-oy)*dy)/len,0,1);
+          if(Math.hypot(e.x-ox-k*dx,e.y-oy-k*dy)<e.d.radius+8){
+            shotHit(p,e); p.hit.add(e.uid);
+            if(!--p.pierce){p.tx=p.x;p.ty=p.y;break}
+          }
+        }
+        if(!p.pierce&&!p.aoe)return false;
+      }
+      if(f>=1) landed = true;
     }
-    if(f<1&&(p.pierce||!p.hit.size))return true;
+
+    if(!landed) return true;
+
+    if(p.type==='nuke'){
+      detonateNuke(p.tx, p.ty, p.owner);
+      return false;
+    }
+    if(p.type==='foil'){
+      detonateFoil(p.tx, p.ty, p.owner);
+      return false;
+    }
     if(p.aoe){
-      const col=p.slow?'#5b94a8':'#b86330';
+      const col=p.slow?'#5b94a8':(p.type==='bomb'?'#ea580c':'#b86330');
       ring(p.tx,p.ty,p.aoe,col);
-      spark(p.tx,p.ty,col,p.type==='boulder'||p.type==='fireball'?10:5,95,3.4,.45);
-      if(p.type==='boulder'||p.type==='cannonball'||p.type==='fireball'){game.shake=Math.max(game.shake,4.5); if(!isWaterAt(p.tx,p.ty))addScar('crater',p.tx,p.ty,p.aoe*0.42);}
+      spark(p.tx,p.ty,col,(p.type==='boulder'||p.type==='fireball'||p.type==='bomb'||p.type==='guided')?11:5,105,3.6,.48);
+      if(p.type==='boulder'||p.type==='cannonball'||p.type==='fireball'||p.type==='bomb'||p.type==='guided'){
+        game.shake=Math.max(game.shake,p.type==='bomb'?6.5:4.5);
+        if(!isWaterAt(p.tx,p.ty))addScar('crater',p.tx,p.ty,p.aoe*0.44);
+      }
       for(const e of enemies)if(!p.hit.has(e.uid)&&Math.hypot(e.x-p.tx,e.y-p.ty)<p.aoe+e.d.radius)shotHit(p,e);
     }else{
       let victim=null, min=Infinity;
@@ -2237,10 +2765,10 @@ function simulate(dt){
     if(d.ult){u.skill=Math.max(0,u.skill-dt);if(u.team!==game.team||game.auto)special(u)}
     if(d.summon&&(u.summon-=dt)<=0){
       u.summon=d.summon;
-      const spId = d.spawnUnit || 'skeleton';
+      const spId = u.customSpawn || d.spawnUnit || 'skeleton';
       const spDef = defs[spId];
       if(d.hangarCap){
-        const batch = spId==='jet' ? 2 : 3;
+        const batch = (defs[spId] && defs[spId].air) ? 2 : 3;
         const launchCnt = Math.min(batch, u.hangar);
         if(launchCnt > 0){
           for(let k=0;k<launchCnt;k++){
@@ -2250,7 +2778,7 @@ function simulate(dt){
             const child = spawn(spId,u.team,sx,sy);
             if(child){
               u.hangar--;
-              if(spId==='jet'){
+              if(defs[spId] && defs[spId].air){
                 child.homeCarrier = u;
                 child.ammo = 4;
                 child.rtb = false;
@@ -2331,37 +2859,103 @@ function simulate(dt){
     }
 
     // Target acquisition: melee units prefer same domain (naval vs naval, land vs land) while ranged can cross-fire!
-    // Carrier-based Jet Return-To-Base (RTB) & Rearm Landing
-    if(u.homeCarrier && u.homeCarrier.alive && u.rtb){
-      const hc = u.homeCarrier;
-      const ha = Math.atan2(hc.y - u.y, hc.x - u.x);
-      u.face = ha;
-      const hd = distance(u, hc);
-      if(hd <= hc.d.radius + 14){
-        // Landed safely on carrier deck -> rearm & return to hangar!
-        hc.hangar = Math.min(hc.d.hangarCap, hc.hangar + 1);
-        u.alive = false; // Stored inside hangar (not killed!)
-        u.hp = 0;
-        spark(hc.x, hc.y, '#86efac', 6, 45, 2.8, .4);
+    // Universal Aircraft Rest, Repair & Rearm on ANY friendly Aircraft Carrier or Airbase!
+    const canRestOnCarrier = d.air && !d.large && !d.hangarCap && !d.suicideBoom;
+    if(u.resting > 0){
+      const hc = u.restCarrier;
+      if(hc && hc.alive){
+        u.resting -= dt;
+        u.x = hc.x + Math.cos(hc.face) * (-hc.d.radius * 0.25);
+        u.y = hc.y + Math.sin(hc.face) * (-hc.d.radius * 0.25);
+        u.face = hc.face;
+        u.hp = Math.min(d.hp, u.hp + d.hp * 0.42 * dt);
+        u.burn = 0; u.slow = 0;
+        if(Math.random() < 0.14) spark(u.x, u.y, '#86efac', 2, 28, 2.2, .3);
+        if(u.resting <= 0){
+          u.resting = 0; u.rtb = false; u.ammo = 5; u.hp = d.hp; u.restCarrier = null;
+          spark(hc.x, hc.y, '#fde68a', 6, 65, 2.8, .38); // Catapult takeoff!
+        }
         continue;
+      }else{
+        u.resting = 0; u.rtb = false; u.restCarrier = null;
       }
-      const step = d.speed * 1.1 * dt;
-      u.x += Math.cos(ha) * step; u.y += Math.sin(ha) * step;
-      continue;
-    }else if(u.rtb && (!u.homeCarrier || !u.homeCarrier.alive)){
-      u.rtb = false; // Carrier lost -> fight to the end
+    }
+    if(canRestOnCarrier && !u.rtb && u.hp < d.hp * 0.45){
+      let bestBase = (u.homeCarrier && u.homeCarrier.alive) ? u.homeCarrier : null;
+      if(!bestBase){
+        let minBD = Infinity;
+        for(const b of allies){
+          if(b.alive && (b.d.isAirbase || (b.d.hangarCap && b.d.spawnUnit && defs[b.d.spawnUnit] && defs[b.d.spawnUnit].air))){
+            const bd = distance(u, b);
+            if(bd < minBD){ minBD = bd; bestBase = b; }
+          }
+        }
+      }
+      if(bestBase){ u.restCarrier = bestBase; u.rtb = true; }
+    }
+    if(u.rtb){
+      let hc = (u.restCarrier && u.restCarrier.alive) ? u.restCarrier : (u.homeCarrier && u.homeCarrier.alive ? u.homeCarrier : null);
+      if(!hc && canRestOnCarrier){
+        let minBD = Infinity;
+        for(const b of allies){
+          if(b.alive && (b.d.isAirbase || (b.d.hangarCap && b.d.spawnUnit && defs[b.d.spawnUnit] && defs[b.d.spawnUnit].air))){
+            const bd = distance(u, b);
+            if(bd < minBD){ minBD = bd; hc = b; }
+          }
+        }
+        u.restCarrier = hc;
+      }
+      if(hc && hc.alive){
+        const ha = Math.atan2(hc.y - u.y, hc.x - u.x);
+        u.face = ha;
+        const hd = distance(u, hc);
+        if(hd <= hc.d.radius + 18){
+          if(u.homeCarrier === hc){
+            hc.hangar = Math.min(hc.d.hangarCap, hc.hangar + 1);
+            u.alive = false; u.hp = 0;
+          }else{
+            // Independent friendly aircraft parks on deck to rest, repair to 100% & rearm!
+            u.resting = 3.0; u.rtb = false; u.restCarrier = hc;
+          }
+          spark(hc.x, hc.y, '#86efac', 6, 45, 2.8, .4);
+          continue;
+        }
+        const step = d.speed * 1.12 * dt;
+        u.x += Math.cos(ha) * step; u.y += Math.sin(ha) * step;
+        continue;
+      }else{
+        u.rtb = false; u.restCarrier = null;
+      }
     }
 
+    // RTS Commander Mode: Selected Corps strictly obeys player's Move or Focus-Target orders!
+    const cOrd = (game.cmdMode && u.team===game.team) ? game.corpsOrders[u.corps||1] : null;
+    if(cOrd && cOrd.type==='move' && !d.building){
+      const md=Math.hypot(cOrd.x-u.x, cOrd.y-u.y);
+      if(md > 34){
+        const ma=Math.atan2(cOrd.y-u.y, cOrd.x-u.x); u.face=ma;
+        const step=d.speed*speed*dt;
+        if(!blocked(u.x+Math.cos(ma)*step, u.y+Math.sin(ma)*step, d.radius, !!d.naval, !!d.air)){
+          u.x+=Math.cos(ma)*step; u.y+=Math.sin(ma)*step;
+        }
+        continue;
+      }
+    }
     let target=null, min=Infinity;
+    if(cOrd && cOrd.type==='attack' && cOrd.target && cOrd.target.alive){
+      if(d.proj || !cOrd.target.d.air) target = cOrd.target;
+    }
     const blueOrder = u.team===game.team ? game.order : 'charge';
-    for(const v of enemies){
-      if(!v.alive)continue;
-      let score=distance(u,v);
-      if(!d.proj && v.d.air) continue;
-      if(!d.proj && !!d.naval !== !!v.d.naval) score += (d.naval ? 1400 : 260);
-      if(d.back&&(['ranged','siege'].includes(v.d.cat)||v.d.healer))score*=.55;
-      if(blueOrder==='snipe' && v.d.ult && (d.proj || d.cav || d.back)) score *= 0.32;
-      if(score<min){min=score;target=v}
+    if(!target){
+      for(const v of enemies){
+        if(!v.alive)continue;
+        let score=distance(u,v);
+        if(!d.proj && v.d.air) continue;
+        if(!d.proj && !!d.naval !== !!v.d.naval) score += (d.naval ? 1400 : 260);
+        if(d.back&&(['ranged','siege'].includes(v.d.cat)||v.d.healer))score*=.55;
+        if(blueOrder==='snipe' && v.d.ult && (d.proj || d.cav || d.back)) score *= 0.32;
+        if(score<min){min=score;target=v}
+      }
     }
     if(!target)continue;
 
@@ -2421,9 +3015,12 @@ function simulate(dt){
       for(let k=0;k<shots;k++){
         launch(u,target.x+(Math.random()-.5)*spread,target.y+(Math.random()-.5)*spread,{dmg,t:-k*.07});
       }
-      if(u.homeCarrier && u.homeCarrier.alive){
-        u.ammo = Math.max(0, u.ammo - 1);
-        if(u.ammo <= 0 || u.hp < d.hp * 0.42) u.rtb = true;
+      if(canRestOnCarrier){
+        const hasBase = (u.homeCarrier && u.homeCarrier.alive) || allies.some(b=>b.alive && (b.d.isAirbase || (b.d.hangarCap && b.d.spawnUnit && defs[b.d.spawnUnit] && defs[b.d.spawnUnit].air)));
+        if(hasBase){
+          u.ammo = Math.max(0, u.ammo - 1);
+          if(u.ammo <= 0 || u.hp < d.hp * 0.45) u.rtb = true;
+        }
       }
       if(d.proj==='cannonball'||d.proj==='bullet'){
         spark(u.x+Math.cos(a)*18,u.y+Math.sin(a)*18,'#6e6a5c',5,55,3.5,.38);
@@ -2439,25 +3036,61 @@ function simulate(dt){
     }
   }
 
-  for(let i=0;i<alive.length;i++){
-    const a=alive[i]; if(!a.alive)continue;
-    for(let j=i+1;j<alive.length;j++){
-      const b=alive[j], min=a.d.radius+b.d.radius, dx=b.x-a.x, dy=b.y-a.y;
-      if(!b.alive||Math.abs(dx)>min||Math.abs(dy)>min)continue;
-      const dist=Math.hypot(dx,dy); if(dist>=min)continue;
-      if(!!a.d.air!==!!b.d.air)continue;
-      const push=(min-dist)*.42, ratio=b.d.mass/(a.d.mass+b.d.mass), nx=dist?dx/dist:1, ny=dist?dy/dist:0;
-      if(!a.d.building){a.x-=nx*push*ratio; a.y-=ny*push*ratio;}
-      if(!b.d.building){b.x+=nx*push*(1-ratio); b.y+=ny*push*(1-ratio);}
+  // O(N) Spatial Hash Grid for smooth 1000+ unit collisions on high-end devices!
+  const cellSz=56, grid=new Map();
+  for(const u of alive){
+    if(!u.alive)continue;
+    const gx=Math.floor(u.x/cellSz), gy=Math.floor(u.y/cellSz), k=(gx<<16)^gy;
+    let bucket=grid.get(k); if(!bucket){bucket=[]; grid.set(k,bucket);}
+    bucket.push(u);
+  }
+  for(const a of alive){
+    if(!a.alive)continue;
+    const gx=Math.floor(a.x/cellSz), gy=Math.floor(a.y/cellSz);
+    for(let ox=-1;ox<=1;ox++)for(let oy=-1;oy<=1;oy++){
+      const bucket=grid.get(((gx+ox)<<16)^(gy+oy)); if(!bucket)continue;
+      for(const b of bucket){
+        if(b.uid<=a.uid||!b.alive||!!a.d.air!==!!b.d.air)continue;
+        if((a.d.isGate&&areAllies(a.team,b.team))||(b.d.isGate&&areAllies(a.team,b.team)))continue;
+        const min=a.d.radius+b.d.radius, dx=b.x-a.x, dy=b.y-a.y;
+        if(Math.abs(dx)>min||Math.abs(dy)>min)continue;
+        const dist=Math.hypot(dx,dy); if(dist>=min)continue;
+        const push=(min-dist)*.42, ratio=b.d.mass/(a.d.mass+b.d.mass), nx=dist?dx/dist:1, ny=dist?dy/dist:0;
+        if(!a.d.building){a.x-=nx*push*ratio; a.y-=ny*push*ratio;}
+        if(!b.d.building){b.x+=nx*push*(1-ratio); b.y+=ny*push*(1-ratio);}
+      }
     }
   }
   updateShots(dt);
+  updateFlybys(dt);
   game.effects=game.effects.filter(e=>{
     e.t-=dt;
     if(e.type==='fire'&&(e.tick-=dt)<=0){
       e.tick=.45;
       spark(e.x+(Math.random()-.5)*e.r,e.y+(Math.random()-.5)*e.r,'#d46a2c',3,45,3.5,.5);
       for(const v of alive)if(v.alive&&!areAllies(e.owner.team,v.team)&&!isTeamNeutral(v.team)&&distance(e,v)<e.r){hit(e.owner,v,36,.5);v.burn=3;v.burnDps=14;v.burnOwner=e.owner}
+    }else if(e.type==='nuke_cloud'&&(e.tick-=dt)<=0){
+      e.tick=.5;
+      spark(e.x+(Math.random()-.5)*e.r*0.7,e.y+(Math.random()-.5)*e.r*0.7,'#fb923c',4,65,4.2,.6);
+      for(const v of alive)if(v.alive&&!areAllies(e.owner.team,v.team)&&!isTeamNeutral(v.team)&&distance(e,v)<e.r*0.82){hit(e.owner,v,48,.9);}
+    }else if(e.type==='foil_zone'){
+      e.r = Math.min(e.maxR, e.r + 42 * dt);
+      if((e.tick-=dt)<=0){
+        e.tick=.22;
+        for(const v of alive){
+          if(!v.alive||areAllies(e.owner.team,v.team)||isTeamNeutral(v.team)) continue;
+          const dist = distance(e, v);
+          if(dist < e.r + v.d.radius){
+            v.flattened = Math.min(1, (v.flattened || 0) + 0.34);
+            if(!v.d.building){
+              const pa = Math.atan2(e.y - v.y, e.x - v.x);
+              v.x += Math.cos(pa) * 9; v.y += Math.sin(pa) * 9;
+            }
+            hit(e.owner, v, Math.max(85, v.d.hp * 0.24), 0.99, 0, true);
+            spark(v.x, v.y, '#67e8f9', 2, 35, 2.5, .3);
+          }
+        }
+      }
     }
     return e.t>0;
   });
@@ -2481,6 +3114,7 @@ const icons={
  scroll:'<path d="M6 5h13a2 2 0 0 1 2 2v2h-4V7a2 2 0 0 1 2-2M6 5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11V9M4 16h10v2a2 2 0 0 0 3 2"/>',
  terrain:'<path d="m1 18 7-11 4 7 3-5 8 10H2m3-5 3-2 3 2m2 0 2-1 2 1"/><circle cx="16" cy="5" r="2"/>',
  fit:'<path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5"/><circle cx="12" cy="12" r="2"/>',
+ move:'<path d="M12 2v20M2 12h20M12 2l-3 3m3-3 3 3M12 22l-3-3m3 3 3-3M2 12l3-3m-3 3 3 3M22 12l-3-3m3 3-3 3"/>',
  brush:'<path d="M18.4 2.6a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4Z"/><path d="M4 20h16"/>',
  hand:'<path d="M18 11V6a2 2 0 0 0-4 0v4m0-5V4a2 2 0 0 0-4 0v6m0-4a2 2 0 0 0-4 0v8l-1.6-1.6a2 2 0 0 0-2.8 2.8l5 5A6 6 0 0 0 11 22h2a6 6 0 0 0 6-6v-5a2 2 0 0 0-1-1.7"/>',
  heart:'<path d="M12 20C8 17 1 12 3 7c2-5 7-4 9-1 3-4 8-4 10 1 1 5-6 10-10 13Z"/>',
@@ -2536,7 +3170,7 @@ function preset(n){
     if(p[k])for(const [id,x,y,count=1,stepY=0] of p[k])
       for(let j=0;j<count;j++){
         const u=spawn(id,team,x+dx,(y+j*stepY)+dy);
-        if(u)ground(u);
+        if(u){u.corps=u.d.naval?4:(u.d.air||u.d.cav?3:(u.d.proj||u.d.cat==='siege'?2:1)); ground(u);}
       }
   $('preset').value=String(n); snapshot(); setup();
   cam.x=WORLD_W/2; cam.y=WORLD_H/2; cam.zoom=1; $('zoomVal').textContent='100%';
@@ -2567,19 +3201,31 @@ function offsets(){
   return [[0,0]];
 }
 function place(w,erase){
-  if(game.phase!=='setup')return;
-  if(erase){const count=game.units.length;game.units=game.units.filter(u=>distance(w,u)>Math.max(36,u.d.radius+16));if(count!==game.units.length)custom()}
-  else{
+  const live = (game.phase==='battle' && game.liveDeploy);
+  if(game.phase!=='setup' && !live)return;
+  if(erase){
+    if(live) return;
+    const count=game.units.length;game.units=game.units.filter(u=>distance(w,u)>Math.max(36,u.d.radius+16));if(count!==game.units.length)custom();
+  }else{
     const d=defs[game.unit]; let placed=false, domainBlocked=false;
     for(const [ox,oy] of offsets()){
       const x=w.x+ox, y=w.y+oy;
       if(x<30||x>WORLD_W-30||y<30||y>WORLD_H-30)continue;
       if(blocked(x,y,d.radius,!!d.naval,!!d.air)){domainBlocked=true;continue}
-      if(game.units.some(u=>Math.hypot(x-u.x,y-u.y)<(d.radius+u.d.radius)*.72))continue;
-      if(spawn(d.id,game.team,x,y))placed=true;
+      if(game.units.some(u=>u.alive&&Math.hypot(x-u.x,y-u.y)<(d.radius+u.d.radius)*.72))continue;
+      const nu = spawn(d.id,game.team,x,y);
+      if(nu){
+        placed=true;
+        if(live){
+          game.stats[game.team] = (game.stats[game.team]||0) + 1;
+          ring(x, y, 26, '#dfbd77', .35);
+        }
+      }
     }
-    if(placed){tone('place');custom()}
-    else if(domainBlocked){
+    if(placed){
+      tone('place');
+      if(live){ if(d.ult) syncUI(); } else custom();
+    }else if(domainBlocked){
       toast(d.naval?'⚓ 海军舰船需部署在水域中（推荐「碧海群岛」或「赤壁长江」）':'⛰️ 陆军部队无法直接部署在深水区或障碍物上');
     }
   }
@@ -2589,7 +3235,7 @@ function place(w,erase){
 let rosterList=[], rosterRendered=0;
 function makeCard(d){
   const b=document.createElement('button');
-  b.className='card'+(d.ult?' gen':'')+(d.naval?' naval':'')+(d.cat==='modern'?' modern':'')+(d.building?' building':'')+(d.id===game.unit&&!game.erase&&!game.panMode?' on':'');
+  b.className='card'+(d.ult?' gen':'')+(d.naval?' naval':'')+(d.cat==='modern'?' modern':'')+(d.cat==='xianxia'?' xianxia':'')+(d.cat==='scifi'?' scifi':'')+(d.cat==='alien'?' alien':'')+(d.cat==='warhammer'?' warhammer':'')+(d.building?' building':'')+(d.id===game.unit&&!game.erase&&!game.panMode?' on':'');
   b.innerHTML='<span class="card-art">'+insignia(d.id)+'</span><span class="cost"><i class="coin"></i>'+d.cost+'</span><b>'+d.name+'</b><small>'+d.role+'</small>';
   b.title=d.name+' · '+d.desc; b.onclick=()=>selectUnit(d.id);
   b.setAttribute('aria-pressed',String(d.id===game.unit&&!game.erase));
@@ -2619,7 +3265,7 @@ $('cards').addEventListener('scroll',()=>{
 $('unitSearch').oninput=()=>{list(); $('cards').scrollTop=0;};
 function setPanMode(on){
   game.panMode=on;
-  if(on){game.erase=false; $('erase').classList.remove('on'); game.brushMode=false; $('brushBtn').classList.remove('on');}
+  if(on){game.erase=false; $('erase').classList.remove('on'); game.brushMode=false; $('brushBtn').classList.remove('on'); game.moveMode=false; $('moveBtn').classList.remove('on');}
   $('panBtn').classList.toggle('on', on);
   $('panSide').classList.toggle('on', on);
   canvas.style.cursor = on ? 'grab' : (game.phase==='setup' ? 'crosshair' : 'grab');
@@ -2627,16 +3273,208 @@ function setPanMode(on){
 }
 function setBrushMode(on){
   game.brushMode=on;
-  if(on){game.erase=false; $('erase').classList.remove('on'); if(game.panMode)setPanMode(false);}
+  if(on){game.erase=false; $('erase').classList.remove('on'); if(game.panMode)setPanMode(false); if(game.moveMode)setMoveMode(false);}
   $('brushBtn').classList.toggle('on', on);
   canvas.style.cursor = game.phase==='setup' ? 'crosshair' : 'grab';
 }
+function setMoveMode(on){
+  game.moveMode=on;
+  if(on){game.erase=false; $('erase').classList.remove('on'); if(game.panMode)setPanMode(false); if(game.brushMode)setBrushMode(false);}
+  $('moveBtn').classList.toggle('on', on);
+  canvas.style.cursor = on ? 'move' : (game.phase==='setup' ? 'crosshair' : 'grab');
+  list();
+}
+
+const CITY_BLUEPRINTS = {
+  outpost: {
+    name: '边关堡垒',
+    items: [
+      // 3x3 perimeter (step 40)
+      {id:'watchtower', dx:-80, dy:-80}, {id:'city_wall', dx:-40, dy:-80}, {id:'city_wall', dx:0, dy:-80}, {id:'city_wall', dx:40, dy:-80}, {id:'watchtower', dx:80, dy:-80},
+      {id:'city_wall', dx:-80, dy:-40}, {id:'city_wall', dx:-80, dy:0}, {id:'city_wall', dx:-80, dy:40},
+      {id:'city_wall', dx:80, dy:-40}, {id:'city_gate', dx:80, dy:0}, {id:'city_wall', dx:80, dy:40},
+      {id:'watchtower', dx:-80, dy:80}, {id:'city_wall', dx:-40, dy:80}, {id:'city_wall', dx:0, dy:80}, {id:'city_wall', dx:40, dy:80}, {id:'watchtower', dx:80, dy:80},
+      {id:'city_keep', dx:0, dy:0}
+    ]
+  },
+  grand: {
+    name: '雄关巨城',
+    items: [
+      // 5x5 grand walled fortress (step 42)
+      {id:'city_bastion', dx:-126, dy:-126}, {id:'city_wall', dx:-84, dy:-126}, {id:'city_wall', dx:-42, dy:-126}, {id:'city_gate', dx:0, dy:-126}, {id:'city_wall', dx:42, dy:-126}, {id:'city_wall', dx:84, dy:-126}, {id:'city_bastion', dx:126, dy:-126},
+      {id:'city_wall', dx:-126, dy:-84}, {id:'city_wall', dx:-126, dy:-42}, {id:'city_wall', dx:-126, dy:0}, {id:'city_wall', dx:-126, dy:42}, {id:'city_wall', dx:-126, dy:84},
+      {id:'city_wall', dx:126, dy:-84}, {id:'city_wall', dx:126, dy:-42}, {id:'city_gate', dx:126, dy:0}, {id:'city_wall', dx:126, dy:42}, {id:'city_wall', dx:126, dy:84},
+      {id:'city_bastion', dx:-126, dy:126}, {id:'city_wall', dx:-84, dy:126}, {id:'city_wall', dx:-42, dy:126}, {id:'city_gate', dx:0, dy:126}, {id:'city_wall', dx:42, dy:126}, {id:'city_wall', dx:84, dy:126}, {id:'city_bastion', dx:126, dy:126},
+      {id:'city_keep', dx:-26, dy:0}, {id:'city_drum', dx:48, dy:-48}, {id:'barracks', dx:48, dy:48}, {id:'med_tent', dx:-52, dy:-56}
+    ]
+  },
+  oriental: {
+    name: '东方王城',
+    items: [
+      {id:'watchtower', dx:-116, dy:-116}, {id:'city_wall', dx:-78, dy:-116}, {id:'city_wall', dx:-39, dy:-116}, {id:'city_gate', dx:0, dy:-116}, {id:'city_wall', dx:39, dy:-116}, {id:'city_wall', dx:78, dy:-116}, {id:'watchtower', dx:116, dy:-116},
+      {id:'city_wall', dx:-116, dy:-78}, {id:'city_wall', dx:-116, dy:-39}, {id:'city_wall', dx:-116, dy:0}, {id:'city_wall', dx:-116, dy:39}, {id:'city_wall', dx:-116, dy:78},
+      {id:'city_wall', dx:116, dy:-78}, {id:'city_wall', dx:116, dy:-39}, {id:'city_gate', dx:116, dy:0}, {id:'city_wall', dx:116, dy:39}, {id:'city_wall', dx:116, dy:78},
+      {id:'watchtower', dx:-116, dy:116}, {id:'city_wall', dx:-78, dy:116}, {id:'city_wall', dx:-39, dy:116}, {id:'city_gate', dx:0, dy:116}, {id:'city_wall', dx:39, dy:116}, {id:'city_wall', dx:78, dy:116}, {id:'watchtower', dx:116, dy:116},
+      {id:'city_keep', dx:-18, dy:0}, {id:'city_drum', dx:46, dy:0}, {id:'barracks', dx:-42, dy:-56}, {id:'barracks', dx:-42, dy:56}
+    ]
+  },
+  modern_base: {
+    name: '现代军事基地',
+    items: [
+      {id:'flak_tower', dx:-118, dy:-118}, {id:'bunker_wall', dx:-78, dy:-118}, {id:'bunker_wall', dx:-39, dy:-118}, {id:'bunker_wall', dx:0, dy:-118}, {id:'bunker_wall', dx:39, dy:-118}, {id:'bunker_wall', dx:78, dy:-118}, {id:'artillery_tower', dx:118, dy:-118},
+      {id:'bunker_wall', dx:-118, dy:-78}, {id:'bunker_wall', dx:-118, dy:-39}, {id:'bunker_wall', dx:-118, dy:0}, {id:'bunker_wall', dx:-118, dy:39}, {id:'bunker_wall', dx:-118, dy:78},
+      {id:'bunker_wall', dx:118, dy:-78}, {id:'bunker_wall', dx:118, dy:-39}, {id:'city_gate', dx:118, dy:0}, {id:'bunker_wall', dx:118, dy:39}, {id:'bunker_wall', dx:118, dy:78},
+      {id:'flak_tower', dx:-118, dy:118}, {id:'bunker_wall', dx:-78, dy:118}, {id:'bunker_wall', dx:-39, dy:118}, {id:'bunker_wall', dx:0, dy:118}, {id:'bunker_wall', dx:39, dy:118}, {id:'bunker_wall', dx:78, dy:118}, {id:'artillery_tower', dx:118, dy:118},
+      {id:'city_drum', dx:-28, dy:0}, {id:'barracks', dx:42, dy:-44}, {id:'med_tent', dx:42, dy:44}
+    ]
+  },
+  scifi_citadel: {
+    name: '星际能量要塞',
+    items: [
+      {id:'al_11', dx:-120, dy:-120}, {id:'energy_wall', dx:-80, dy:-120}, {id:'energy_wall', dx:-40, dy:-120}, {id:'energy_wall', dx:0, dy:-120}, {id:'energy_wall', dx:40, dy:-120}, {id:'energy_wall', dx:80, dy:-120}, {id:'al_11', dx:120, dy:-120},
+      {id:'energy_wall', dx:-120, dy:-80}, {id:'energy_wall', dx:-120, dy:-40}, {id:'energy_wall', dx:-120, dy:0}, {id:'energy_wall', dx:-120, dy:40}, {id:'energy_wall', dx:-120, dy:80},
+      {id:'energy_wall', dx:120, dy:-80}, {id:'energy_wall', dx:120, dy:-40}, {id:'city_gate', dx:120, dy:0}, {id:'energy_wall', dx:120, dy:40}, {id:'energy_wall', dx:120, dy:80},
+      {id:'al_11', dx:-120, dy:120}, {id:'energy_wall', dx:-80, dy:120}, {id:'energy_wall', dx:-40, dy:120}, {id:'energy_wall', dx:0, dy:120}, {id:'energy_wall', dx:40, dy:120}, {id:'energy_wall', dx:80, dy:120}, {id:'al_11', dx:120, dy:120},
+      {id:'star_citadel', dx:0, dy:0}, {id:'med_tent', dx:-52, dy:-50}, {id:'city_drum', dx:-52, dy:50}
+    ]
+  }
+};
+
+function setCityMode(on){
+  game.cityMode = on;
+  if(on){
+    game.erase=false; $('erase').classList.remove('on');
+    if(game.panMode)setPanMode(false);
+    if(game.moveMode)setMoveMode(false);
+    if(game.brushMode)setBrushMode(false);
+    if(game.activeStrike)setActiveStrike(null);
+  }
+  $('cityBtn').classList.toggle('on', on);
+  $('cityBar').hidden = !on;
+  canvas.style.cursor = on ? 'crosshair' : (game.phase==='setup'?'crosshair':'grab');
+}
+$('cityBtn').onclick=()=>{
+  setCityMode(!game.cityMode);
+  toast(game.cityMode ? '🏰 建城模式已开启：选好城池风格后，点击战场一键筑城！' : '已退出建城模式');
+};
+document.querySelectorAll('#cityBar button').forEach(b=>b.onclick=()=>{
+  game.cityType = b.dataset.city;
+  document.querySelectorAll('#cityBar button').forEach(el=>el.classList.toggle('on', el===b));
+  toast('已选择蓝图：【'+CITY_BLUEPRINTS[game.cityType].name+'】');
+});
+
+function buildCity(w){
+  const bp = CITY_BLUEPRINTS[game.cityType] || CITY_BLUEPRINTS.grand;
+  const dir = (game.team==='blue'||game.team==='green') ? 1 : -1;
+  let built = 0;
+  for(const item of bp.items){
+    const d = defs[item.id]; if(!d) continue;
+    const x = w.x + item.dx * dir, y = w.y + item.dy;
+    if(x<26 || x>WORLD_W-26 || y<26 || y>WORLD_H-26) continue;
+    if(blocked(x, y, d.radius, false, false)) continue;
+    if(game.units.some(u=>u.alive && Math.hypot(x-u.x, y-u.y) < (d.radius + u.d.radius)*0.55)) continue;
+    const nu = spawn(item.id, game.team, x, y);
+    if(nu){
+      built++;
+      if(game.phase==='battle') game.stats[game.team] = (game.stats[game.team]||0) + 1;
+    }
+  }
+  if(built > 0){
+    tone('cannon');
+    ring(w.x, w.y, 145, '#dfbd77', .55);
+    if(game.phase==='setup') custom();
+    stats();
+    toast('🏰 已为'+TEAMS[game.team].name+'建成【'+bp.name+'】（'+built+' 座城防建筑）！');
+  }else{
+    toast('⛰️ 该区域空间不足或为水域，请在平坦陆地上建城');
+  }
+}
+
+$('moveBtn').onclick=()=>{setMoveMode(!game.moveMode); toast(game.moveMode?'✥ 拖动模式已开启：按住任意单位即可自由拖动调整位置':'已切回常规布阵模式')};
+$('cmdModeBtn').onclick=()=>{
+  game.cmdMode=!game.cmdMode;
+  $('cmdModeBtn').classList.toggle('on', game.cmdMode);
+  if(game.cmdMode){game.controlled=null; updateCtrlHud();}
+  toast(game.cmdMode?'👑 军团指挥模式已开启！开战后选下方 1~4 军团，点空地集结、点敌军全军集火！':'已关闭军团指挥模式（恢复自由交战）');
+};
+document.querySelectorAll('#setupCorpsBar button').forEach(b=>b.onclick=()=>{
+  game.activeCorps=Number(b.dataset.corps);
+  document.querySelectorAll('#setupCorpsBar button').forEach(el=>el.classList.toggle('on',el===b));
+  toast('接下来部署的单位将编入 第'+game.activeCorps+'军团');
+});
+document.querySelectorAll('#battleCorpsBar button').forEach(b=>b.onclick=()=>{
+  game.battleCorps=Number(b.dataset.bc);
+  document.querySelectorAll('#battleCorpsBar button').forEach(el=>el.classList.toggle('on',el===b));
+});
+function issueCorpsCommand(w){
+  const targets = game.battleCorps===0 ? [1,2,3,4] : [game.battleCorps];
+  const label = game.battleCorps===0 ? '全军' : ('第'+game.battleCorps+'军团');
+  const enemyHit = game.units.find(u=>u.alive && !areAllies(game.team,u.team) && !isTeamNeutral(u.team) && distance(w,u)<=Math.max(24,u.d.radius+12));
+  if(enemyHit){
+    for(const cid of targets) game.corpsOrders[cid]={type:'attack', target:enemyHit};
+    ring(enemyHit.x, enemyHit.y, 44, '#ef4444', .45);
+    tone('horn');
+    toast('🎯 '+label+' 奉命集火打击：'+enemyHit.d.name+'！');
+  }else{
+    for(const cid of targets) game.corpsOrders[cid]={type:'move', x:clamp(w.x,30,WORLD_W-30), y:clamp(w.y,30,WORLD_H-30)};
+    ring(w.x, w.y, 38, '#dfbd77', .4);
+    tone('place');
+    toast('🚩 '+label+' 向目标坐标集结推进！');
+  }
+}
+
+function setActiveStrike(s){
+  game.activeStrike = (game.activeStrike === s) ? null : s;
+  if(game.activeStrike){
+    game.liveDeploy = false;
+    $('liveDeployBtn').classList.remove('live-on');
+  }
+  document.querySelectorAll('#ordnanceBar button[data-strike]').forEach(b=>b.classList.toggle('on', b.dataset.strike===game.activeStrike));
+  canvas.style.cursor = game.activeStrike ? 'crosshair' : (game.liveDeploy ? 'crosshair' : (game.phase==='setup'?'crosshair':'grab'));
+  if(game.activeStrike){
+    const names={artillery:'155mm 炮弹齐射',guided:'激光精确制导导弹',bomber:'战略轰炸机编队',nuke:'战略核打击',droplet:'三体水滴突袭',foil:'歌者二向箔'};
+    toast('🎯 已装填【'+names[game.activeStrike]+'】：点击战场任意位置直接投放！');
+  }
+}
+function setLiveDeploy(on){
+  game.liveDeploy = on;
+  if(on){
+    game.activeStrike = null;
+    document.querySelectorAll('#ordnanceBar button[data-strike]').forEach(b=>b.classList.remove('on'));
+  }
+  $('liveDeployBtn').classList.toggle('live-on', on);
+  canvas.style.cursor = on ? 'crosshair' : (game.phase==='setup'?'crosshair':'grab');
+}
+$('liveDeployBtn').onclick=()=>{
+  setLiveDeploy(!game.liveDeploy);
+  toast(game.liveDeploy?'➕ 战中放兵已开启：直接点选左侧阵营与兵种，点击战场空投增援！':'已关闭战中放兵模式');
+};
+document.querySelectorAll('#ordnanceBar button[data-strike]').forEach(b=>b.onclick=()=>setActiveStrike(b.dataset.strike));
+
 function selectUnit(id){
   game.unit=id; game.erase=false; $('erase').classList.remove('on');
   if(game.panMode)setPanMode(false);
+  if(game.moveMode)setMoveMode(false);
+  if(game.cityMode)setCityMode(false);
+  if(game.phase==='battle' && !game.liveDeploy){ setLiveDeploy(true); toast('➕ 已切换为战中放兵：点击战场直接投放 '+defs[id].name+'！'); }
   const d=defs[id]; list();
+  let extra='';
+  if(d.hangarCap && d.spawnUnit==='jet'){
+    const airUnits=UNITS.filter(u=>u.air);
+    extra='<div style="margin-top:8px;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gold)"><span>搭載機型：</span><select id="carrierPlaneSel" style="flex:1;padding:3px 6px;font-size:11px">'+
+      airUnits.map(a=>'<option value="'+a.id+'"'+(a.id===game.carrierPlane?' selected':'')+'>'+a.name+' ('+a.cost+'金)</option>').join('')+'</select></div>';
+  }
   $('inspect').innerHTML='<div class="detail-heading">'+insignia(id)+'<b>'+d.name+'</b><span>'+d.cost+' 金</span></div><div class="statrow">'+
-    [['生命',d.hp],['攻击',d.atk],['护甲',d.def],['射程',d.range]].map(([k,v])=>'<div>'+k+'<b>'+v+'</b></div>').join('')+'</div><p>'+d.desc+'</p>';
+    [['生命',d.hp],['攻击',d.atk],['护甲',d.def],['射程',d.range]].map(([k,v])=>'<div>'+k+'<b>'+v+'</b></div>').join('')+'</div><p>'+d.desc+'</p>'+extra;
+  const sel=$('carrierPlaneSel');
+  if(sel)sel.onchange=e=>{
+    game.carrierPlane=e.target.value;
+    // Also update currently placed setup-phase carriers of this team!
+    if(game.phase==='setup'){
+      for(const u of game.units)if(u.team===game.team && u.d.hangarCap && u.d.spawnUnit==='jet')u.customSpawn=game.carrierPlane;
+    }
+    toast('✈️ 航母／機場已改為搭載：'+defs[game.carrierPlane].name);
+  };
 }
 function timestamp(){return [Math.floor(game.time/60),Math.floor(game.time)%60].map(n=>String(n).padStart(2,'0')).join(':')}
 function stats(){
@@ -2665,7 +3503,7 @@ function syncUI(){
   $('fight').innerHTML=icon(active?(game.paused?'play':'pause'):'swords')+'<span>'+(active?(game.paused?'继续':'暂停'):game.phase==='ended'?'还原':'开战')+'</span>';
   const generals=game.units.filter(u=>u.team===game.team&&u.d.ult);
   $('skills').replaceChildren(...generals.map(u=>{const b=document.createElement('button');b.onclick=()=>special(u);return b}));
-  $('dock').hidden=!active; if(!active && $('ctrlHud'))$('ctrlHud').hidden=true;
+  $('dock').hidden=!active; if($('ordnanceBar'))$('ordnanceBar').hidden=!active; if(!active){ game.activeStrike=null; game.liveDeploy=false; if($('liveDeployBtn'))$('liveDeployBtn').classList.remove('live-on'); document.querySelectorAll('#ordnanceBar button[data-strike]').forEach(b=>b.classList.remove('on')); if($('ctrlHud'))$('ctrlHud').hidden=true; }
   if(game.phase!=='ended'&&$('report').open)$('report').close();
   stats();
 }
@@ -2888,21 +3726,59 @@ function drawWarship(u, r, color, light, general){
     drawSquareSail(-r * 0.65, r * 0.52, r * 0.35, isNel ? trimGold : null);
     drawSquareSail(0, r * 0.78, r * 0.52, isNel ? trimGold : null);
     drawSquareSail(r * 0.68, r * 0.58, r * 0.4, isNel ? trimGold : null);
-  } else if (id === 'carrier') {
+  } else if (id === 'naval_dock') {
+    // Water-based Naval Shipyard Dock with twin drydock piers & crane
+    ctx.fillStyle = u.flash > 0 ? '#f3e5b8' : '#57534e'; ctx.strokeStyle = color; ctx.lineWidth = 2.6;
+    ctx.fillRect(-r*1.1, -r*0.95, r*2.2, r*0.42); ctx.strokeRect(-r*1.1, -r*0.95, r*2.2, r*0.42);
+    ctx.fillRect(-r*1.1, r*0.53, r*2.2, r*0.42); ctx.strokeRect(-r*1.1, r*0.53, r*2.2, r*0.42);
+    ctx.fillRect(-r*1.1, -r*0.95, r*0.45, r*1.9); ctx.strokeRect(-r*1.1, -r*0.95, r*0.45, r*1.9);
+    ctx.strokeStyle = '#dfbd77'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(-r*0.3, -r*0.75); ctx.lineTo(r*0.65, r*0.1); ctx.stroke();
+  } else if (id === 'carrier' || id.startsWith('carrier_')) {
+    const isWW2 = id === 'carrier_ww2', isSub = id === 'carrier_sub', isEmals = id === 'carrier_emals', isTwin = id === 'carrier_twin', isSki = id === 'carrier_ski';
     ctx.beginPath();
-    ctx.moveTo(r * 1.65, -r * 0.42); ctx.lineTo(r * 1.65, r * 0.42);
-    ctx.lineTo(r * 0.6, r * 0.62); ctx.lineTo(-r * 1.48, r * 0.54);
-    ctx.lineTo(-r * 1.56, -r * 0.54); ctx.lineTo(r * 0.6, -r * 0.62); ctx.closePath();
-    ctx.fillStyle = u.flash > 0 ? '#f3e5b8' : '#4a5258'; ctx.fill();
+    if(isSub){
+      ctx.ellipse(0, 0, r * 1.55, r * 0.42, 0, 0, 7);
+    }else if(isWW2){
+      ctx.rect(-r * 1.5, -r * 0.48, r * 3.05, r * 0.96);
+    }else{
+      ctx.moveTo(r * 1.72, -r * 0.42); ctx.lineTo(r * 1.72, r * 0.42);
+      ctx.lineTo(r * 0.55, r * 0.68); ctx.lineTo(-r * 1.52, r * 0.58);
+      ctx.lineTo(-r * 1.62, -r * 0.58); ctx.lineTo(r * 0.55, -r * 0.68); ctx.closePath();
+    }
+    ctx.fillStyle = u.flash > 0 ? '#f3e5b8' : (isWW2 ? '#9c7c52' : (isSub ? '#334155' : '#434b52')); ctx.fill();
     ctx.strokeStyle = color; ctx.lineWidth = 3.2; ctx.stroke();
-    ctx.strokeStyle = '#ebe4cc'; ctx.lineWidth = 1.4; ctx.setLineDash([6, 5]);
-    ctx.beginPath(); ctx.moveTo(-r * 1.3, r * 0.14); ctx.lineTo(r * 1.4, -r * 0.12); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = color; ctx.strokeStyle = '#222629'; ctx.lineWidth = 1.3;
-    ctx.fillRect(-r * 0.35, r * 0.22, r * 0.72, r * 0.3); ctx.strokeRect(-r * 0.35, r * 0.22, r * 0.72, r * 0.3);
-    ctx.fillStyle = '#ebe4cc';
-    const parked = Math.min(2, u.hangar);
-    const slots = [[-r*0.85, -r*0.24], [r*0.35, -r*0.22]];
+    // Ski-jump bow ramp highlight
+    if(isSki || isTwin){
+      ctx.fillStyle = '#64748b'; ctx.fillRect(r * 1.25, -r * 0.36, r * 0.44, r * 0.72);
+    }
+    // Flight deck runway markings & arresting wires
+    ctx.strokeStyle = '#ebe4cc'; ctx.lineWidth = 1.5; ctx.setLineDash([6, 5]);
+    ctx.beginPath();
+    if(isWW2 || isSub){ ctx.moveTo(-r*1.3, 0); ctx.lineTo(r*1.35, 0); }
+    else { ctx.moveTo(-r*1.38, r*0.2); ctx.lineTo(r*1.45, -r*0.16); }
+    ctx.stroke(); ctx.setLineDash([]);
+    // EMALS glowing cyan electromagnetic catapult tracks!
+    if(isEmals){
+      ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(r*0.15, -r*0.28); ctx.lineTo(r*1.55, -r*0.28);
+      ctx.moveTo(r*0.15, 0); ctx.lineTo(r*1.55, 0);
+      ctx.moveTo(-r*0.45, -r*0.15); ctx.lineTo(r*0.85, -r*0.45);
+      ctx.stroke();
+    }
+    // Island Superstructure(s) + rotating radar
+    ctx.fillStyle = color; ctx.strokeStyle = '#1f2428'; ctx.lineWidth = 1.4;
+    if(isTwin){
+      ctx.fillRect(-r*0.65, r*0.28, r*0.46, r*0.28); ctx.strokeRect(-r*0.65, r*0.28, r*0.46, r*0.28);
+      ctx.fillRect(r*0.22, r*0.28, r*0.46, r*0.28); ctx.strokeRect(r*0.22, r*0.28, r*0.46, r*0.28);
+    }else if(!isSub){
+      ctx.fillRect(-r*0.42, r*0.26, r*0.82, r*0.32); ctx.strokeRect(-r*0.42, r*0.26, r*0.82, r*0.32);
+    }
+    // Parked miniature aircraft on deck proportional to hangar count
+    ctx.fillStyle = '#f8fafc';
+    const parked = Math.min(4, u.hangar);
+    const slots = [[-r*1.05,-r*0.26],[-r*0.45,-r*0.34],[r*0.32,-r*0.28],[r*0.85,r*0.18]];
     for (let pi = 0; pi < parked; pi++) {
       const [jx, jy] = slots[pi];
       ctx.beginPath(); ctx.moveTo(jx + 7, jy); ctx.lineTo(jx - 4, jy - 5); ctx.lineTo(jx - 2, jy); ctx.lineTo(jx - 4, jy + 5); ctx.closePath(); ctx.fill();
@@ -2940,6 +3816,227 @@ function drawWarship(u, r, color, light, general){
   ctx.restore();
 }
 
+
+function drawWarhammerModel(u, rid, r, color, isAir){
+  const t = performance.now() * 0.008;
+  ctx.save();
+  if(isAir){
+    ctx.fillStyle='rgba(15,18,16,0.28)';
+    ctx.beginPath(); ctx.ellipse(10,16,r*.92,r*.52,u.face,0,7); ctx.fill();
+  }
+  ctx.rotate(u.face);
+  const flash = u.flash > 0;
+
+  if(rid==='wh_emperor'){
+    // Radiant Golden Halo + Auramite Armor + Flaming Sword
+    const halo = r*(1.35 + Math.sin(t)*0.12);
+    const g = ctx.createRadialGradient(0,0,r*.3,0,0,halo);
+    g.addColorStop(0,'rgba(254,240,138,0.85)'); g.addColorStop(0.6,'rgba(245,158,11,0.35)'); g.addColorStop(1,'rgba(245,158,11,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(0,0,halo,0,7); ctx.fill();
+    ctx.fillStyle=flash?'#fff':'#eab308'; ctx.strokeStyle='#fef08a'; ctx.lineWidth=2.4;
+    ctx.beginPath(); ctx.ellipse(0,0,r*.88,r*1.05,0,0,7); ctx.fill(); ctx.stroke();
+    // Shoulder pauldrons
+    ctx.fillStyle='#ca8a04'; ctx.beginPath(); ctx.arc(-r*.1,-r*.85,r*.45,0,7); ctx.arc(-r*.1,r*.85,r*.45,0,7); ctx.fill(); ctx.stroke();
+    // Blazing Emperor's Sword
+    ctx.strokeStyle='#f97316'; ctx.lineWidth=5.5; ctx.beginPath(); ctx.moveTo(r*.35,r*.45); ctx.lineTo(r*2.15,r*.15); ctx.stroke();
+    ctx.strokeStyle='#fef08a'; ctx.lineWidth=2.4; ctx.stroke();
+  }else if(rid==='wh_primarch' || rid==='wh_chaos_primarch' || rid==='wh_custodes'){
+    const isChaos = rid==='wh_chaos_primarch', isGold = rid==='wh_custodes';
+    ctx.fillStyle=flash?'#fff':(isGold?'#d4a017':(isChaos?'#1f1b24':color));
+    ctx.strokeStyle=isChaos?'#ef4444':'#fde047'; ctx.lineWidth=2.2;
+    // Bulky heroic pauldrons
+    ctx.beginPath(); ctx.arc(-r*.05,-r*.78,r*.52,0,7); ctx.arc(-r*.05,r*.78,r*.52,0,7); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(0,0,r*.76,0,7); ctx.fill(); ctx.stroke();
+    if(isChaos){
+      // Spiked trophy rack behind armor
+      ctx.strokeStyle='#fbbf24'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(-r*.5,-r*.6); ctx.lineTo(-r*1.15,-r*.95); ctx.moveTo(-r*.5,r*.6); ctx.lineTo(-r*1.15,r*.95); ctx.stroke();
+      ctx.strokeStyle='#dc2626'; ctx.lineWidth=4.2; ctx.beginPath(); ctx.moveTo(r*.3,r*.4); ctx.lineTo(r*1.85,r*.1); ctx.stroke();
+    }else if(isGold){
+      // Crimson plume + Guardian Spear
+      ctx.fillStyle='#dc2626'; ctx.beginPath(); ctx.ellipse(-r*.55,0,r*.55,r*.2,0,0,7); ctx.fill();
+      ctx.strokeStyle='#fef08a'; ctx.lineWidth=2.6; ctx.beginPath(); ctx.moveTo(-r*.3,r*.5); ctx.lineTo(r*1.9,r*.3); ctx.stroke();
+    }else{
+      // Flaming sword & iron halo
+      ctx.strokeStyle='#fb923c'; ctx.lineWidth=3.6; ctx.beginPath(); ctx.moveTo(r*.3,r*.45); ctx.lineTo(r*1.9,r*.15); ctx.stroke();
+    }
+  }else if(rid==='wh_marine' || rid==='wh_terminator' || rid==='wh_chaos_marine' || rid==='wh_jump'){
+    const isTerm = rid==='wh_terminator', isChaos = rid==='wh_chaos_marine', isJump = rid==='wh_jump';
+    // Power backpack / Jump pack
+    ctx.fillStyle='#2b2e33'; ctx.fillRect(-r*1.02,-r*.55,r*.55,r*1.1);
+    if(isJump){
+      ctx.fillStyle='#f97316'; ctx.beginPath(); ctx.arc(-r*1.22,-r*.32,r*.24,0,7); ctx.arc(-r*1.22,r*.32,r*.24,0,7); ctx.fill();
+    }
+    // Iconic Space Marine oversized pauldrons
+    ctx.fillStyle=flash?'#fff':(isChaos?'#3f1d24':color);
+    ctx.strokeStyle=isChaos?'#f59e0b':'#e5e7eb'; ctx.lineWidth=isTerm?2.4:1.6;
+    const pr = isTerm?r*.56:r*.46;
+    ctx.beginPath(); ctx.arc(0,-r*.68,pr,0,7); ctx.arc(0,r*.68,pr,0,7); ctx.fill(); ctx.stroke();
+    // Helmet & torso
+    ctx.beginPath(); ctx.arc(r*.08,0,isTerm?r*.62:r*.52,0,7); ctx.fill(); ctx.stroke();
+    // Bolter / Chainsword
+    ctx.fillStyle='#1f2937'; ctx.fillRect(r*.35,-r*.16,r*1.05,r*.32);
+    if(isChaos){
+      ctx.strokeStyle='#fbbf24'; ctx.lineWidth=1.8;
+      ctx.beginPath(); ctx.moveTo(-r*.2,-r*.9); ctx.lineTo(-r*.6,-r*1.25); ctx.moveTo(-r*.2,r*.9); ctx.lineTo(-r*.6,r*1.25); ctx.stroke();
+    }
+  }else if(rid==='wh_dread' || rid==='wh_knight' || rid==='wh_titan' || rid==='wh_stompa'){
+    const isTitan = rid==='wh_titan', isStompa = rid==='wh_stompa', isKnight = rid==='wh_knight';
+    // Heavy stride feet
+    const st = Math.sin(t + u.uid)*r*.22;
+    ctx.fillStyle='#27272a';
+    ctx.fillRect(-r*.45+st,-r*.95,r*.6,r*.35); ctx.fillRect(-r*.45-st,r*.6,r*.6,r*.35);
+    if(isStompa){
+      // Bell-shaped Ork scrap-metal titan
+      ctx.fillStyle=flash?'#fff':'#7f1d1d'; ctx.strokeStyle='#facc15'; ctx.lineWidth=2.4;
+      ctx.beginPath(); ctx.arc(0,0,r*1.08,0,7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#991b1b'; ctx.fillRect(r*.2,-r*1.12,r*1.1,r*.32); ctx.fillRect(r*.2,r*.8,r*1.25,r*.28);
+    }else if(isTitan){
+      // Cathedral-shouldered Warlord God-Engine!
+      ctx.fillStyle=flash?'#fff':color; ctx.strokeStyle='#fde047'; ctx.lineWidth=2.8;
+      ctx.fillRect(-r*.95,-r*1.05,r*1.85,r*2.1); ctx.strokeRect(-r*.95,-r*1.05,r*1.85,r*2.1);
+      // Shoulder cathedral towers
+      ctx.fillStyle='#334155'; ctx.fillRect(-r*.65,-r*.95,r*.7,r*.55); ctx.fillRect(-r*.65,r*.4,r*.7,r*.55);
+      // Dual Volcano Arm Cannons
+      ctx.fillStyle='#1e293b'; ctx.fillRect(r*.2,-r*1.18,r*1.45,r*.36); ctx.fillRect(r*.2,r*.82,r*1.45,r*.36);
+      ctx.fillStyle='#38bdf8'; ctx.fillRect(r*1.25,-r*1.1,r*.36,r*.2); ctx.fillRect(r*1.25,r*.9,r*.36,r*.2);
+      // Glowing Titan Head
+      ctx.fillStyle='#fef08a'; ctx.beginPath(); ctx.moveTo(r*1.15,0); ctx.lineTo(r*.55,-r*.35); ctx.lineTo(r*.55,r*.35); ctx.closePath(); ctx.fill();
+    }else if(isKnight){
+      ctx.fillStyle=flash?'#fff':color; ctx.strokeStyle='#fbbf24'; ctx.lineWidth=2.2;
+      ctx.beginPath(); ctx.ellipse(0,0,r*.92,r*1.02,0,0,7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#1e293b'; ctx.fillRect(r*.2,-r*1.05,r*1.28,r*.3); ctx.fillRect(r*.2,r*.75,r*1.28,r*.3);
+      ctx.fillStyle='#fb923c'; ctx.fillRect(r*1.1,-r*.99,r*.35,r*.18);
+    }else{
+      // Iconic Boxy Redemptor Dreadnought
+      ctx.fillStyle=flash?'#fff':color; ctx.strokeStyle='#dfbd77'; ctx.lineWidth=2.2;
+      ctx.fillRect(-r*.78,-r*.85,r*1.56,r*1.7); ctx.strokeRect(-r*.78,-r*.85,r*1.56,r*1.7);
+      ctx.fillStyle='#1f2937'; ctx.fillRect(r*.25,-r*.95,r*1.1,r*.32); ctx.fillRect(r*.25,r*.63,r*.95,r*.32);
+      ctx.fillStyle='#60a5fa'; ctx.fillRect(r*.9,-r*.88,r*.4,r*.16);
+    }
+  }else if(rid==='wh_lemanruss' || rid==='wh_baneblade' || rid==='wh_steamtank'){
+    const isBane = rid==='wh_baneblade', isSteam = rid==='wh_steamtank';
+    ctx.fillStyle='#27272a';
+    ctx.fillRect(-r*1.1,-r*.92,r*2.2,r*.34); ctx.fillRect(-r*1.1,r*.58,r*2.2,r*.34);
+    ctx.fillStyle=flash?'#fff':(isSteam?'#9a7b4f':color); ctx.strokeStyle=isSteam?'#fde68a':'#374151'; ctx.lineWidth=2;
+    ctx.fillRect(-r*.98,-r*.68,r*1.96,r*1.36); ctx.strokeRect(-r*.98,-r*.68,r*1.96,r*1.36);
+    // Side sponsons
+    if(!isSteam){
+      ctx.fillStyle='#4b5563'; ctx.fillRect(-r*.2,-r*1.02,r*.65,r*.24); ctx.fillRect(-r*.2,r*.78,r*.65,r*.24);
+    }
+    ctx.fillStyle=isSteam?'#b45309':'#374151'; ctx.beginPath(); ctx.arc(0,0,r*.48,0,7); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle='#18181b'; ctx.lineWidth=isBane?5.5:4;
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(r*(isBane?1.75:1.45),0); ctx.stroke();
+    if(isSteam){
+      // Brass smokestack
+      ctx.fillStyle='#451a03'; ctx.beginPath(); ctx.arc(-r*.55,0,r*.22,0,7); ctx.fill();
+    }
+  }else if(rid==='wh_thunderhawk' || rid==='wh_gyro' || rid==='wh_skyjunk'){
+    if(rid==='wh_skyjunk'){
+      // Grand Cathay Lantern War-Balloon!
+      ctx.fillStyle=flash?'#fff':'#dc2626'; ctx.strokeStyle='#facc15'; ctx.lineWidth=2.4;
+      ctx.beginPath(); ctx.arc(0,0,r*1.12,0,7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#fef08a'; ctx.beginPath(); ctx.arc(0,0,r*.5,0,7); ctx.fill();
+    }else if(rid==='wh_gyro'){
+      ctx.fillStyle=flash?'#fff':'#b45309'; ctx.strokeStyle='#fde68a'; ctx.lineWidth=1.8;
+      ctx.beginPath(); ctx.ellipse(0,0,r*.95,r*.45,0,0,7); ctx.fill(); ctx.stroke();
+      ctx.rotate(t*4); ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=2.2;
+      ctx.beginPath(); ctx.moveTo(-r*1.2,0); ctx.lineTo(r*1.2,0); ctx.moveTo(0,-r*1.2); ctx.lineTo(0,r*1.2); ctx.stroke();
+    }else{
+      // Thunderhawk Gunship
+      ctx.fillStyle=flash?'#fff':color; ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(r*1.5,0); ctx.lineTo(r*.2,-r*.45); ctx.lineTo(-r*.45,-r*1.35); ctx.lineTo(-r*.95,-r*1.2); ctx.lineTo(-r*.75,-r*.38); ctx.lineTo(-r*1.25,-r*.55); ctx.lineTo(-r*1.25,r*.55); ctx.lineTo(-r*.75,r*.38); ctx.lineTo(-r*.95,r*1.2); ctx.lineTo(-r*.45,r*1.35); ctx.lineTo(r*.2,r*.45); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+    }
+  }else if(rid==='wh_daemon_wing' || rid==='wh_tzeentch' || rid==='wh_griffon' || rid==='wh_sphinx'){
+    const flap = Math.sin(t*1.6 + u.uid)*r*.28;
+    const wingCol = rid==='wh_tzeentch'?'#3b82f6':(rid==='wh_griffon'?'#b45309':(rid==='wh_sphinx'?'#1f2937':'#991b1b'));
+    const trimCol = rid==='wh_tzeentch'?'#67e8f9':(rid==='wh_sphinx'?'#facc15':'#fbbf24');
+    // Sweeping Wings
+    ctx.fillStyle=flash?'#fff':wingCol; ctx.strokeStyle=trimCol; ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(r*.2,0); ctx.quadraticCurveTo(-r*.1,-r*1.55-flap,-r*1.15,-r*1.35-flap); ctx.lineTo(-r*.45,0);
+    ctx.lineTo(-r*1.15,r*1.35+flap); ctx.quadraticCurveTo(-r*.1,r*1.55+flap,r*.2,0); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    // Core torso + horns/head
+    ctx.fillStyle=rid==='wh_daemon_wing'?'#dc2626':wingCol;
+    ctx.beginPath(); ctx.ellipse(r*.15,0,r*.85,r*.55,0,0,7); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle='#fde047'; ctx.lineWidth=3.2;
+    ctx.beginPath(); ctx.moveTo(r*.5,r*.3); ctx.lineTo(r*1.75,-r*.2); ctx.stroke();
+  }else if(rid==='wh_plague'){
+    ctx.fillStyle=flash?'#fff':'#4d7c0f'; ctx.strokeStyle='#a3e635'; ctx.lineWidth=2.2;
+    ctx.beginPath(); ctx.arc(0,0,r*1.02,0,7); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#bef264';
+    ctx.beginPath(); ctx.arc(-r*.3,-r*.3,r*.24,0,7); ctx.arc(r*.25,r*.25,r*.2,0,7); ctx.arc(r*.25,-r*.28,r*.18,0,7); ctx.fill();
+  }else if(rid==='wh_ork'){
+    ctx.fillStyle=flash?'#fff':'#3f7d20'; ctx.strokeStyle='#14532d'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.ellipse(0,0,r*.82,r*.98,0,0,7); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#52525b'; ctx.fillRect(r*.35,r*.28,r*1.05,r*.28);
+    ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(r*.3,-r*.45); ctx.lineTo(r*1.35,-r*.75); ctx.stroke();
+  }else if(rid==='wh_necron' || rid==='wh_monolith' || rid==='wh_ctan'){
+    if(rid==='wh_monolith'){
+      ctx.fillStyle=flash?'#fff':'#111827'; ctx.strokeStyle='#10b981'; ctx.lineWidth=2.8;
+      ctx.fillRect(-r*1.08,-r*1.08,r*2.16,r*2.16); ctx.strokeRect(-r*1.08,-r*1.08,r*2.16,r*2.16);
+      ctx.fillStyle='rgba(16,185,129,0.75)'; ctx.beginPath(); ctx.arc(0,0,r*.48,0,7); ctx.fill();
+    }else if(rid==='wh_ctan'){
+      ctx.fillStyle=flash?'#fff':'#0f172a'; ctx.strokeStyle='#34d399'; ctx.lineWidth=2.2;
+      ctx.beginPath(); ctx.moveTo(r*1.2,0); ctx.quadraticCurveTo(-r*.4,-r*.9,-r*1.3,0); ctx.quadraticCurveTo(-r*.4,r*.9,r*1.2,0); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle='#a7f3d0'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(r*.2,r*.35); ctx.lineTo(r*1.75,-r*.4); ctx.stroke();
+    }else{
+      ctx.fillStyle=flash?'#fff':'#94a3b8'; ctx.strokeStyle='#10b981'; ctx.lineWidth=1.8;
+      ctx.beginPath(); ctx.arc(0,0,r*.72,0,7); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle='#10b981'; ctx.lineWidth=3.2; ctx.beginPath(); ctx.moveTo(r*.3,0); ctx.lineTo(r*1.48,0); ctx.stroke();
+    }
+  }else if(rid==='wh_tyranid' || rid==='wh_carnifex' || rid==='wh_dino'){
+    const isDino = rid==='wh_dino';
+    ctx.fillStyle=flash?'#fff':(isDino?'#15803d':'#581c87'); ctx.strokeStyle=isDino?'#facc15':'#e9d5ff'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.ellipse(0,0,r*1.12,r*.76,0,0,7); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle=isDino?'#fde047':'#f5d0fe'; ctx.lineWidth=2.8;
+    ctx.beginPath(); ctx.moveTo(r*.5,-r*.45); ctx.quadraticCurveTo(r*1.35,-r*.8,r*1.55,-r*.15);
+    ctx.moveTo(r*.5,r*.45); ctx.quadraticCurveTo(r*1.35,r*.8,r*1.55,r*.15); ctx.stroke();
+  }else if(rid==='wh_eldar' || rid==='wh_tau' || rid==='wh_tau_suit'){
+    const isTau = rid.startsWith('wh_tau');
+    ctx.fillStyle=flash?'#fff':(isTau?'#e2c08d':'#f8fafc');
+    ctx.strokeStyle=isTau?'#38bdf8':color; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(r*1.15,0); ctx.lineTo(-r*.45,-r*.85); ctx.lineTo(-r*.85,0); ctx.lineTo(-r*.45,r*.85); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.strokeStyle=isTau?'#38bdf8':'#f59e0b'; ctx.lineWidth=rid==='wh_tau_suit'?4:2.5;
+    ctx.beginPath(); ctx.moveTo(r*.35,0); ctx.lineTo(r*1.65,0); ctx.stroke();
+  }else if(rid==='wh_doomwheel'){
+    // Giant wooden Skaven Warpstone Doomwheel!
+    ctx.fillStyle=flash?'#fff':'#78350f'; ctx.strokeStyle='#22c55e'; ctx.lineWidth=2.6;
+    ctx.fillRect(-r*1.05,-r*.95,r*2.1,r*1.9); ctx.strokeRect(-r*1.05,-r*.95,r*2.1,r*1.9);
+    ctx.fillStyle='#4ade80'; ctx.beginPath(); ctx.arc(0,0,r*.42,0,7); ctx.fill();
+  }else if(rid==='wh_cathay'){
+    // Grand Cathay Terracotta Sentinel (Jade & Bronze Giant!)
+    ctx.fillStyle=flash?'#fff':'#0f766e'; ctx.strokeStyle='#facc15'; ctx.lineWidth=2.6;
+    ctx.beginPath(); ctx.roundRect(-r*.82,-r*.88,r*1.64,r*1.76,4); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle='#5eead4'; ctx.lineWidth=4.2;
+    ctx.beginPath(); ctx.moveTo(r*.2,r*.5); ctx.lineTo(r*2.05,-r*.25); ctx.stroke();
+  }else if(rid==='wh_dwarf'){
+    ctx.fillStyle=flash?'#fff':'#d97706'; ctx.strokeStyle='#78350f'; ctx.lineWidth=1.8;
+    ctx.beginPath(); ctx.arc(0,0,r*.78,0,7); ctx.fill(); ctx.stroke();
+    // Bright orange Slayer Mohawk!
+    ctx.fillStyle='#f97316'; ctx.fillRect(-r*.65,-r*.16,r*1.3,r*.32);
+    ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.moveTo(r*.3,-r*.6); ctx.lineTo(r*1.2,-r*.8); ctx.moveTo(r*.3,r*.6); ctx.lineTo(r*1.2,r*.8); ctx.stroke();
+  }else if(rid==='wh_fantasy_cav'){
+    ctx.fillStyle=flash?'#fff':'#7c2d12'; ctx.strokeStyle='#fbbf24'; ctx.lineWidth=1.8;
+    ctx.beginPath(); ctx.ellipse(0,0,r*1.18,r*.58,0,0,7); ctx.fill(); ctx.stroke();
+    ctx.fillStyle=color; ctx.beginPath(); ctx.arc(0,0,r*.48,0,7); ctx.fill();
+    ctx.strokeStyle='#fef08a'; ctx.lineWidth=2.6; ctx.beginPath(); ctx.moveTo(r*.2,r*.35); ctx.lineTo(r*1.85,r*.2); ctx.stroke();
+  }else{
+    // Skitarii, Krieg Guard, Skaven Ratling
+    const isSkav = rid==='wh_skaven', isSkit = rid==='wh_skitarii';
+    ctx.fillStyle=flash?'#fff':(isSkit?'#991b1b':(isSkav?'#4d4436':'#475569'));
+    ctx.strokeStyle=isSkav?'#22c55e':'#d6cfb9'; ctx.lineWidth=1.6;
+    ctx.beginPath(); ctx.arc(0,0,r*.74,0,7); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle=isSkav?'#4ade80':'#1e293b'; ctx.lineWidth=2.8;
+    ctx.beginPath(); ctx.moveTo(r*.3,0); ctx.lineTo(r*1.45,0); ctx.stroke();
+  }
+  ctx.restore();
+}
+
 function unitToken(u){
   const d=u.d, general=!!d.ult, tm=TEAMS[u.team]||TEAMS.blue, color=tm.token, light='#f6e7c4';
   const thrust=u.lunge>0?Math.sin((u.lunge/.2)*Math.PI)*5.5:0;
@@ -2950,6 +4047,7 @@ function unitToken(u){
     ctx.beginPath(); ctx.ellipse(0,2,d.radius*.9,d.radius*.42,u.face,0,7); ctx.fill();
     ctx.restore(); return;
   }
+  if(u.flattened>0){ctx.scale(1+u.flattened*0.55, Math.max(0.14, 1-u.flattened*0.82));}
   const r=d.radius*(general?1.15:1.13);
 
   // Detailed Top-Down Warship Renderer + Embarked Landing Craft for Sea-Crossing Land Units!
@@ -2979,6 +4077,12 @@ function unitToken(u){
   if(u.shield>0){
     ctx.strokeStyle='#d9b760'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(0,0,r+4,0,Math.PI*2); ctx.stroke();
   }
+  if(game.cmdMode && u.team===game.team){
+    const hl=(game.battleCorps===0 || game.battleCorps===(u.corps||1));
+    if(hl){ctx.strokeStyle='#dfbd77aa'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(0,0,r+5,0,7); ctx.stroke();}
+    ctx.font='bold 10px Georgia,serif'; ctx.fillStyle='#21241e'; ctx.fillRect(r-4,-r-6,12,12);
+    ctx.fillStyle='#dfbd77'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(String(u.corps||1),r+2,-r);
+  }
   if(game.controlled===u){
     ctx.strokeStyle='#ffe082'; ctx.lineWidth=3; ctx.setLineDash([6,4]);
     ctx.beginPath(); ctx.arc(0,0,r+9,0,Math.PI*2); ctx.stroke(); ctx.setLineDash([]);
@@ -2986,6 +4090,9 @@ function unitToken(u){
   if(isTeamNeutral(u.team)){
     ctx.font='bold 10px sans-serif'; ctx.fillStyle='rgba(25,28,24,0.85)'; ctx.fillRect(-16,-r-18,32,13);
     ctx.fillStyle='#dfbd77'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('中立',0,-r-11);
+  }else if(u.resting>0){
+    ctx.font='bold 10px sans-serif'; ctx.fillStyle='rgba(20,44,36,0.92)'; ctx.fillRect(-16,-r-18,32,13);
+    ctx.fillStyle='#fde68a'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('整备',0,-r-11);
   }else if(u.rtb){
     ctx.font='bold 10px sans-serif'; ctx.fillStyle='rgba(25,38,32,0.88)'; ctx.fillRect(-16,-r-18,32,13);
     ctx.fillStyle='#86efac'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('返航',0,-r-11);
@@ -2997,18 +4104,90 @@ function unitToken(u){
 
   if(!d.naval){
     const rid = d.renderAs || d.id;
-    if(rid==='tank' || rid==='mlrs'){
+    const wep = d.ico || d.id;
+    if(rid && rid.startsWith('wh_')){
+      drawWarhammerModel(u, rid, r, color, !!d.air);
+    }else if(rid==='mech'){
+      // Articulated bipedal sci-fi Titan Mech
+      ctx.save(); ctx.rotate(u.face);
+      const stride = Math.sin(performance.now()*0.012 + u.uid) * (u.alive?r*.25:0);
+      ctx.fillStyle='#2a3238';
+      ctx.fillRect(-r*.45+stride,-r*.92,r*.55,r*.34); ctx.fillRect(-r*.45-stride,r*.58,r*.55,r*.34);
+      ctx.fillStyle=u.flash>0?'#f3e5b8':color; ctx.strokeStyle='#7de2f8'; ctx.lineWidth=1.8;
+      ctx.beginPath(); ctx.roundRect(-r*.72,-r*.68,r*1.44,r*1.36,5); ctx.fill(); ctx.stroke();
+      // Dual shoulder railguns
+      ctx.fillStyle='#1e293b'; ctx.fillRect(r*.1,-r*.84,r*1.25,r*.24); ctx.fillRect(r*.1,r*.6,r*1.25,r*.24);
+      ctx.fillStyle='#38bdf8'; ctx.fillRect(r*.95,-r*.78,r*.38,r*.12); ctx.fillRect(r*.95,r*.66,r*.38,r*.12);
+      // Glowing cockpit visor
+      ctx.fillStyle='#7de2f8'; ctx.beginPath(); ctx.ellipse(r*.35,0,r*.25,r*.32,0,0,7); ctx.fill();
+      ctx.restore();
+    }else if(rid==='prism' || rid==='shieldgen' || rid==='hovertank'){
+      ctx.save(); ctx.rotate(u.face);
+      // Hover glow under chassis
+      ctx.fillStyle='rgba(56,189,248,0.28)'; ctx.beginPath(); ctx.ellipse(0,0,r*1.28,r*.88,0,0,7); ctx.fill();
+      ctx.fillStyle=u.flash>0?'#f3e5b8':color; ctx.strokeStyle='#7de2f8'; ctx.lineWidth=1.8;
+      ctx.beginPath(); ctx.moveTo(r*1.25,0); ctx.lineTo(r*.45,-r*.76); ctx.lineTo(-r*.95,-r*.62); ctx.lineTo(-r*1.12,0); ctx.lineTo(-r*.95,r*.62); ctx.lineTo(r*.45,r*.76); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+      if(rid==='prism'){
+        ctx.fillStyle='#bae6fd'; ctx.strokeStyle='#0284c7'; ctx.lineWidth=1.5;
+        ctx.beginPath(); ctx.moveTo(r*.75,0); ctx.lineTo(0,-r*.42); ctx.lineTo(-r*.45,0); ctx.lineTo(0,r*.42); ctx.closePath(); ctx.fill(); ctx.stroke();
+      }else if(rid==='shieldgen'){
+        const pR = r*(1.15 + Math.sin(performance.now()*0.008)*0.12);
+        ctx.strokeStyle='rgba(125,211,252,0.75)'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(0,0,pR,0,7); ctx.stroke();
+        ctx.fillStyle='#38bdf8'; ctx.beginPath(); ctx.arc(0,0,r*.34,0,7); ctx.fill();
+      }else{
+        ctx.strokeStyle='#e0f2fe'; ctx.lineWidth=3.2;
+        ctx.beginPath(); ctx.moveTo(0,-r*.22); ctx.lineTo(r*1.48,-r*.22); ctx.moveTo(0,r*.22); ctx.lineTo(r*1.48,r*.22); ctx.stroke();
+      }
+      ctx.restore();
+    }else if(rid==='tripod'){
+      ctx.save(); ctx.rotate(u.face);
+      const tW = performance.now()*0.008 + u.uid;
+      ctx.strokeStyle='#5b4d6e'; ctx.lineWidth=3.2;
+      for(let i=0;i<3;i++){
+        const la = i*2.094 + Math.sin(tW+i)*0.18;
+        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(Math.cos(la)*r*1.35, Math.sin(la)*r*1.35); ctx.stroke();
+      }
+      ctx.fillStyle=u.flash>0?'#f3e5b8':'#3d2e4f'; ctx.strokeStyle='#c084fc'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.arc(0,0,r*.78,0,7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#f43f5e'; ctx.beginPath(); ctx.arc(r*.35,0,r*.24,0,7); ctx.fill();
+      ctx.restore();
+    }else if(rid==='obelisk'){
+      ctx.save();
+      ctx.fillStyle=u.flash>0?'#f3e5b8':'#2e1f40'; ctx.strokeStyle='#c084fc'; ctx.lineWidth=2.2;
+      ctx.beginPath(); for(let i=0;i<6;i++){const a=i*Math.PI/3; ctx[i?'lineTo':'moveTo'](Math.cos(a)*r,Math.sin(a)*r);} ctx.closePath(); ctx.fill(); ctx.stroke();
+      const pulse = 0.6 + 0.4*Math.sin(performance.now()*0.01);
+      ctx.fillStyle='rgba(192,132,252,'+pulse+')'; ctx.beginPath(); ctx.arc(0,0,r*.45,0,7); ctx.fill();
+      ctx.restore();
+    }else if(rid==='alien_bio' && !d.air){
+      ctx.save(); ctx.rotate(u.face);
+      ctx.fillStyle=u.flash>0?'#f3e5b8':'#4c2459'; ctx.strokeStyle='#a855f7'; ctx.lineWidth=1.8;
+      ctx.beginPath(); ctx.ellipse(0,0,r*1.12,r*.82,0,0,7); ctx.fill(); ctx.stroke();
+      // Scythe claws
+      ctx.strokeStyle='#e9d5ff'; ctx.lineWidth=2.8;
+      ctx.beginPath(); ctx.moveTo(r*.5,-r*.55); ctx.quadraticCurveTo(r*1.35,-r*.85,r*1.45,-r*.2);
+      ctx.moveTo(r*.5,r*.55); ctx.quadraticCurveTo(r*1.35,r*.85,r*1.45,r*.2); ctx.stroke();
+      ctx.restore();
+    }else if(rid==='tank' || rid==='mlrs' || rid==='ifv' || rid==='sam'){
       ctx.save(); ctx.rotate(u.face);
       const recoil=u.lunge>0?-u.lunge*14:0;
       ctx.fillStyle='#2a2d28';
-      ctx.fillRect(-r*.95,-r*.78,r*1.9,r*.32); ctx.fillRect(-r*.95,r*.46,r*1.9,r*.32);
+      ctx.fillRect(-r*.95,-r*.78,r*1.9,r*.3); ctx.fillRect(-r*.95,r*.48,r*1.9,r*.3);
       ctx.fillStyle=u.flash>0?'#f3e5b8':color; ctx.strokeStyle='#2c2f2a'; ctx.lineWidth=1.8;
-      ctx.fillRect(-r*.82,-r*.58,r*1.64,r*1.16); ctx.strokeRect(-r*.82,-r*.58,r*1.64,r*1.16);
+      ctx.fillRect(-r*.84,-r*.58,r*1.68,r*1.16); ctx.strokeRect(-r*.84,-r*.58,r*1.68,r*1.16);
       if(rid==='tank'){
         ctx.fillStyle='#464d47'; ctx.strokeStyle='#d6cfb9'; ctx.lineWidth=1.2;
-        ctx.beginPath(); ctx.arc(recoil*0.3,0,r*.44,0,7); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.arc(recoil*0.3,0,r*.46,0,7); ctx.fill(); ctx.stroke();
         ctx.strokeStyle='#232624'; ctx.lineWidth=3.8;
-        ctx.beginPath(); ctx.moveTo(recoil*0.3,0); ctx.lineTo(r*1.42+recoil,0); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(recoil*0.3,0); ctx.lineTo(r*1.46+recoil,0); ctx.stroke();
+      }else if(rid==='ifv'){
+        ctx.fillStyle='#525a54'; ctx.fillRect(-r*.25,-r*.34,r*.65,r*.68);
+        ctx.strokeStyle='#232624'; ctx.lineWidth=2.4;
+        ctx.beginPath(); ctx.moveTo(r*.35,0); ctx.lineTo(r*1.32+recoil,0); ctx.stroke();
+      }else if(rid==='sam'){
+        ctx.fillStyle='#4d5248'; ctx.fillRect(-r*.62,-r*.42,r*1.15,r*.84);
+        ctx.fillStyle='#e2c06b';
+        for(const sy of [-r*.22, r*.22]){ctx.fillRect(-r*.45,sy-3,r*.82,6);}
       }else{
         ctx.fillStyle='#5c5544'; ctx.fillRect(-r*.65,-r*.4,r*1.1,r*.8);
         ctx.strokeStyle='#e0c482'; ctx.lineWidth=1.5;
@@ -3019,9 +4198,71 @@ function unitToken(u){
       const rot=performance.now()*0.025;
       ctx.save();
       ctx.fillStyle='rgba(20,25,22,0.28)';
-      ctx.beginPath(); ctx.ellipse(10,16,r*.85,r*.48,u.face,0,7); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(10,16,r*.88,r*.5,u.face,0,7); ctx.fill();
       ctx.rotate(u.face);
-      if(rid==='jet'){
+      if(rid==='droplet'){
+        // Mirror-silver Strong-Interaction Trisolaran Droplet!
+        const g = ctx.createRadialGradient(r*.35, -r*.2, 1, 0, 0, r*1.4);
+        g.addColorStop(0, '#ffffff'); g.addColorStop(0.35, '#e2e8f0'); g.addColorStop(0.75, '#94a3b8'); g.addColorStop(1, '#38bdf8');
+        ctx.fillStyle = u.flash>0 ? '#fef08a' : g;
+        ctx.strokeStyle = '#7dd3fc'; ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(r*1.55, 0);
+        ctx.bezierCurveTo(r*1.15, -r*.68, -r*.55, -r*.58, -r*1.35, 0);
+        ctx.bezierCurveTo(-r*.55, r*.58, r*1.15, r*.68, r*1.55, 0);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      }else if(rid==='foil_unit'){
+        // Singer Dual-Vector Foil carrier: glowing geometric slip + orbital ring
+        ctx.strokeStyle='#38bdf8'; ctx.lineWidth=1.8;
+        ctx.beginPath(); ctx.arc(0,0,r*1.12,0,7); ctx.stroke();
+        ctx.fillStyle='rgba(224,242,254,0.92)'; ctx.strokeStyle='#7dd3fc'; ctx.lineWidth=1.5;
+        ctx.fillRect(-r*.75,-r*.42,r*1.5,r*.84); ctx.strokeRect(-r*.75,-r*.42,r*1.5,r*.84);
+      }else if(rid==='ufo'){
+        // Classic glowing Alien Saucer Mothership
+        const g = ctx.createRadialGradient(0,0,r*.2,0,0,r*1.25);
+        g.addColorStop(0,'#e9d5ff'); g.addColorStop(0.55,color); g.addColorStop(1,'#3b0764');
+        ctx.fillStyle=u.flash>0?'#f3e5b8':g; ctx.strokeStyle='#d8b4fe'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.arc(0,0,r*1.18,0,7); ctx.fill(); ctx.stroke();
+        for(let i=0;i<6;i++){
+          const la = i*Math.PI/3 + rot*0.18;
+          ctx.fillStyle='#67e8f9'; ctx.beginPath(); ctx.arc(Math.cos(la)*r*.76, Math.sin(la)*r*.76, 2.5, 0, 7); ctx.fill();
+        }
+      }else if(rid==='carrier_air'){
+        // Sci-Fi Sky Fortress Helicarrier
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#334155'; ctx.strokeStyle='#7de2f8'; ctx.lineWidth=2;
+        ctx.fillRect(-r*1.45,-r*.68,r*2.9,r*1.36); ctx.strokeRect(-r*1.45,-r*.68,r*2.9,r*1.36);
+        ctx.strokeStyle='#38bdf8'; ctx.lineWidth=1.6;
+        for(const [rx,ry] of [[-r*.95,-r*.88],[r*.95,-r*.88],[-r*.95,r*.88],[r*.95,r*.88]]){
+          ctx.beginPath(); ctx.arc(rx,ry,r*.34,0,7); ctx.stroke();
+        }
+        ctx.strokeStyle='#e2e8f0'; ctx.setLineDash([4,4]); ctx.beginPath(); ctx.moveTo(-r*1.2,0); ctx.lineTo(r*1.2,0); ctx.stroke(); ctx.setLineDash([]);
+      }else if(rid==='alien_bio'){
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#581c87'; ctx.strokeStyle='#c084fc'; ctx.lineWidth=1.8;
+        ctx.beginPath(); ctx.moveTo(r*1.35,0); ctx.quadraticCurveTo(r*.2,-r*1.25,-r*1.15,-r*.65); ctx.lineTo(-r*.75,0); ctx.lineTo(-r*1.15,r*.65); ctx.quadraticCurveTo(r*.2,r*1.25,r*1.35,0); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+      }else if(rid==='stealth'){
+        // Stealth Flying Wing / 5th-gen Diamond Jet
+        ctx.beginPath();
+        ctx.moveTo(r*1.48,0); ctx.lineTo(-r*.45,-r*1.32); ctx.lineTo(-r*.95,-r*.92);
+        ctx.lineTo(-r*.48,0); ctx.lineTo(-r*.95,r*.92); ctx.lineTo(-r*.45,r*1.32); ctx.closePath();
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#374047'; ctx.fill();
+        ctx.strokeStyle=color; ctx.lineWidth=2.2; ctx.stroke();
+        ctx.fillStyle='#a8d8eb'; ctx.beginPath(); ctx.ellipse(r*.55,0,r*.28,r*.11,0,0,7); ctx.fill();
+      }else if(rid==='bomber'){
+        // Heavy 4-engine strategic bomber / AC-130
+        ctx.fillStyle=u.flash>0?'#f3e5b8':color; ctx.strokeStyle='#ebe4cc'; ctx.lineWidth=1.4;
+        ctx.beginPath();
+        ctx.moveTo(r*1.55,0); ctx.lineTo(r*.4,-r*.25); ctx.lineTo(-r*.2,-r*1.55); ctx.lineTo(-r*.62,-r*1.55);
+        ctx.lineTo(-r*.3,-r*.24); ctx.lineTo(-r*1.35,-r*.58); ctx.lineTo(-r*1.35,r*.58);
+        ctx.lineTo(-r*.3,r*.24); ctx.lineTo(-r*.62,r*1.55); ctx.lineTo(-r*.2,r*1.55); ctx.lineTo(r*.4,r*.25); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+      }else if(rid==='drone'){
+        // Slender high-altitude Reaper drone
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#d2ccb8'; ctx.strokeStyle=color; ctx.lineWidth=1.8;
+        ctx.fillRect(-r*1.1,-2.2,r*2.2,4.4);
+        ctx.fillRect(-r*.1,-r*1.35,4,r*2.7);
+        ctx.strokeRect(-r*.1,-r*1.35,4,r*2.7);
+      }else if(rid==='jet'){
         ctx.beginPath();
         ctx.moveTo(r*1.45,0); ctx.lineTo(r*.2,-r*.28); ctx.lineTo(-r*.45,-r*1.18); ctx.lineTo(-r*.78,-r*1.18);
         ctx.lineTo(-r*.45,-r*.24); ctx.lineTo(-r*1.15,-r*.46); ctx.lineTo(-r*1.15,r*.46);
@@ -3041,23 +4282,117 @@ function unitToken(u){
       }
       ctx.restore();
     }else if(d.building){
-      ctx.fillStyle=u.flash>0?'#f3e5b8':'#8a816e'; ctx.strokeStyle=color; ctx.lineWidth=3.2;
-      ctx.fillRect(-r*.92,-r*.92,r*1.84,r*1.84); ctx.strokeRect(-r*.92,-r*.92,r*1.84,r*1.84);
-      ctx.fillStyle=color; ctx.fillRect(-r*.56,-r*.56,r*1.12,r*1.12);
-      if(d.id==='artillery_tower'||d.id==='flak_tower'){
-        ctx.save(); ctx.rotate(u.face); ctx.strokeStyle='#222524'; ctx.lineWidth=d.id==='artillery_tower'?4.5:2.2;
-        if(d.id==='flak_tower'){
-          ctx.beginPath(); ctx.moveTo(0,-3.5); ctx.lineTo(r*1.15,-3.5); ctx.moveTo(0,3.5); ctx.lineTo(r*1.15,3.5); ctx.stroke();
+      if(rid==='city_wall' || rid==='bunker_wall' || rid==='energy_wall'){
+        if(rid==='energy_wall'){
+          ctx.fillStyle='rgba(56,189,248,0.32)'; ctx.strokeStyle='#38bdf8'; ctx.lineWidth=2.4;
+          ctx.fillRect(-r,-r,r*2,r*2); ctx.strokeRect(-r,-r,r*2,r*2);
+          ctx.strokeStyle='#bae6fd'; ctx.lineWidth=1.4;
+          ctx.beginPath(); ctx.moveTo(-r,0); ctx.lineTo(r,0); ctx.moveTo(0,-r); ctx.lineTo(0,r); ctx.stroke();
         }else{
-          ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(r*1.22,0); ctx.stroke();
+          ctx.fillStyle=u.flash>0?'#f3e5b8':(rid==='bunker_wall'?'#6b7270':'#948b78');
+          ctx.strokeStyle='#36332c'; ctx.lineWidth=2;
+          ctx.fillRect(-r,-r,r*2,r*2); ctx.strokeRect(-r,-r,r*2,r*2);
+          // Stone battlements / merlons
+          ctx.fillStyle=rid==='bunker_wall'?'#474d4b':'#b8ae99';
+          for(const [bx,by] of [[-r*.82,-r*.82],[r*.32,-r*.82],[-r*.82,r*.32],[r*.32,r*.32]]){
+            ctx.fillRect(bx,by,r*.5,r*.5);
+          }
+          ctx.fillStyle=color; ctx.fillRect(-r*.35,-r*.35,r*.7,r*.7);
         }
+      }else if(rid==='city_gate'){
+        // Twin stone gatehouse towers + timber arch passageway
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#8d8471'; ctx.strokeStyle='#2f2b24'; ctx.lineWidth=2;
+        ctx.fillRect(-r,-r,r*2,r*.56); ctx.strokeRect(-r,-r,r*2,r*.56);
+        ctx.fillRect(-r,r*.44,r*2,r*.56); ctx.strokeRect(-r,r*.44,r*2,r*.56);
+        // Timber gate doors in center
+        ctx.fillStyle='#5c3d24'; ctx.strokeStyle=color; ctx.lineWidth=2.2;
+        ctx.fillRect(-r*.52,-r*.44,r*1.04,r*.88); ctx.strokeRect(-r*.52,-r*.44,r*1.04,r*.88);
+        ctx.strokeStyle='#dfbd77'; ctx.lineWidth=1.5;
+        ctx.beginPath(); ctx.moveTo(0,-r*.44); ctx.lineTo(0,r*.44); ctx.stroke();
+      }else if(rid==='city_keep'){
+        // Grand multi-tiered palace citadel roof
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#7e7665'; ctx.strokeStyle='#2d2922'; ctx.lineWidth=2.4;
+        ctx.fillRect(-r,-r,r*2,r*2); ctx.strokeRect(-r,-r,r*2,r*2);
+        ctx.fillStyle=color; ctx.strokeStyle='#dfbd77'; ctx.lineWidth=2.2;
+        ctx.fillRect(-r*.78,-r*.78,r*1.56,r*1.56); ctx.strokeRect(-r*.78,-r*.78,r*1.56,r*1.56);
+        ctx.fillStyle='#2a2d28'; ctx.fillRect(-r*.45,-r*.45,r*.9,r*.9);
+        ctx.strokeStyle='#fde68a'; ctx.lineWidth=2.4;
+        ctx.beginPath(); ctx.moveTo(-r*.75,-r*.75); ctx.lineTo(r*.75,r*.75); ctx.moveTo(r*.75,-r*.75); ctx.lineTo(-r*.75,r*.75); ctx.stroke();
+        ctx.fillStyle='#dfbd77'; ctx.beginPath(); ctx.arc(0,0,r*.22,0,7); ctx.fill();
+      }else if(rid==='city_bastion'){
+        // Octagonal corner fortress cannon tower
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#8a816e'; ctx.strokeStyle=color; ctx.lineWidth=3;
+        ctx.beginPath(); for(let i=0;i<8;i++){const a=i*Math.PI/4+Math.PI/8; ctx[i?'lineTo':'moveTo'](Math.cos(a)*r*1.05,Math.sin(a)*r*1.05);} ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.fillStyle='#454139'; ctx.beginPath(); ctx.arc(0,0,r*.55,0,7); ctx.fill();
+        ctx.save(); ctx.rotate(u.face); ctx.strokeStyle='#1f2220'; ctx.lineWidth=5;
+        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(r*1.25,0); ctx.stroke(); ctx.restore();
+      }else if(rid==='city_drum'){
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#8a3b2a'; ctx.strokeStyle='#dfbd77'; ctx.lineWidth=2.4;
+        ctx.beginPath(); ctx.arc(0,0,r*.95,0,7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle='#f3e2b8'; ctx.beginPath(); ctx.arc(0,0,r*.48,0,7); ctx.fill();
+        ctx.strokeStyle=color; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(0,0,r*.48,0,7); ctx.stroke();
+      }else if(rid==='airfield_runway'){
+        // Land Airbase Runway with tarmac markings & hangar
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#4b524e'; ctx.strokeStyle=color; ctx.lineWidth=2.4;
+        ctx.fillRect(-r*1.25,-r*.72,r*2.5,r*1.44); ctx.strokeRect(-r*1.25,-r*.72,r*2.5,r*1.44);
+        ctx.strokeStyle='#f5ecd5'; ctx.lineWidth=1.6; ctx.setLineDash([6,5]);
+        ctx.beginPath(); ctx.moveTo(-r*1.1,0); ctx.lineTo(r*1.1,0); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle='#333936'; ctx.fillRect(-r*.95,-r*.68,r*.65,r*.38);
+      }else if(rid==='missile_silo'){
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#4b504c'; ctx.strokeStyle='#ef4444'; ctx.lineWidth=2.4;
+        ctx.beginPath(); ctx.arc(0,0,r*1.02,0,7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle='#1f2421'; ctx.beginPath(); ctx.arc(0,0,r*.58,0,7); ctx.fill();
+        ctx.fillStyle='#f59e0b'; ctx.beginPath(); ctx.arc(0,0,r*.24,0,7); ctx.fill();
+      }else if(rid==='radar_station'){
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#4b5563'; ctx.strokeStyle=color; ctx.lineWidth=2.2;
+        ctx.fillRect(-r*.85,-r*.85,r*1.7,r*1.7); ctx.strokeRect(-r*.85,-r*.85,r*1.7,r*1.7);
+        ctx.save(); ctx.rotate(performance.now()*0.004);
+        ctx.strokeStyle='#7de2f8'; ctx.lineWidth=3.2;
+        ctx.beginPath(); ctx.moveTo(-r*.75,0); ctx.lineTo(r*.75,0); ctx.stroke();
         ctx.restore();
-      }else if(d.id==='med_tent'){
-        ctx.strokeStyle='#f5ecd5'; ctx.lineWidth=3;
-        ctx.beginPath(); ctx.moveTo(0,-r*.45); ctx.lineTo(0,r*.45); ctx.moveTo(-r*.45,0); ctx.lineTo(r*.45,0); ctx.stroke();
-      }else if(d.id==='barracks'){
-        ctx.strokeStyle='#f5ecd5'; ctx.lineWidth=1.8;
-        ctx.beginPath(); ctx.moveTo(-r*.45,-r*.1); ctx.lineTo(0,-r*.55); ctx.lineTo(r*.45,-r*.1); ctx.stroke();
+      }else if(rid==='tank_factory'){
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#52525b'; ctx.strokeStyle=color; ctx.lineWidth=2.6;
+        ctx.fillRect(-r*1.08,-r*.92,r*2.16,r*1.84); ctx.strokeRect(-r*1.08,-r*.92,r*2.16,r*1.84);
+        ctx.fillStyle='#27272a'; ctx.fillRect(r*.35,-r*.45,r*.72,r*.9);
+        ctx.strokeStyle='#fbbf24'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(-r*.75,-r*.4); ctx.lineTo(r*.15,-r*.4); ctx.moveTo(-r*.75,r*.4); ctx.lineTo(r*.15,r*.4); ctx.stroke();
+      }else if(rid==='tesla_coil'){
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#334155'; ctx.strokeStyle='#38bdf8'; ctx.lineWidth=2.4;
+        ctx.beginPath(); ctx.arc(0,0,r*.95,0,7); ctx.fill(); ctx.stroke();
+        const tp = r*(0.38 + 0.14*Math.sin(performance.now()*0.015));
+        ctx.fillStyle='#e0f2fe'; ctx.beginPath(); ctx.arc(0,0,tp,0,7); ctx.fill();
+      }else if(rid==='shield_dome'){
+        ctx.fillStyle='rgba(56,189,248,0.28)'; ctx.strokeStyle='#38bdf8'; ctx.lineWidth=2.6;
+        ctx.beginPath(); ctx.arc(0,0,r*1.12,0,7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle='#bae6fd'; ctx.beginPath(); ctx.arc(0,0,r*.38,0,7); ctx.fill();
+      }else if(rid==='warp_gate'){
+        ctx.fillStyle='rgba(147,51,234,0.38)'; ctx.strokeStyle='#c084fc'; ctx.lineWidth=2.8;
+        ctx.beginPath(); ctx.arc(0,0,r*1.05,0,7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle='#f3e8ff'; ctx.beginPath(); ctx.arc(0,0,r*.42,0,7); ctx.fill();
+      }else if(rid==='star_citadel'){
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#1e293b'; ctx.strokeStyle='#38bdf8'; ctx.lineWidth=2.8;
+        ctx.beginPath(); for(let i=0;i<8;i++){const a=i*Math.PI/4; ctx[i?'lineTo':'moveTo'](Math.cos(a)*r*1.08,Math.sin(a)*r*1.08);} ctx.closePath(); ctx.fill(); ctx.stroke();
+        const pr = r*(0.42 + 0.12*Math.sin(performance.now()*0.008));
+        ctx.fillStyle='#7dd3fc'; ctx.beginPath(); ctx.arc(0,0,pr,0,7); ctx.fill();
+      }else{
+        ctx.fillStyle=u.flash>0?'#f3e5b8':'#8a816e'; ctx.strokeStyle=color; ctx.lineWidth=3.2;
+        ctx.fillRect(-r*.92,-r*.92,r*1.84,r*1.84); ctx.strokeRect(-r*.92,-r*.92,r*1.84,r*1.84);
+        ctx.fillStyle=color; ctx.fillRect(-r*.56,-r*.56,r*1.12,r*1.12);
+        if(d.id==='artillery_tower'||d.id==='flak_tower'){
+          ctx.save(); ctx.rotate(u.face); ctx.strokeStyle='#222524'; ctx.lineWidth=d.id==='artillery_tower'?4.5:2.2;
+          if(d.id==='flak_tower'){
+            ctx.beginPath(); ctx.moveTo(0,-3.5); ctx.lineTo(r*1.15,-3.5); ctx.moveTo(0,3.5); ctx.lineTo(r*1.15,3.5); ctx.stroke();
+          }else{
+            ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(r*1.22,0); ctx.stroke();
+          }
+          ctx.restore();
+        }else if(d.id==='med_tent'){
+          ctx.strokeStyle='#f5ecd5'; ctx.lineWidth=3;
+          ctx.beginPath(); ctx.moveTo(0,-r*.45); ctx.lineTo(0,r*.45); ctx.moveTo(-r*.45,0); ctx.lineTo(r*.45,0); ctx.stroke();
+        }else if(d.id==='barracks'){
+          ctx.strokeStyle='#f5ecd5'; ctx.lineWidth=1.8;
+          ctx.beginPath(); ctx.moveTo(-r*.45,-r*.1); ctx.lineTo(0,-r*.55); ctx.lineTo(r*.45,-r*.1); ctx.stroke();
+        }
       }
     }else if(rid==='elephant'){
       ctx.save(); ctx.rotate(u.face);
@@ -3097,22 +4432,79 @@ function unitToken(u){
       }
       ctx.restore();
     }else{
-      ctx.beginPath();
-      if(d.cat==='cavalry'){ctx.moveTo(0,-r*1.2);ctx.lineTo(r,0);ctx.lineTo(0,r*1.2);ctx.lineTo(-r,0);ctx.closePath()}
-      else{ctx.moveTo(-r*.87,-r*.84);ctx.lineTo(r*.87,-r*.84);ctx.lineTo(r*.84,r*.3);ctx.quadraticCurveTo(r*.6,r*.85,0,r*1.1);ctx.quadraticCurveTo(-r*.7,r*.82,-r*.87,r*.26);ctx.closePath()}
-      ctx.fillStyle=u.flash>0?'#f3e5b8':u.slow>0?'#4b7c8e':color; ctx.fill();
-      ctx.strokeStyle=general?'#b08a48':'#4d4b3b'; ctx.lineWidth=general?3.5:2.1; ctx.stroke();
-      ctx.save(); ctx.scale(.8,.8); ctx.strokeStyle=light; ctx.lineWidth=1.8; ctx.stroke(); ctx.restore();
-      ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillStyle=light;
-      if(general){ctx.font='bold '+Math.round(r*1.22)+'px serif';ctx.fillText(d.name.split('·')[1][0],0,-1)}
-      else{
-        ctx.lineWidth=2.2; ctx.strokeStyle=light; ctx.beginPath();
-        if(d.cat==='ranged'){ctx.moveTo(-r*.5,r*.35);ctx.lineTo(r*.47,-r*.45);ctx.lineTo(r*.4,-r*.08);ctx.moveTo(r*.47,-r*.45);ctx.lineTo(r*.13,-r*.4)}
-        else if(d.cat==='cavalry'){ctx.moveTo(-r*.38,r*.22);ctx.lineTo(0,-r*.27);ctx.lineTo(r*.38,r*.22)}
-        else if(d.cat==='mythic'){ctx.arc(0,0,r*.3,0,Math.PI*2)}
-        else{ctx.moveTo(-r*.26,-r*.4);ctx.lineTo(-r*.26,r*.31);ctx.moveTo(r*.26,-r*.4);ctx.lineTo(r*.26,r*.31)}
-        ctx.stroke();
+      // Bespoke Top-Down Character Models (Horses, Chariots, Soldiers, Armor, Unique Held Weapons!)
+      ctx.save(); ctx.rotate(u.face);
+      const sw = u.lunge>0 ? Math.sin((u.lunge/.2)*Math.PI)*0.85 : 0;
+
+      // 1) Mount Chassis (Chariot / Camel / Warhorse)
+      if(wep==='chariot'){
+        ctx.fillStyle='#5c452d'; ctx.fillRect(-r*1.1,-r*.65,r*1.2,r*1.3);
+        ctx.fillStyle='#3d2d1d'; ctx.fillRect(-r*.9,-r*.92,r*.6,r*.24); ctx.fillRect(-r*.9,r*.68,r*.6,r*.24);
+        ctx.strokeStyle='#e2d8bd'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(-r*.6,-r*.92); ctx.lineTo(-r*.6,-r*1.32); ctx.moveTo(-r*.6,r*.92); ctx.lineTo(-r*.6,r*1.32); ctx.stroke();
+        ctx.fillStyle='#8c6742'; ctx.beginPath(); ctx.ellipse(r*.65,-r*.34,r*.55,r*.24,0,0,7); ctx.ellipse(r*.65,r*.34,r*.55,r*.24,0,0,7); ctx.fill();
+      }else if(d.cav){
+        ctx.fillStyle=wep==='camel'?'#b59360':'#6e4b30'; ctx.strokeStyle='#2e2014'; ctx.lineWidth=1.4;
+        ctx.beginPath(); ctx.ellipse(0,0,r*1.18,r*.54,0,0,7); ctx.fill(); ctx.stroke();
+        ctx.fillStyle=color; ctx.fillRect(-r*.45,-r*.42,r*.78,r*.84); // horse caparison cloth
       }
+
+      // 2) Distinct Held Weapon with Swing Animation
+      ctx.save(); ctx.rotate(sw);
+      const wCol = general ? '#f5d782' : '#e6dec5';
+      if(['pikeman','spearman','spartan','lancer','halberdier','modao','gen_guanyu','gen_lubu'].includes(wep)){
+        const len = wep==='pikeman'?r*2.75:r*2.15;
+        ctx.strokeStyle='#634b30'; ctx.lineWidth=2.2;
+        ctx.beginPath(); ctx.moveTo(-r*.6,r*.45); ctx.lineTo(len,r*.45); ctx.stroke();
+        ctx.fillStyle=wCol;
+        ctx.beginPath(); ctx.moveTo(len+6,r*.45); ctx.lineTo(len-4,r*.22); ctx.lineTo(len-4,r*.68); ctx.closePath(); ctx.fill();
+      }else if(['archer','longbow','firearcher','horsearcher'].includes(wep)){
+        ctx.strokeStyle='#8c6234'; ctx.lineWidth=2.2;
+        ctx.beginPath(); ctx.arc(r*.55,0,wep==='longbow'?r*1.05:r*.82,-1.05,1.05); ctx.stroke();
+        ctx.strokeStyle=wep==='firearcher'?'#e07530':'#ebe4cc'; ctx.lineWidth=1.4;
+        ctx.beginPath(); ctx.moveTo(r*.2,0); ctx.lineTo(r*1.45,0); ctx.stroke();
+      }else if(['crossbow','chukonu'].includes(wep)){
+        ctx.strokeStyle='#5c452d'; ctx.lineWidth=2.4;
+        ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(r*1.35,0); ctx.moveTo(r*.85,-r*.72); ctx.lineTo(r*.85,r*.72); ctx.stroke();
+      }else if(['musketeer','arquebus','marine','sniper','dragoon','flamethrower'].includes(wep)){
+        ctx.strokeStyle=wep==='sniper'?'#222624':'#3d3830'; ctx.lineWidth=wep==='sniper'?2.8:2.4;
+        ctx.beginPath(); ctx.moveTo(0,r*.32); ctx.lineTo(r*(wep==='sniper'?2.15:1.65),r*.32); ctx.stroke();
+        if(u.lunge>.12){ctx.fillStyle='#fde08b'; ctx.beginPath(); ctx.arc(r*1.75,r*.32,4,0,7); ctx.fill();}
+      }else if(['warhammer','titan','flail','monk_staff'].includes(wep)){
+        ctx.strokeStyle='#5c452d'; ctx.lineWidth=2.5;
+        ctx.beginPath(); ctx.moveTo(-r*.3,r*.42); ctx.lineTo(r*1.6,r*.42); ctx.stroke();
+        ctx.fillStyle=wep==='titan'?'#93c5fd':'#8c8980';
+        ctx.fillRect(r*1.35,r*.12,r*.38,r*.6);
+      }else if(['pyro','frost','cleric','necro','gen_zhuge'].includes(wep)){
+        ctx.strokeStyle='#7a5c3d'; ctx.lineWidth=2.2;
+        ctx.beginPath(); ctx.moveTo(0,r*.45); ctx.lineTo(r*1.5,r*.45); ctx.stroke();
+        ctx.fillStyle=wep==='frost'?'#7dd3fc':wep==='cleric'?'#fde08b':wep==='necro'?'#c084fc':'#fb923c';
+        ctx.beginPath(); ctx.arc(r*1.58,r*.45,4.2,0,7); ctx.fill();
+      }else if(['berserker','assassin','samurai','greatsword','gen_arthur'].includes(wep)){
+        ctx.strokeStyle=wCol; ctx.lineWidth=wep==='greatsword'||wep==='gen_arthur'?3.2:2.2;
+        ctx.beginPath(); ctx.moveTo(r*.1,r*.45); ctx.lineTo(r*1.75,r*.3); ctx.stroke();
+        if(wep==='berserker'||wep==='assassin'){ctx.beginPath(); ctx.moveTo(r*.1,-r*.45); ctx.lineTo(r*1.5,-r*.3); ctx.stroke();}
+      }else{
+        ctx.strokeStyle=wCol; ctx.lineWidth=2.2;
+        ctx.beginPath(); ctx.moveTo(r*.1,r*.4); ctx.lineTo(r*1.35,r*.4); ctx.stroke();
+      }
+      ctx.restore();
+
+      // 3) Shield on Left Arm (for shielded infantry / knights)
+      if(d.block && !d.cav){
+        ctx.fillStyle=color; ctx.strokeStyle='#e6dec5'; ctx.lineWidth=1.5;
+        ctx.fillRect(r*.42,-r*.85,4.5,r*1.25); ctx.strokeRect(r*.42,-r*.85,4.5,r*1.25);
+      }
+
+      // 4) Soldier Shoulders + Armored Helmet / Head
+      const br = d.cav ? r*.58 : r*.86;
+      ctx.fillStyle=u.flash>0?'#f3e5b8':u.slow>0?'#4b7c8e':color;
+      ctx.strokeStyle=general?'#d9b45b':'#2d2b24'; ctx.lineWidth=general?2.6:1.6;
+      ctx.beginPath(); ctx.ellipse(0,0,br*.72,br*1.02,0,0,7); ctx.fill(); ctx.stroke();
+      // Helmet / Head dome
+      ctx.fillStyle=general?'#e8c76b':(d.def>=14?'#b8b5a8':(d.cat==='mythic'?'#d9c5a0':'#d9c49c'));
+      ctx.beginPath(); ctx.arc(r*.06,0,br*.52,0,7); ctx.fill(); ctx.stroke();
+      ctx.restore();
     }
   }
   if(game.hp&&(general||u.hp<d.hp)){
@@ -3188,14 +4580,132 @@ function draw(){
       ctx.strokeStyle='#fff7d6'; ctx.lineWidth=18; ctx.stroke();
     }else if(e.type==='arc'){ctx.lineWidth=22;ctx.arc(e.x,e.y,e.r*(1-.5*e.t/e.life),e.a-.85,e.a+.85);ctx.stroke()}
     else if(e.type==='fire'){ctx.globalAlpha*=.48;ctx.arc(e.x,e.y,e.r,0,7);ctx.fill()}
+    else if(e.type==='nuke_cloud'){
+      const p = 1 - e.t / e.life;
+      const g = ctx.createRadialGradient(e.x, e.y, 8, e.x, e.y, e.r * (0.6 + p * 0.55));
+      g.addColorStop(0, 'rgba(255,251,235,0.92)');
+      g.addColorStop(0.35, 'rgba(249,115,22,0.72)');
+      g.addColorStop(0.7, 'rgba(124,45,18,0.48)');
+      g.addColorStop(1, 'rgba(28,25,23,0)');
+      ctx.globalAlpha = Math.max(0, e.t / e.life);
+      ctx.fillStyle = g; ctx.arc(e.x, e.y, e.r * (0.6 + p * 0.55), 0, 7); ctx.fill();
+      // Rising mushroom cap highlight
+      ctx.fillStyle = 'rgba(254,240,138,0.55)';
+      ctx.beginPath(); ctx.arc(e.x, e.y - p * 48, e.r * 0.36 * (0.6 + p * 0.5), 0, 7); ctx.fill();
+    }else if(e.type==='foil_zone'){
+      // Dual-Vector Foil expanding 2D Dimensional Collapse Field!
+      const alpha = Math.min(1, e.t * 0.9);
+      ctx.globalAlpha = alpha * 0.88;
+      const g = ctx.createRadialGradient(e.x, e.y, 4, e.x, e.y, e.r);
+      g.addColorStop(0, 'rgba(240,249,255,0.92)');
+      g.addColorStop(0.65, 'rgba(56,189,248,0.42)');
+      g.addColorStop(0.92, 'rgba(168,85,247,0.55)');
+      g.addColorStop(1, 'rgba(56,189,248,0)');
+      ctx.fillStyle = g; ctx.arc(e.x, e.y, e.r, 0, 7); ctx.fill();
+      // 2D Coordinate Grid inside the collapsed plane
+      ctx.save(); ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, 7); ctx.clip();
+      ctx.strokeStyle = 'rgba(224,242,254,0.48)'; ctx.lineWidth = 1.2;
+      const step = 24;
+      const x0 = Math.floor((e.x - e.r)/step)*step, y0 = Math.floor((e.y - e.r)/step)*step;
+      ctx.beginPath();
+      for(let gx=x0; gx<=e.x+e.r; gx+=step){ctx.moveTo(gx, e.y-e.r); ctx.lineTo(gx, e.y+e.r);}
+      for(let gy=y0; gy<=e.y+e.r; gy+=step){ctx.moveTo(e.x-e.r, gy); ctx.lineTo(e.x+e.r, gy);}
+      ctx.stroke(); ctx.restore();
+      ctx.strokeStyle = '#e0f2fe'; ctx.lineWidth = 2.6;
+      ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, 7); ctx.stroke();
+    }
     else{ctx.arc(e.x,e.y,e.r*(1-.8*e.t/e.life),0,7);ctx.stroke()}
     ctx.restore();
   }
   for(const u of game.units)if(!u.alive)unitToken(u);
   for(const u of game.units)if(u.alive)unitToken(u);
+  // Draw active RTS Corps Waypoints & Focus-Target Reticles in Commander Mode!
+  if(game.cmdMode && game.phase==='battle'){
+    for(const cid of [1,2,3,4]){
+      const ord=game.corpsOrders[cid]; if(!ord)continue;
+      ctx.save();
+      if(ord.type==='move'){
+        ctx.strokeStyle='#dfbd77'; ctx.lineWidth=2.5; ctx.setLineDash([5,4]);
+        ctx.beginPath(); ctx.arc(ord.x,ord.y,22,0,7); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle='#dfbd77'; ctx.font='bold 13px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(cid+'军集结',ord.x,ord.y-28);
+      }else if(ord.type==='attack' && ord.target && ord.target.alive){
+        const tx=ord.target.x, ty=ord.target.y, tr=ord.target.d.radius+12;
+        ctx.strokeStyle='#ef4444'; ctx.lineWidth=2.8;
+        ctx.beginPath(); ctx.arc(tx,ty,tr,0,7); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(tx-tr-6,ty); ctx.lineTo(tx+tr+6,ty); ctx.moveTo(tx,ty-tr-6); ctx.lineTo(tx,ty+tr+6); ctx.stroke();
+        ctx.fillStyle='#fca5a5'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(cid+'军集火',tx,ty-tr-10);
+      }
+      ctx.restore();
+    }
+  }
 
   for(const p of game.shots){
     if(p.t<0)continue;
+    if(p.type==='bomb'){
+      // Draw ground shadow converging with falling bomb + dotted parabolic trajectory!
+      const hFrac = clamp((p.z||0) / (p.z0||96), 0, 1);
+      ctx.save();
+      ctx.fillStyle = 'rgba(20,22,18,' + (0.45 - hFrac * 0.25).toFixed(2) + ')';
+      ctx.beginPath(); ctx.ellipse(p.x, p.y, 4 + hFrac * 5, 2.2 + hFrac * 2.5, 0, 0, 7); ctx.fill();
+      if(p.trail && p.trail.length > 1){
+        ctx.strokeStyle = 'rgba(220,210,185,0.42)'; ctx.lineWidth = 1.4; ctx.setLineDash([3,3]);
+        ctx.beginPath(); ctx.moveTo(p.trail[0].x, p.trail[0].y);
+        for(let i=1;i<p.trail.length;i++) ctx.lineTo(p.trail[i].x, p.trail[i].y);
+        ctx.stroke(); ctx.setLineDash([]);
+      }
+      const py = p.y - Math.max(0, p.z||0);
+      const pitch = Math.atan2(p.vy - (p.vz||0), p.vx);
+      ctx.translate(p.x, py); ctx.rotate(pitch);
+      const sc = 0.85 + hFrac * 0.45;
+      ctx.scale(sc, sc);
+      ctx.fillStyle = '#27272a'; ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.1;
+      ctx.beginPath(); ctx.ellipse(0, 0, 8.5, 3.6, 0, 0, 7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#ef4444'; ctx.fillRect(-9, -4, 3.5, 8);
+      ctx.restore();
+      continue;
+    }
+    if(p.type==='guided'){
+      ctx.save();
+      if(p.trail && p.trail.length > 1){
+        ctx.strokeStyle = 'rgba(255,248,220,0.68)'; ctx.lineWidth = 2.2;
+        ctx.beginPath(); ctx.moveTo(p.trail[0].x, p.trail[0].y);
+        for(let i=1;i<p.trail.length;i++) ctx.lineTo(p.trail[i].x, p.trail[i].y);
+        ctx.stroke();
+      }
+      ctx.translate(p.x, p.y); ctx.rotate(Math.atan2(p.vy, p.vx));
+      ctx.fillStyle = '#f8fafc'; ctx.fillRect(-10, -2.5, 16, 5);
+      ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.moveTo(10,0); ctx.lineTo(5,-3); ctx.lineTo(5,3); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(-11, 0, 3.5, 0, 7); ctx.fill();
+      ctx.restore();
+      continue;
+    }
+    if(p.type==='nuke'){
+      const f = Math.min(1, p.t / p.dur);
+      const arc = Math.sin(f * Math.PI) * 260;
+      ctx.save();
+      // Pulsing nuclear target warning circle on ground
+      ctx.strokeStyle = 'rgba(239,68,68,' + (0.45 + 0.45*Math.sin(performance.now()*0.02)) + ')';
+      ctx.lineWidth = 2.6; ctx.setLineDash([8,6]);
+      ctx.beginPath(); ctx.arc(p.tx, p.ty, 68 * (1 - f * 0.45), 0, 7); ctx.stroke(); ctx.setLineDash([]);
+      // Warhead
+      const dx = p.tx - p.sx, dy = p.ty - p.sy;
+      const vzSlope = Math.cos(f * Math.PI) * 260 * Math.PI / p.dur;
+      ctx.translate(p.x, p.y - arc); ctx.rotate(Math.atan2(dy/p.dur - vzSlope, dx/p.dur));
+      ctx.fillStyle = '#fef08a'; ctx.beginPath(); ctx.arc(-15, 0, 6, 0, 7); ctx.fill();
+      ctx.fillStyle = '#e2e8f0'; ctx.fillRect(-12, -4.5, 22, 9);
+      ctx.fillStyle = '#dc2626'; ctx.beginPath(); ctx.moveTo(16,0); ctx.lineTo(9,-5); ctx.lineTo(9,5); ctx.closePath(); ctx.fill();
+      ctx.restore();
+      continue;
+    }
+    if(p.type==='foil'){
+      ctx.save(); ctx.translate(p.x, p.y - 18); ctx.rotate(p.t * 4);
+      ctx.fillStyle = 'rgba(224,242,254,0.95)'; ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
+      ctx.fillRect(-10, -6, 20, 12); ctx.strokeRect(-10, -6, 20, 12);
+      ctx.restore();
+      continue;
+    }
     const arc=['arrow','firearrow','boulder','javelin'].includes(p.type)?Math.sin(Math.min(1,p.t/p.dur)*Math.PI)*Math.min(100,.2*Math.hypot(p.tx-p.sx,p.ty-p.sy)):0;
     ctx.save(); ctx.translate(p.x,p.y-arc); ctx.rotate(Math.atan2(p.ty-p.sy,p.tx-p.sx));
     ctx.beginPath(); ctx.strokeStyle=p.burn?'#b5562c':'#484638'; ctx.lineWidth=3;
@@ -3206,6 +4716,74 @@ function draw(){
       ctx.fillStyle=({fireball:'#d26b24',frostbolt:'#5b98ad',shadowbolt:'#845887'})[p.type]||'#544c41';
       ctx.arc(0,0,p.type==='boulder_sm'?3.8:6.5,0,7); ctx.fill();
     }else{ctx.moveTo(-10,0);ctx.lineTo(7,0);ctx.stroke()}
+    ctx.restore();
+  }
+
+  // Draw active Bomber Flybys & Hypersonic Trisolaran Droplets!
+  for(const f of game.flybys){
+    if(!f.alive) continue;
+    ctx.save();
+    if(f.kind==='bomber'){
+      const alt = f.alt || 108;
+      // Ground shadow far below bomber
+      ctx.fillStyle='rgba(15,18,16,0.28)';
+      ctx.beginPath(); ctx.ellipse(f.x, f.y + 8, 28, 12, 0, 0, 7); ctx.fill();
+      ctx.translate(f.x, f.y - alt);
+      ctx.rotate(f.dir > 0 ? 0 : Math.PI);
+      // Sleek B-2 Stealth Flying Wing Strategic Bomber
+      ctx.fillStyle='#272b30'; ctx.strokeStyle='#dfbd77'; ctx.lineWidth=2;
+      ctx.beginPath();
+      ctx.moveTo(32,0); ctx.lineTo(-10,-34); ctx.lineTo(-22,-22); ctx.lineTo(-10,0); ctx.lineTo(-22,22); ctx.lineTo(-10,34); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#7dd3fc'; ctx.beginPath(); ctx.ellipse(12,0,7,3,0,0,7); ctx.fill();
+    }else if(f.kind==='droplet'){
+      if(f.trail && f.trail.length > 1){
+        ctx.strokeStyle='rgba(103,232,249,0.75)'; ctx.lineWidth=3.2;
+        ctx.beginPath(); ctx.moveTo(f.trail[0].x, f.trail[0].y);
+        for(let i=1;i<f.trail.length;i++) ctx.lineTo(f.trail[i].x, f.trail[i].y);
+        ctx.stroke();
+      }
+      ctx.translate(f.x, f.y); ctx.rotate(Math.atan2(f.vy, f.vx));
+      const g = ctx.createRadialGradient(6, -3, 1, 0, 0, 22);
+      g.addColorStop(0,'#ffffff'); g.addColorStop(0.45,'#e2e8f0'); g.addColorStop(1,'#38bdf8');
+      ctx.fillStyle=g; ctx.strokeStyle='#e0f2fe'; ctx.lineWidth=1.8;
+      ctx.beginPath(); ctx.moveTo(22,0); ctx.bezierCurveTo(16,-10,-8,-9,-18,0); ctx.bezierCurveTo(-8,9,16,10,22,0); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // City Blueprint Ghost Preview when 🏰 建城 mode is active!
+  if(game.cityMode && pointer.inside){
+    const pw = world(pointer.x, pointer.y);
+    const bp = CITY_BLUEPRINTS[game.cityType] || CITY_BLUEPRINTS.grand;
+    const dir = (game.team==='blue'||game.team==='green') ? 1 : -1;
+    ctx.save();
+    for(const item of bp.items){
+      const d = defs[item.id]; if(!d) continue;
+      const x = pw.x + item.dx * dir, y = pw.y + item.dy, rr = d.radius;
+      const bad = blocked(x, y, rr, false, false);
+      ctx.fillStyle = bad ? 'rgba(239,68,68,0.28)' : 'rgba(223,189,119,0.28)';
+      ctx.strokeStyle = bad ? '#ef4444' : '#dfbd77';
+      ctx.lineWidth = 1.6;
+      ctx.fillRect(x - rr, y - rr, rr*2, rr*2);
+      ctx.strokeRect(x - rr, y - rr, rr*2, rr*2);
+    }
+    ctx.fillStyle='#fde68a'; ctx.font='bold 14px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('🏰 点击筑城：'+bp.name, pw.x, pw.y - 142);
+    ctx.restore();
+  }
+
+  // Targeting Reticle Preview when an Ordnance Strike is armed during battle!
+  if(game.phase==='battle' && game.activeStrike && pointer.inside){
+    const pw = world(pointer.x, pointer.y);
+    const radMap = {artillery:115, guided:65, bomber:135, nuke:225, droplet:90, foil:180};
+    const colMap = {artillery:'#dfbd77', guided:'#f59e0b', bomber:'#fb923c', nuke:'#ef4444', droplet:'#67e8f9', foil:'#38bdf8'};
+    const rr = radMap[game.activeStrike] || 90, cc = colMap[game.activeStrike] || '#ef4444';
+    ctx.save();
+    ctx.strokeStyle = cc; ctx.lineWidth = 2.4; ctx.setLineDash([8,6]);
+    ctx.beginPath(); ctx.arc(pw.x, pw.y, rr, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(pw.x-16,pw.y); ctx.lineTo(pw.x+16,pw.y); ctx.moveTo(pw.x,pw.y-16); ctx.lineTo(pw.x,pw.y+16); ctx.stroke();
     ctx.restore();
   }
 
@@ -3248,7 +4826,7 @@ function draw(){
     const w=world(pointer.x,pointer.y);
     const hu=game.units.find(u=>u.alive&&distance(w,u)<=Math.max(16,u.d.radius+6));
     if(hu){
-      const txt=hu.d.name+' · 血量 '+Math.ceil(hu.hp)+'/'+hu.d.hp+(hu.d.hangarCap?' · 機庫 '+hu.hangar+'/'+hu.d.hangarCap:'')+(game.phase==='battle'?' · 擊殺 '+hu.kills+' · 傷害 '+Math.round(hu.damage):'');
+      const txt=hu.d.name+' · 血量 '+Math.ceil(hu.hp)+'/'+hu.d.hp+(hu.d.hangarCap?' · 機庫 '+hu.hangar+'/'+hu.d.hangarCap+(hu.customSpawn&&defs[hu.customSpawn]?'('+defs[hu.customSpawn].name+')':''):'')+(game.phase==='battle'?' · 擊殺 '+hu.kills+' · 傷害 '+Math.round(hu.damage):'');
       ctx.save(); ctx.font='12px "PingFang SC", sans-serif';
       const tw=ctx.measureText(txt).width+18;
       const bx=clamp(hu.x-tw/2,12,WORLD_W-tw-12), by=hu.y-hu.d.radius-36;
@@ -3575,7 +5153,7 @@ for(const [cat,name] of Object.entries(categories)){
 }
 document.querySelectorAll('[data-team]').forEach(b=>b.onclick=()=>{game.team=b.dataset.team;document.querySelectorAll('[data-team]').forEach(el=>el.classList.toggle('on',el===b))});
 document.querySelectorAll('[data-form]').forEach(b=>b.onclick=()=>{game.form=b.dataset.form;game.erase=false;$('erase').classList.remove('on');document.querySelectorAll('[data-form]').forEach(el=>el.classList.toggle('on',el===b));list()});
-$('erase').onclick=()=>{game.erase=!game.erase;if(game.erase){if(game.panMode)setPanMode(false);if(game.brushMode)setBrushMode(false);}$('erase').classList.toggle('on',game.erase);list()};
+$('erase').onclick=()=>{game.erase=!game.erase;if(game.erase){if(game.panMode)setPanMode(false);if(game.brushMode)setBrushMode(false);if(game.moveMode)setMoveMode(false);}$('erase').classList.toggle('on',game.erase);list()};
 $('brushBtn').onclick=()=>{setBrushMode(!game.brushMode); toast(game.brushMode?'🖌️ 连续部署已开启：单指或鼠标拖动即可成片刷兵（双指仍可缩放）':'已切回常规点击部署')};
 $('panBtn').onclick=()=>{setPanMode(!game.panMode); toast(game.panMode?'✋ 漫游模式：可自由拖拽与缩放地图，不会误放单位':'⚔️ 已切回布阵模式')};
 $('panSide').onclick=()=>$('panBtn').click();
@@ -3795,7 +5373,7 @@ function locate(e){const r=canvas.getBoundingClientRect();pointer.x=e.clientX-r.
 
 // Multi-touch: 2-finger pinch-to-zoom + 1-finger drag pans camera (quick tap places/deletes/controls!)
 const activePtrs=new Map();
-let pinchDist=0, pinchMid=null, touchStart=null;
+let pinchDist=0, pinchMid=null, touchStart=null, dragUnit=null;
 function getPinchMetrics(){
   const pts=[...activePtrs.values()];
   const dx=pts[1].x-pts[0].x, dy=pts[1].y-pts[0].y;
@@ -3820,9 +5398,16 @@ canvas.onpointerdown=e=>{
   if(!e.isPrimary)return;
   const w=locate(e);
 
-  // Touchscreen 1-finger: if 连刷 (brushMode) is ON in setup, drag continuously deploys units! Otherwise drag pans camera.
+  // Move/Drag Unit mode (works for BOTH touch & mouse!)
+  if(game.phase==='setup' && game.moveMode && e.button===0){
+    const hitM=game.units.find(u=>u.alive&&distance(w,u)<=Math.max(22,u.d.radius+10));
+    if(hitM){
+      dragUnit=hitM; pointer.mode='drag-unit'; canvas.style.cursor='grabbing'; return;
+    }
+  }
+  // Touchscreen 1-finger: if 连刷 (brushMode) is ON in setup or liveDeploy, drag continuously deploys units!
   if(e.pointerType==='touch'){
-    if(game.phase==='setup' && !game.panMode && (game.brushMode || game.erase)){
+    if((game.phase==='setup' || (game.phase==='battle' && game.liveDeploy)) && !game.panMode && !game.activeStrike && (game.brushMode || (game.phase==='setup' && game.erase))){
       pointer.mode=game.erase?'erase':'place';
       place(w, game.erase);
       return;
@@ -3832,7 +5417,23 @@ canvas.onpointerdown=e=>{
     return;
   }
 
+  if(game.cityMode && e.button===0 && !pointer.space && !game.panMode && !game.mapEdit){
+    buildCity(w);
+    return;
+  }
   if(game.phase==='battle' && e.button===0 && !pointer.space){
+    if(game.activeStrike){
+      triggerPlayerStrike(game.activeStrike, w);
+      return;
+    }
+    if(game.liveDeploy){
+      pointer.mode='place'; place(w, false);
+      return;
+    }
+    if(game.cmdMode){
+      issueCorpsCommand(w);
+      return;
+    }
     const hitBattle=game.units.find(u=>u.alive&&distance(w,u)<=Math.max(18,u.d.radius+8));
     if(hitBattle && !hitBattle.d.building){
       game.controlled=hitBattle; updateCtrlHud();
@@ -3886,6 +5487,7 @@ canvas.onpointermove=e=>{
       pointer.mode='pan';
     }else return;
   }
+  if(pointer.mode==='drag-unit' && dragUnit){dragUnit.x=clamp(w.x,24,WORLD_W-24); dragUnit.y=clamp(w.y,24,WORLD_H-24); ground(dragUnit); custom(); return;}
   if(pointer.mode==='pan'){cam.x=clamp(cam.x-(pointer.x-x)/(cam.zoom*cam.base),0,WORLD_W);cam.y=clamp(cam.y-(pointer.y-y)/(cam.zoom*cam.base),0,WORLD_H)}
   else if(pointer.mode==='map-paint'||pointer.mode==='map-erase')paintCustomTerrain(w,pointer.mode==='map-erase'||game.edBrush==='erase');
   else if(pointer.mode==='place'||pointer.mode==='erase')place(w,pointer.mode==='erase');
@@ -3898,11 +5500,21 @@ function endPtr(e){
     // Single-finger quick tap on touch -> execute tap action (control / delete / place)
     if(pointer.mode==='touch-pending' && touchStart && !touchStart.moved){
       const w={x:touchStart.wx, y:touchStart.wy};
-      if(game.phase==='battle'){
-        const hitBattle=game.units.find(u=>u.alive&&distance(w,u)<=Math.max(20,u.d.radius+10));
-        if(hitBattle && !hitBattle.d.building){
-          game.controlled=hitBattle; updateCtrlHud();
-          toast('🎮 已接管控制：'+hitBattle.d.name);
+      if(game.cityMode && !game.panMode && !game.mapEdit){
+        buildCity(w);
+      }else if(game.phase==='battle'){
+        if(game.activeStrike){
+          triggerPlayerStrike(game.activeStrike, w);
+        }else if(game.liveDeploy){
+          place(w, false);
+        }else if(game.cmdMode){
+          issueCorpsCommand(w);
+        }else{
+          const hitBattle=game.units.find(u=>u.alive&&distance(w,u)<=Math.max(20,u.d.radius+10));
+          if(hitBattle && !hitBattle.d.building){
+            game.controlled=hitBattle; updateCtrlHud();
+            toast('🎮 已接管控制：'+hitBattle.d.name);
+          }
         }
       }else if(game.phase==='setup' && game.mapEdit){
         paintCustomTerrain(w, game.edBrush==='erase');
@@ -3920,6 +5532,7 @@ function endPtr(e){
         }
       }
     }
+    if(dragUnit){ground(dragUnit); dragUnit=null; snapshot();}
     pointer.mode=''; touchStart=null;
     canvas.style.cursor=game.panMode||game.phase!=='setup'?'grab':'crosshair';
   }else if(pointer.mode==='pinch'){
@@ -3978,7 +5591,7 @@ $('dipAmbush').onclick=()=>{game.diplomacy.blue={ally:'A',trigger:'now',active:t
 window.onkeydown=e=>{
   if(e.target.matches('select,input')||$('report').open||$('dipModal').open||$('formModal').open||studio.open)return;
   if(e.code==='KeyP' && game.phase==='battle'){begin(); return;}
-  if(e.code==='Escape' && game.controlled){game.controlled=null; game.keys={}; updateCtrlHud(); toast('已交還 AI 作戰'); return;}
+  if(e.code==='Escape'){if(game.cityMode){setCityMode(false);return;} if(game.activeStrike){setActiveStrike(null);return;} if(game.liveDeploy){setLiveDeploy(false);return;} if(game.controlled){game.controlled=null; game.keys={}; updateCtrlHud(); toast('已交還 AI 作戰'); return;}}
   if(game.controlled && game.phase==='battle'){
     if(e.code==='KeyW'||e.code==='ArrowUp'){e.preventDefault();game.keys.up=true}
     if(e.code==='KeyS'||e.code==='ArrowDown'){e.preventDefault();game.keys.down=true}
