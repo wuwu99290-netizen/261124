@@ -678,294 +678,518 @@ const defs=Object.fromEntries(UNITS.map(u=>[u.id,u]));
 defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,atk:14,def:1,range:24,speed:74,cd:.95,radius:8,mass:.6,antiCav:1};
 
 // =========================================================================
-// COMPREHENSIVE 500-UNIT ENCYCLOPEDIA GENERATOR (Balanced Pricing & Roles)
+// 500 UNIQUE HISTORICAL, MODERN & MYTHIC UNITS (Zero Clones, Unique Stats)
 // =========================================================================
 (() => {
   const existing = new Set(UNITS.map(u => u.id));
+  const usedNames = new Set(UNITS.map(u => u.name));
   function addU(u) {
-    if (existing.has(u.id) || UNITS.length >= 500) return;
-    existing.add(u.id);
-    UNITS.push(u);
-    defs[u.id] = u;
+    if (existing.has(u.id) || usedNames.has(u.name) || UNITS.length >= 500) return;
+    existing.add(u.id); usedNames.add(u.name);
+    UNITS.push(u); defs[u.id] = u;
   }
   function calcCost(hp, atk, def, range, cd, sp) {
-    const dps = (atk * (sp.salvo || 1)) / Math.max(0.35, cd);
+    const dps = (atk * (sp.salvo || 1)) / Math.max(0.25, cd);
     let c = hp * 0.14 + dps * 2.1 + def * 2.2 + (range > 80 ? range * 0.12 : range * 0.25);
-    if (sp.aoe) c += sp.aoe * 0.9;
-    if (sp.cleave) c += sp.cleave * 0.55;
-    if (sp.ap) c += sp.ap * 35;
-    if (sp.air) c *= 1.35;
-    if (sp.naval) c *= 1.12;
+    if (sp.aoe) c += sp.aoe * 0.85;
+    if (sp.cleave) c += sp.cleave * 0.5;
+    if (sp.ap) c += sp.ap * 34;
+    if (sp.air) c *= 1.32;
+    if (sp.naval) c *= 1.1;
     if (sp.ult) c = Math.max(540, c * 1.15);
-    if (sp.summon) c += 220;
+    if (sp.summon) c += 210;
     return Math.max(25, Math.round(c / 5) * 5);
   }
-
-  // A. +30 Legendary Historical Generals (Total 40 Generals)
-  const extraGens = [
-    ['gen_zhaoyun','常山·趙雲','七進七出',1680,92,19,46,120,.92,{cav:true,cleave:64,ap:.45,aura:'speed',reach:200,ult:10,ultType:'slash',ico:'spearman'},'白馬銀槍，提升周圍友軍移速與攻速；大招橫掃龍膽槍氣！'],
-    ['gen_zhangfei','燕人·張飛','當陽怒吼',1820,96,18,44,98,1.0,{cav:true,cleave:72,kb:55,aura:'fear',reach:210,ult:10,ultType:'leap',ico:'pikeman'},'威懾周圍敵軍；大招怒吼震盪波重創並減速大片敵軍！'],
-    ['gen_machao','錦馬超','西涼鐵騎',1640,94,17,46,128,.95,{cav:true,charge:2.4,cleave:60,aura:'speed',reach:220,ult:10,ultType:'slash',ico:'lancer'},'強化騎兵移速；大招西涼長槍破陣衝殺！'],
-    ['gen_huangzhong','老將·黃忠','百步穿楊',1180,82,12,410,72,1.15,{proj:'arrow',ps:580,ap:.6,crit:.35,aura:'atk',reach:230,ult:10,ultType:'arrowrain',ico:'longbow'},'弓箭名將，強化周圍攻擊；大招萬箭齊發覆蓋敵群！'],
-    ['gen_dianwei','古之惡來·典韋','雙鐵戟舞',1920,102,21,36,86,.85,{cleave:68,berserk:true,aura:'atk',reach:180,ult:10,ultType:'leap',ico:'berserker'},'殘血愈戰愈勇；大招雙戟震地重擊四周敵軍！'],
-    ['gen_caocao','魏武·曹操','短歌行令',1480,68,20,42,84,1.0,{cav:true,cleave:54,aura:'haste',reach:260,ult:11,ultType:'rally',ico:'gen_caesar'},'大範圍強化友軍攻速；大招號令全軍回血與狂熱！'],
-    ['gen_hanxin','兵仙·韓信','背水一戰',1380,66,18,44,88,.98,{cleave:56,aura:'atk',reach:280,ult:11,ultType:'rally',ico:'gen_caesar'},'超大範圍軍團攻擊光環；大招激發全軍護盾與攻速！'],
-    ['gen_baiqi','人屠·白起','長平殺陣',1740,98,19,44,92,.95,{cleave:70,ap:.55,aura:'fear',reach:240,ult:10,ultType:'leap',ico:'greatsword'},'令周圍敵軍戰慄減攻；大招引發猩紅殺陣震盪波！'],
-    ['gen_huoqubing','冠軍侯·霍去病','封狼居胥',1660,95,18,46,134,.9,{cav:true,charge:2.5,cleave:65,aura:'speed',reach:240,ult:10,ultType:'slash',ico:'lancer'},'閃電突襲騎兵之王；大招斬出破甲衝鋒槍氣！'],
-    ['gen_yuefei','武穆·岳飛','滿江紅陣',1800,88,23,46,96,.96,{cav:true,cleave:66,block:.55,aura:'def',reach:240,ult:11,ultType:'holy',ico:'pikeman'},'岳家軍鐵壁防禦光環；大招聖光鼓舞回血並震退敵軍！'],
-    ['gen_qijiguang','抗倭·戚繼光','鴛鴦戰陣',1620,76,22,42,80,.98,{cleave:58,block:.6,aura:'def',reach:250,ult:11,ultType:'rally',ico:'modao'},'極致步兵防禦光環；大招強化防線護盾與攻速！'],
-    ['gen_zhengchenggong','國姓爺·鄭成功','樓船破浪',1720,84,19,420,64,2.1,{naval:true,proj:'cannonball',ps:660,pierce:3,aoe:46,aura:'haste',reach:270,ult:11,ultType:'navalbarrage',ico:'gen_zhouyu'},'【海軍統帥】強化水師攻速；大招傾瀉 12 發艦砲齊射！'],
-    ['gen_alexander','亞歷山大大帝','夥伴騎兵',1720,90,20,46,118,.95,{cav:true,charge:2.3,cleave:62,aura:'atk',reach:250,ult:11,ultType:'rally',ico:'lancer'},'馬其頓征服者，強化全軍攻擊；大招號令衝鋒回血！'],
-    ['gen_hannibal','迦太基·漢尼拔','坎尼包圍',1980,86,21,48,74,1.1,{cav:true,large:true,cleave:76,kb:70,aura:'fear',reach:230,ult:11,ultType:'leap',ico:'elephant'},'騎乘重甲戰象統帥；大招戰象踏地震飛四周敵軍！'],
-    ['gen_leonidas','斯巴達王·列奧尼達','溫泉關死戰',1950,84,26,44,68,.95,{antiCav:2.0,block:.65,cleave:55,aura:'def',reach:210,ult:11,ultType:'holy',ico:'spartan'},'極致護甲與抗箭；大招堅壁庇護全軍回血並震退來敵！'],
-    ['gen_richard','獅心王·理查','十字軍重斬',1820,94,22,42,84,1.0,{cleave:66,ap:.5,aura:'atk',reach:210,ult:11,ultType:'beam',ico:'greatsword'},'重甲騎士王；大招揮出聖十字斬擊光束貫穿敵陣！'],
-    ['gen_saladin','阿尤布·薩拉丁','新月彎刀',1580,82,17,42,124,.88,{cav:true,cleave:58,aura:'speed',reach:240,ult:10,ultType:'arrowrain',ico:'hussar'},'沙漠輕騎統帥；大招召喚新月箭雨覆蓋敵陣！'],
-    ['gen_nobunaga','第六天魔王·織田信長','三段擊齊射',1360,78,14,320,76,1.25,{proj:'bullet',ps:820,ap:.78,aura:'haste',reach:260,ult:11,ultType:'barrage',ico:'arquebus'},'火器霸主，大幅提升遠程攻速；大招呼叫十發重砲轟炸！'],
-    ['gen_shingen','甲斐之虎·武田信玄','風林火山',1720,86,20,44,116,.98,{cav:true,charge:2.2,cleave:64,aura:'def',reach:240,ult:11,ultType:'rally',ico:'samurai'},'赤備騎兵統帥；大招風林火山大幅強化友軍戰力！'],
-    ['gen_musashi','劍聖·宮本武藏','二天一流',1540,112,15,36,105,.72,{crit:.42,lifesteal:.2,cleave:56,aura:'atk',reach:160,ult:9,ultType:'slash',ico:'samurai'},'單挑與暴擊極致的劍聖；大招斬出雙刀月牙劍氣！'],
-    ['gen_tadakatsu','戰國無雙·本多忠勝','蜻蛉切',1840,98,23,50,104,.94,{cav:true,antiCav:2.0,cleave:68,ap:.55,aura:'fear',reach:190,ult:10,ultType:'slash',ico:'pikeman'},'一生無傷的重甲槍神；大招橫掃蜻蛉切破甲槍氣！'],
-    ['gen_frederick','腓特烈大帝','斜線戰術',1440,72,17,300,78,1.3,{proj:'bullet',ps:820,ap:.75,aura:'haste',reach:270,ult:12,ultType:'barrage',ico:'musketeer'},'普魯士線列步兵之魂；大招呼叫重砲覆蓋轟炸！'],
-    ['gen_wellington','鐵公爵·威靈頓','方陣防線',1560,68,21,290,74,1.35,{proj:'bullet',ps:800,block:.55,aura:'def',reach:260,ult:11,ultType:'rally',ico:'musketeer'},'防禦大師，強化全軍護甲；大招穩固方陣回血加速！'],
-    ['gen_patton','裝甲統帥·巴頓','鐵血裝甲師',2400,140,30,400,86,2.1,{proj:'cannonball',ps:720,aoe:62,ap:.88,block:.65,aura:'speed',reach:280,ult:11,ultType:'barrage',ico:'tank'},'【現代裝甲統帥】駕駛指揮坦克衝鋒，大招呼叫重砲地毯轟炸！'],
-    ['gen_zhukov','勝利元帥·朱可夫','喀秋莎風暴',2200,130,28,440,78,2.2,{proj:'rocket',ps:560,aoe:68,salvo:2,ap:.85,aura:'atk',reach:280,ult:12,ultType:'barrage',ico:'mlrs'},'【現代砲兵統帥】強化全軍火力，大招呼叫火箭砲飽和轟炸！'],
-    ['gen_nimitz','艦隊上將·尼米茲','太平洋艦隊',2900,65,28,580,44,1.0,{naval:true,kite:true,proj:'bullet',ps:860,block:.72,spawnUnit:'jet',summon:3.0,hangarCap:8,aura:'haste',reach:300,ult:12,ultType:'navalbarrage',ico:'carrier'},'【現代航母統帥】8 架艦載機超級旗艦，大招呼叫艦隊齊射！'],
-    ['gen_yamamoto','聯合艦隊·山本','巨艦大砲',2750,145,28,600,46,2.8,{naval:true,proj:'boulder',ps:520,aoe:92,ap:.9,block:.7,aura:'atk',reach:300,ult:12,ultType:'navalbarrage',ico:'ironclad'},'【現代戰列艦統帥】大和級巨艦主砲轟鳴，大招傾瀉 12 發重砲！'],
-    ['gen_sunce','小霸王·孫策','江東猛虎',1660,94,17,42,118,.88,{cav:true,berserk:true,cleave:62,aura:'atk',reach:200,ult:10,ultType:'leap',ico:'halberdier'},'江東猛將；大招躍入敵陣引發霸王震盪波！'],
-    ['gen_xuchu','虎癡·許褚','裸衣血戰',2020,104,20,38,82,.98,{berserk:true,cleave:74,kb:65,aura:'fear',reach:180,ult:10,ultType:'leap',ico:'warhammer'},'超高血量重錘猛將；大招重砸地面震飛四周！'],
-    ['gen_chengji','蒙古神射·哲別','疾風箭雨',1380,76,13,340,136,.88,{cav:true,kite:true,proj:'arrow',ps:580,ap:.55,aura:'speed',reach:250,ult:10,ultType:'arrowrain',ico:'horsearcher'},'蒙古四狗神射；大招召喚 24 支穿甲箭雨！']
-  ];
-  for (const [id,name,role,hp,atk,def,range,speed,cd,sp,desc] of extraGens) {
-    addU({id,name,cat:'general',role,cost:calcCost(hp,atk,def,range,cd,sp),hp,atk,def,range,speed,cd,radius:sp.naval?26:(sp.large?23:17),mass:sp.naval?14:(sp.large?9:5.5),...sp,desc});
+  // Compact tuple unpacker: [name, role, hp, atk, def, range, speed, cd, sp, desc]
+  function addBatch(cat, prefix, rad, mass, rows) {
+    rows.forEach((r, i) => {
+      const [name, role, hp, atk, def, range, speed, cd, sp, desc] = r;
+      const radV = sp.rad || (sp.hangarCap ? 33 : sp.large ? 25 : sp.naval ? (hp > 1000 ? 24 : 19) : rad);
+      const massV = sp.mass || (sp.building ? 999 : sp.large ? 10 : sp.naval ? (hp > 1000 ? 12 : 6) : mass);
+      addU({id:`${prefix}_${i}`, name, cat, role, cost:calcCost(hp,atk,def,range,cd,sp), hp, atk, def, range, speed, cd, radius:radV, mass:massV, ...sp, desc:desc || `${name}：${role}。`});
+    });
   }
 
-  // B. Systematic Regional & Weapon Infantry (+106 -> 120 Infantry)
-  const infCivs = [
-    ['秦軍','qin',1.05,1.05,1.0], ['漢軍','han',1.08,1.02,1.05], ['唐軍','tang',1.12,1.1,1.05], ['宋軍','song',1.1,0.98,1.15],
-    ['明軍','ming',1.06,1.06,1.08], ['希臘','greek',1.1,1.02,1.15], ['羅馬','roman',1.15,1.0,1.2], ['條頓','teuton',1.2,1.12,1.2],
-    ['維京','viking',1.05,1.18,0.9], ['不列顛','brit',1.06,1.04,1.05], ['法蘭西','fr',1.08,1.06,1.08], ['東洋','jp',0.96,1.18,1.0],
-    ['鄂圖曼','otto',1.08,1.12,1.05], ['波斯','pers',1.0,1.05,1.0], ['阿茲特克','azt',0.92,1.2,0.82], ['祖魯','zulu',0.9,1.15,0.8]
-  ];
-  const infWeps = [
-    ['刀盾兵','saber_sh','盾牆推進 · 抗箭',190,21,10,26,56,1.05,{block:.45,ico:'legionary'}],
-    ['長槍兵','pike','超長槍 · 反騎兵',155,22,7,52,54,1.0,{antiCav:2.1,ico:'pikeman'}],
-    ['戰戟衛','halb','長柄戟 · 破甲反騎',210,31,11,44,56,1.05,{ap:.5,antiCav:1.7,ico:'halberdier'}],
-    ['重斧手','axe','雙手戰斧 · 高爆發',180,35,6,28,74,.86,{ap:.35,ico:'berserker'}],
-    ['大劍衛','gs','雙手巨劍 · 順劈',235,38,11,34,58,1.15,{cleave:42,ap:.42,ico:'greatsword'}],
-    ['戰錘兵','ham','破甲重錘 · 擊退',245,40,13,28,54,1.18,{ap:.8,kb:34,ico:'warhammer'}],
-    ['突襲刺客','ass','疾速切後排 · 暴擊',125,38,3,24,118,.68,{crit:.3,back:true,ico:'assassin'}]
-  ];
-  let ic = 0;
-  for (const [cn, ck, hM, aM, dM] of infCivs) {
-    for (const [wn, wk, role, hp, atk, def, rng, spd, cd, sp] of infWeps) {
-      if (ic >= 106) break;
-      const H = Math.round(hp * hM), A = Math.round(atk * aM), D = Math.round(def * dM);
-      addU({id:`inf_${ck}_${wk}`, name:`${cn}${wn}`, cat:'infantry', role, cost:calcCost(H,A,D,rng,cd,sp), hp:H, atk:A, def:D, range:rng, speed:spd, cd, radius:11, mass:1.4, ...sp, desc:`${cn}精銳${wn}，${role}。`});
-      ic++;
-    }
-  }
+  // 1. +30 Unique Legendary Generals (Total 40)
+  addBatch('general','gx',17,5.5,[
+    ['常山·趙雲','七進七出',1680,92,19,46,120,.92,{cav:true,cleave:64,ap:.45,aura:'speed',reach:200,ult:10,ultType:'slash',ico:'spearman'},'白馬銀槍，提升周圍移速與攻速；大招橫掃龍膽槍氣！'],
+    ['燕人·張飛','當陽怒吼',1820,96,18,44,98,1.0,{cav:true,cleave:72,kb:55,aura:'fear',reach:210,ult:10,ultType:'leap',ico:'pikeman'},'威懾敵軍；大招怒吼震盪波重創並減速大片敵軍！'],
+    ['錦馬超','西涼鐵騎',1640,94,17,46,128,.95,{cav:true,charge:2.4,cleave:60,aura:'speed',reach:220,ult:10,ultType:'slash',ico:'lancer'},'強化騎兵移速；大招西涼長槍破陣衝殺！'],
+    ['老將·黃忠','百步穿楊',1180,82,12,410,72,1.15,{proj:'arrow',ps:580,ap:.6,crit:.35,aura:'atk',reach:230,ult:10,ultType:'arrowrain',ico:'longbow'},'神箭名將，強化周圍攻擊；大招萬箭齊發！'],
+    ['古之惡來·典韋','雙鐵戟舞',1920,102,21,36,86,.85,{cleave:68,berserk:true,aura:'atk',reach:180,ult:10,ultType:'leap',ico:'berserker'},'殘血狂暴；大招雙戟震地重擊四周！'],
+    ['魏武·曹操','短歌行令',1480,68,20,42,84,1.0,{cav:true,cleave:54,aura:'haste',reach:260,ult:11,ultType:'rally',ico:'gen_caesar'},'大範圍攻速光環；大招號令全軍回血與狂熱！'],
+    ['兵仙·韓信','背水一戰',1380,66,18,44,88,.98,{cleave:56,aura:'atk',reach:280,ult:11,ultType:'rally',ico:'gen_caesar'},'超大範圍軍團攻擊光環；大招激發全軍護盾！'],
+    ['人屠·白起','長平殺陣',1740,98,19,44,92,.95,{cleave:70,ap:.55,aura:'fear',reach:240,ult:10,ultType:'leap',ico:'greatsword'},'威懾減攻；大招引發猩紅殺陣震盪波！'],
+    ['冠軍侯·霍去病','封狼居胥',1660,95,18,46,134,.9,{cav:true,charge:2.5,cleave:65,aura:'speed',reach:240,ult:10,ultType:'slash',ico:'lancer'},'閃電突襲騎兵之王；大招斬出破甲衝鋒槍氣！'],
+    ['武穆·岳飛','滿江紅陣',1800,88,23,46,96,.96,{cav:true,cleave:66,block:.55,aura:'def',reach:240,ult:11,ultType:'holy',ico:'pikeman'},'岳家軍鐵壁防禦光環；大招鼓舞回血並震退敵軍！'],
+    ['抗倭·戚繼光','鴛鴦戰陣',1620,76,22,42,80,.98,{cleave:58,block:.6,aura:'def',reach:250,ult:11,ultType:'rally',ico:'modao'},'極致步兵防禦光環；大招強化防線護盾與攻速！'],
+    ['國姓爺·鄭成功','樓船破浪',1720,84,19,420,64,2.1,{naval:true,proj:'cannonball',ps:660,pierce:3,aoe:46,aura:'haste',reach:270,ult:11,ultType:'navalbarrage',ico:'gen_zhouyu',renderAs:'tower_ship'},'【海軍統帥】強化水師攻速；大招傾瀉 12 發艦砲！'],
+    ['亞歷山大大帝','夥伴騎兵',1720,90,20,46,118,.95,{cav:true,charge:2.3,cleave:62,aura:'atk',reach:250,ult:11,ultType:'rally',ico:'lancer'},'馬其頓征服者，強化全軍攻擊；大招號令衝鋒！'],
+    ['迦太基·漢尼拔','坎尼包圍',1980,86,21,48,74,1.1,{cav:true,large:true,cleave:76,kb:70,aura:'fear',reach:230,ult:11,ultType:'leap',ico:'elephant',renderAs:'elephant'},'騎乘重甲戰象統帥；大招戰象踏地震飛四周！'],
+    ['斯巴達王·列奧尼達','溫泉關死戰',1950,84,26,44,68,.95,{antiCav:2.0,block:.65,cleave:55,aura:'def',reach:210,ult:11,ultType:'holy',ico:'spartan'},'極致護甲與抗箭；大招堅壁庇護全軍回血！'],
+    ['獅心王·理查','十字軍重斬',1820,94,22,42,84,1.0,{cleave:66,ap:.5,aura:'atk',reach:210,ult:11,ultType:'beam',ico:'greatsword'},'重甲騎士王；大招揮出聖十字斬擊光束！'],
+    ['阿尤布·薩拉丁','新月彎刀',1580,82,17,42,124,.88,{cav:true,cleave:58,aura:'speed',reach:240,ult:10,ultType:'arrowrain',ico:'hussar'},'沙漠輕騎統帥；大招召喚新月箭雨！'],
+    ['第六天魔王·織田信長','三段擊齊射',1360,78,14,320,76,1.25,{proj:'bullet',ps:820,ap:.78,aura:'haste',reach:260,ult:11,ultType:'barrage',ico:'arquebus'},'火器霸主，提升遠程攻速；大招呼叫十發重砲！'],
+    ['甲斐之虎·武田信玄','風林火山',1720,86,20,44,116,.98,{cav:true,charge:2.2,cleave:64,aura:'def',reach:240,ult:11,ultType:'rally',ico:'samurai'},'赤備騎兵統帥；大招風林火山強化友軍戰力！'],
+    ['劍聖·宮本武藏','二天一流',1540,112,15,36,105,.72,{crit:.42,lifesteal:.2,cleave:56,aura:'atk',reach:160,ult:9,ultType:'slash',ico:'samurai'},'單挑暴擊極致的劍聖；大招斬出雙刀月牙劍氣！'],
+    ['戰國無雙·本多忠勝','蜻蛉切',1840,98,23,50,104,.94,{cav:true,antiCav:2.0,cleave:68,ap:.55,aura:'fear',reach:190,ult:10,ultType:'slash',ico:'pikeman'},'重甲槍神；大招橫掃蜻蛉切破甲槍氣！'],
+    ['腓特烈大帝','斜線戰術',1440,72,17,300,78,1.3,{proj:'bullet',ps:820,ap:.75,aura:'haste',reach:270,ult:12,ultType:'barrage',ico:'musketeer'},'普魯士線列步兵之魂；大招呼叫重砲覆蓋轟炸！'],
+    ['鐵公爵·威靈頓','方陣防線',1560,68,21,290,74,1.35,{proj:'bullet',ps:800,block:.55,aura:'def',reach:260,ult:11,ultType:'rally',ico:'musketeer'},'防禦大師，強化全軍護甲；大招穩固方陣！'],
+    ['裝甲統帥·巴頓','鐵血裝甲師',2400,140,30,400,86,2.1,{proj:'cannonball',ps:720,aoe:62,ap:.88,block:.65,aura:'speed',reach:280,ult:11,ultType:'barrage',ico:'tank',renderAs:'tank'},'【現代裝甲統帥】駕駛指揮坦克衝鋒，呼叫地毯轟炸！'],
+    ['勝利元帥·朱可夫','喀秋莎風暴',2200,130,28,440,78,2.2,{proj:'rocket',ps:560,aoe:68,salvo:2,ap:.85,aura:'atk',reach:280,ult:12,ultType:'barrage',ico:'mlrs',renderAs:'mlrs'},'【現代砲兵統帥】強化全軍火力，火箭砲飽和轟炸！'],
+    ['艦隊上將·尼米茲','太平洋艦隊',2900,65,28,580,44,1.0,{naval:true,kite:true,proj:'bullet',ps:860,block:.72,spawnUnit:'jet',summon:3.0,hangarCap:8,aura:'haste',reach:300,ult:12,ultType:'navalbarrage',ico:'carrier',renderAs:'carrier'},'【現代航母統帥】8 架艦載機超級旗艦！'],
+    ['聯合艦隊·山本','巨艦大砲',2750,145,28,600,46,2.8,{naval:true,proj:'boulder',ps:520,aoe:92,ap:.9,block:.7,aura:'atk',reach:300,ult:12,ultType:'navalbarrage',ico:'ironclad',renderAs:'ironclad'},'【現代戰列艦統帥】大和級巨艦主砲轟鳴！'],
+    ['小霸王·孫策','江東猛虎',1660,94,17,42,118,.88,{cav:true,berserk:true,cleave:62,aura:'atk',reach:200,ult:10,ultType:'leap',ico:'halberdier'},'江東猛將；大招躍入敵陣引發霸王震盪波！'],
+    ['虎癡·許褚','裸衣血戰',2020,104,20,38,82,.98,{berserk:true,cleave:74,kb:65,aura:'fear',reach:180,ult:10,ultType:'leap',ico:'warhammer'},'超高血量重錘猛將；大招重砸地面震飛四周！'],
+    ['蒙古神射·哲別','疾風箭雨',1380,76,13,340,136,.88,{cav:true,kite:true,proj:'arrow',ps:580,ap:.55,aura:'speed',reach:250,ult:10,ultType:'arrowrain',ico:'horsearcher'},'蒙古神射；大招召喚 24 支穿甲箭雨！']
+  ]);
 
-  // C. Systematic Regional & Weapon Ranged (+78 -> 90 Ranged)
-  const rngCivs = [
-    ['秦軍','qin',1.02,1.08], ['漢軍','han',1.05,1.05], ['唐軍','tang',1.08,1.08], ['明軍','ming',1.05,1.12],
-    ['英格蘭','eng',1.0,1.15], ['法蘭西','fr',1.05,1.06], ['西班牙','esp',1.08,1.1], ['熱那亞','gen',1.15,1.1],
-    ['東洋','jp',0.98,1.12], ['鄂圖曼','otto',1.08,1.1], ['蒙古','mon',1.0,1.12], ['印度','ind',1.0,1.05], ['海盜','pir',0.95,1.15]
+  // 2. +106 100%-Unique Named Historical Infantry (Total 120)
+  const infNames = [
+    ['秦銳士','先登死士',215,30,11,34,68,.92,{ap:.4,ico:'halberdier'}],
+    ['魏武卒','精銳重甲步卒',245,28,14,38,60,.96,{antiCav:1.6,block:.45,ico:'spartan'}],
+    ['齊技擊','劍術輕步兵',165,34,6,28,88,.76,{crit:.25,ico:'samurai'}],
+    ['漢羽林郎','皇家禁衛矛兵',230,27,13,40,62,.95,{antiCav:1.7,block:.4,ico:'spearman'}],
+    ['蜀白毦兵','精銳護衛劍盾',255,31,14,30,66,.9,{block:.5,ap:.3,ico:'legionary'}],
+    ['魏青州兵','百戰精銳刀盾',220,26,11,28,64,.95,{block:.45,ico:'shield_axe'}],
+    ['蜀無當飛軍','山岳重甲步兵',240,33,13,34,76,.88,{ap:.4,ico:'modao'}],
+    ['吳解煩兵','雙刀突擊步卒',185,37,7,28,86,.74,{cleave:34,ico:'berserker'}],
+    ['吳丹陽兵','江東精銳重步',235,30,12,32,68,.92,{block:.4,ico:'legionary'}],
+    ['晉北府兵','重裝鐵壁長槍',250,29,14,48,56,.96,{antiCav:2.0,block:.4,ico:'pikeman'}],
+    ['唐玄甲步卒','黑甲重劍精銳',290,41,16,34,60,1.05,{cleave:44,ap:.45,ico:'greatsword'}],
+    ['宋背嵬步軍','岳家精銳重斧',285,43,15,32,64,.96,{ap:.55,antiCav:1.6,ico:'shield_axe'}],
+    ['宋步人甲重卒','極致重鎧長槍',340,26,20,44,44,1.1,{block:.6,antiCav:1.8,ico:'spartan'}],
+    ['戚家軍鴛鴦陣','狼筅盾牌協同',275,28,16,46,56,.92,{block:.62,antiCav:1.9,ico:'pikeman'}],
+    ['明神機營護衛','刀盾火器護兵',210,25,11,28,60,1.0,{block:.5,ico:'legionary'}],
+    ['錦衣衛繡春刀','飛魚服快刀手',175,44,8,28,96,.7,{crit:.36,ap:.4,ico:'samurai'}],
+    ['八旗巴圖魯','滿洲重鎧勇士',295,42,15,32,64,1.0,{cleave:42,kb:26,ico:'greatsword'}],
+    ['雅典重裝步兵','青銅圓盾長矛',245,25,14,40,52,1.0,{block:.5,antiCav:1.7,ico:'spartan'}],
+    ['馬其頓薩里沙方陣','六米超長槍牆',210,27,11,62,46,1.05,{antiCav:2.5,ico:'pikeman'}],
+    ['底比斯聖隊','鐵血重矛精銳',290,32,16,42,54,.92,{antiCav:1.9,block:.5,ico:'spartan'}],
+    ['羅馬青年兵','輕裝短劍前鋒',175,22,8,26,68,.95,{block:.35,ico:'legionary'}],
+    ['羅馬成年兵','中堅鎖甲盾衛',225,25,12,26,56,1.0,{block:.5,ico:'legionary'}],
+    ['羅馬老兵三列陣','百戰長矛盾牆',270,29,15,42,52,.96,{antiCav:1.85,block:.52,ico:'spartan'}],
+    ['羅馬禁衛軍','帝國紫袍重盾',320,35,17,30,58,.92,{block:.6,ap:.35,ico:'legionary'}],
+    ['角鬥士網斗士','漁網三叉戟手',165,33,4,40,86,.82,{slow:true,crit:.25,ico:'spearman'}],
+    ['角鬥士色雷斯人','曲刃短盾鬥士',180,36,6,28,82,.78,{crit:.3,ap:.35,ico:'assassin'}],
+    ['迦太基聖團步兵','白盾重甲矛兵',265,28,15,42,54,.98,{antiCav:1.8,block:.5,ico:'spartan'}],
+    ['高盧狂暴勇士','赤膊巨劍衝鋒',190,39,3,30,88,.76,{berserk:true,cleave:38,ico:'berserker'}],
+    ['日耳曼雙斧戰士','森林重斧狂徒',195,38,5,28,82,.8,{ap:.4,berserk:true,ico:'berserker'}],
+    ['維京胡斯卡爾','北歐親衛長斧',265,42,13,34,64,.96,{ap:.55,block:.35,ico:'shield_axe'}],
+    ['維京盾女','迅捷圓盾矛衛',195,29,10,32,78,.84,{block:.5,crit:.2,ico:'spearman'}],
+    ['諾曼步戰騎士','鎖子甲長盾劍',255,33,14,30,58,.98,{block:.5,ico:'legionary'}],
+    ['條頓十字軍騎士','重板甲雙手劍',325,44,18,34,52,1.1,{cleave:46,ap:.5,ico:'greatsword'}],
+    ['聖殿重劍騎士','白袍紅十字衛',310,42,17,32,56,1.05,{cleave:42,block:.4,ico:'greatsword'}],
+    ['醫院騎士團衛士','黑袍鐵壁盾劍',330,32,19,28,50,1.05,{block:.62,ico:'legionary'}],
+    ['瑞士長戟方陣','重型鉤鐮戰戟',245,36,12,48,58,1.0,{ap:.58,antiCav:2.0,ico:'halberdier'}],
+    ['德意志雙手劍傭兵','花衣焰形巨劍',260,48,10,38,62,1.12,{cleave:54,ap:.55,ico:'greatsword'}],
+    ['蘇格蘭高地闊劍手','雙手大劍狂衝',220,45,7,34,82,.88,{berserk:true,cleave:46,ico:'greatsword'}],
+    ['英格蘭下馬重騎士','全身板甲戰錘',315,41,19,30,48,1.15,{ap:.82,kb:36,ico:'warhammer'}],
+    ['法蘭西皇家戟衛','宮廷重裝長戟',255,35,14,46,56,1.02,{ap:.52,antiCav:1.8,ico:'halberdier'}],
+    ['西班牙圓盾劍士','迅捷鋼盾刺劍',215,32,11,28,74,.82,{block:.55,crit:.25,ico:'shield_axe'}],
+    ['西班牙大方陣長槍','五米精鋼長槍',225,26,12,56,48,1.02,{antiCav:2.35,ico:'pikeman'}],
+    ['義大利傭兵矛衛','精銳重甲長矛',235,28,13,46,54,1.0,{antiCav:1.9,block:.4,ico:'pikeman'}],
+    ['威尼斯重錘衛隊','重甲破甲戰錘',285,43,16,30,52,1.18,{ap:.85,kb:40,ico:'warhammer'}],
+    ['拜占庭瓦蘭吉衛隊','帝國雙手丹麥斧',305,49,15,34,62,.98,{ap:.6,cleave:48,ico:'berserker'}],
+    ['羅斯斧盾步兵','北國鐵斧圓盾',225,31,11,28,64,.94,{block:.45,ap:.3,ico:'shield_axe'}],
+    ['匈牙利黑軍步兵','重甲盾劍精銳',275,35,15,30,58,.98,{block:.5,ap:.35,ico:'legionary'}],
+    ['鄂圖曼耶尼切里','蘇丹近衛彎刀',250,39,12,30,72,.84,{crit:.25,ap:.4,ico:'samurai'}],
+    ['波斯不死軍','萬人精銳重矛',245,29,13,40,62,.94,{block:.45,antiCav:1.65,ico:'spearman'}],
+    ['巴比倫青銅矛兵','古兩河方陣兵',170,21,8,38,56,1.02,{antiCav:1.65,ico:'spearman'}],
+    ['埃及新王國鐮劍兵','青銅彎刃突擊',165,28,6,28,76,.86,{ap:.35,ico:'samurai'}],
+    ['亞述鐵甲矛兵','早期精鐵重步',215,27,12,38,54,.98,{block:.45,antiCav:1.6,ico:'spearman'}],
+    ['努比亞戰斧手','沙漠疾走重斧',160,34,4,28,90,.78,{ap:.4,ico:'berserker'}],
+    ['祖魯短矛勇士','牛皮盾高速衝鋒',155,31,5,28,102,.74,{block:.4,charge:1.5,ico:'spearman'}],
+    ['馬賽獅獵戰士','長矛輕捷獵手',145,32,3,38,108,.76,{antiLarge:1.8,ico:'spearman'}],
+    ['阿拉伯沙漠彎刀兵','輕盈連斬曲刃',165,33,5,28,92,.74,{crit:.24,ico:'samurai'}],
+    ['馬木留克重步衛','鎖甲雙手重劍',275,41,14,32,64,.96,{cleave:40,ap:.45,ico:'greatsword'}],
+    ['印度拉傑普特劍聖','雙手拳刃重劍',230,44,10,30,78,.8,{crit:.35,ico:'samurai'}],
+    ['廓爾喀彎刀勇士','叢林反曲狗腿刀',195,43,7,26,96,.7,{crit:.38,ap:.4,ico:'assassin'}],
+    ['錫克圓輪重步','鋼輪短刀武士',235,36,12,32,74,.86,{cleave:36,ico:'flail'}],
+    ['織田長槍足輕','三間半竹長槍',130,20,5,54,56,1.05,{antiCav:2.2,ico:'pikeman'}],
+    ['東洋野太刀劍豪','超長斬馬太刀',235,49,9,44,72,.96,{cleave:52,antiCav:1.9,ico:'modao'}],
+    ['比叡山薙刀僧兵','白頭巾長薙刀',215,35,9,44,72,.88,{cleave:40,antiCav:1.7,ico:'halberdier'}],
+    ['山伏金碎棒僧','鐵刺巨棒重砸',260,44,12,34,60,1.15,{ap:.75,kb:44,ico:'warhammer'}],
+    ['伊賀上忍','瞬步雙苦無暗殺',135,46,3,26,132,.58,{crit:.44,back:true,ico:'assassin'}],
+    ['甲賀毒刃暗衛','劇毒短刀繞後',140,34,3,26,126,.65,{burn:12,slow:true,back:true,ico:'assassin'}],
+    ['東洋浪人劍客','孤高拔刀快劍',175,46,6,30,88,.72,{crit:.38,ico:'samurai'}],
+    ['新選組誠字劍士','淺蔥羽織突擊',195,45,8,30,90,.74,{crit:.34,berserk:true,ico:'samurai'}],
+    ['朝鮮重盾刀手','籐牌厚甲步兵',225,25,13,26,56,1.0,{block:.55,ico:'legionary'}],
+    ['越南叢林刀盾兵','藤盾快刀散兵',170,27,7,26,86,.82,{block:.45,ico:'shield_axe'}],
+    ['古泰拳雙刀戰卒','疾速連擊雙刃',175,38,5,26,94,.66,{crit:.3,ico:'assassin'}],
+    ['阿茲特克美洲豹戰士','黑曜石巨棒狂徒',195,41,5,30,92,.76,{berserk:true,ap:.35,ico:'berserker'}],
+    ['阿茲特克鷹戰士','羽翼疾速突擊兵',155,34,4,28,112,.7,{back:true,crit:.28,ico:'assassin'}],
+    ['印加青銅戰錘手','高原破甲星錘',225,38,10,30,66,1.05,{ap:.78,kb:34,ico:'warhammer'}],
+    ['瑪雅黑曜石矛手','叢林鋸齒長矛',165,29,5,38,84,.86,{antiCav:1.6,burn:6,ico:'spearman'}],
+    ['印第安戰斧勇士','輕捷雙持印第安斧',160,35,4,28,98,.74,{crit:.26,ico:'berserker'}],
+    ['毛利鯨骨棒戰士','悍勇近戰重擊',190,37,5,28,84,.84,{kb:30,berserk:true,ico:'warhammer'}],
+    ['夏威夷鯊齒棒勇士','鋸齒裂傷戰棒',175,35,4,30,86,.82,{burn:8,ico:'flail'}],
+    ['斯巴達青年散兵','輕甲速攻短矛',175,26,8,34,82,.82,{antiCav:1.6,ico:'spearman'}],
+    ['凱爾特藍繪劍士','塗藍狂吼突擊',170,36,3,28,92,.76,{berserk:true,ico:'berserker'}],
+    ['達契亞長鐮勇士','雙手反曲破盾鐮',205,43,6,36,74,.92,{ap:.72,cleave:38,ico:'modao'}],
+    ['伊比利亞短彎刀兵','山地輕步突襲',165,30,6,26,86,.8,{block:.35,ico:'shield_axe'}],
+    ['色雷斯斬馬刀兵','長柄反曲巨刃',210,41,7,40,74,.94,{ap:.55,antiCav:1.8,ico:'modao'}],
+    ['瑞士短劍突擊兵','破陣重甲短劍',220,37,11,26,76,.8,{ap:.45,ico:'shield_axe'}],
+    ['威尼斯雙匕暗衛','水城刺客精銳',135,44,3,24,124,.6,{crit:.4,back:true,ico:'assassin'}],
+    ['愛爾蘭重斧傭兵','鎖甲巨斧重砍',240,42,10,32,68,.94,{ap:.5,cleave:36,ico:'berserker'}],
+    ['佛蘭德斯尖刺棒兵','晨星釘頭長棒',215,36,9,40,62,1.0,{ap:.7,antiCav:1.7,ico:'flail'}],
+    ['勃艮第戰錘親衛','板甲破城重錘',295,44,17,30,52,1.15,{ap:.86,kb:38,ico:'warhammer'}],
+    ['莫斯科射擊軍斧手','月牙重斧護衛',235,39,11,34,62,.96,{ap:.55,cleave:38,ico:'halberdier'}],
+    ['波西米亞胡斯連枷兵','重型農具鐵連枷',210,38,8,38,66,.96,{cleave:44,ap:.55,ico:'flail'}],
+    ['瑞典卡洛林刺刀兵','白刃衝鋒刺刀',215,35,9,34,76,.86,{charge:1.6,antiCav:1.6,ico:'pikeman'}],
+    ['普魯士近衛步兵','鐵紀律刺刀方陣',255,34,12,34,64,.9,{block:.35,antiCav:1.7,ico:'pikeman'}],
+    ['法蘭西老近衛軍','帝國精銳熊皮帽',310,42,15,34,66,.88,{block:.45,cleave:38,ico:'greatsword'}],
+    ['英國紅衫刺刀兵','紀律嚴明刺刀隊',230,32,11,32,64,.9,{antiCav:1.65,ico:'pikeman'}],
+    ['哥薩克步戰馬刀兵','悍勇曲刃突擊',195,38,7,28,86,.78,{crit:.28,ico:'samurai'}],
+    ['吐蕃重甲步兵','高原全鎧長矛',285,33,17,40,50,1.02,{block:.5,antiCav:1.7,ico:'spartan'}],
+    ['契丹皮室步卒','北疆精銳重斧',245,37,12,32,66,.92,{ap:.45,ico:'shield_axe'}],
+    ['西夏鐵鷂步衛','冷鍛精鋼重甲',305,36,18,34,52,1.0,{block:.55,ap:.4,ico:'legionary'}],
+    ['女真重斧破陣兵','白山黑水重斧手',265,45,13,32,68,.94,{ap:.58,cleave:40,ico:'berserker'}],
+    ['苗疆苗刀勇士','長刃連斬武士',195,41,7,36,86,.78,{cleave:38,crit:.28,ico:'modao'}],
+    ['少林羅漢鐵布衫','金鐘罩重棍高僧',295,31,18,38,74,.82,{block:.6,kb:34,ico:'monk_staff'}],
+    ['波斯鏈錘衛士','雙球鐵鏈重錘',225,39,10,38,68,.98,{cleave:44,ap:.55,ico:'flail'}],
+    ['斯巴達黑衣老兵','百戰精鋼長槍',340,36,19,44,50,.9,{antiCav:2.1,block:.55,ico:'spartan'}],
+    ['羅馬鷹旗護衛','鼓舞士氣重盾手',285,32,16,28,58,.95,{block:.58,ico:'legionary'}],
+    ['條頓大團長親衛','全身哥德重甲',365,48,21,36,48,1.12,{cleave:50,ap:.58,ico:'greatsword'}],
+    ['大明東廠刺客','雙刺鬼影暗衛',145,48,4,26,128,.6,{crit:.42,back:true,ap:.45,ico:'assassin'}]
   ];
-  const rngWeps = [
-    ['複合弓手','bow','高射速拋射',88,20,2,310,58,1.15,{proj:'arrow',ps:440,ico:'archer'}],
-    ['重長弓手','lbow','超遠破甲箭雨',92,27,2,380,55,1.28,{proj:'arrow',ps:470,ap:.4,ico:'longbow'}],
-    ['絞盤重弩手','xbow','重弩高破甲',105,36,5,280,50,1.75,{proj:'bolt',ps:560,ap:.68,ico:'crossbow'}],
-    ['鳥銃火繩槍','arq','高性價比火器',88,48,2,260,54,1.62,{proj:'bullet',ps:740,ap:.72,kb:22,ico:'arquebus'}],
-    ['線列來福槍','rif','遠距精準排槍',112,62,4,315,58,1.52,{proj:'bullet',ps:820,ap:.8,kb:30,ico:'musketeer'}],
-    ['投彈手','grn','黑火藥範圍爆破',135,54,5,205,58,2.05,{proj:'fireball',ps:360,aoe:52,burn:8,ap:.5,ico:'grenadier'}]
-  ];
-  let rc = 0;
-  for (const [cn, ck, hM, aM] of rngCivs) {
-    for (const [wn, wk, role, hp, atk, def, rng, spd, cd, sp] of rngWeps) {
-      if (rc >= 78) break;
-      const H = Math.round(hp * hM), A = Math.round(atk * aM);
-      addU({id:`rng_${ck}_${wk}`, name:`${cn}${wn}`, cat:'ranged', role, cost:calcCost(H,A,def,rng,cd,sp), hp:H, atk:A, def, range:rng, speed:spd, cd, radius:9, mass:.9, ...sp, desc:`${cn}編制${wn}，${role}。`});
-      rc++;
-    }
-  }
+  addBatch('infantry','ix',11,1.4,infNames);
 
-  // D. Systematic Cavalry & Beasts (+53 -> 60 Cavalry)
-  const cavCivs = [
-    ['西涼','xil',1.08,1.12], ['虎豹','hub',1.18,1.15], ['玄甲','xua',1.2,1.14], ['鐵浮屠','tief',1.3,1.12],
-    ['蒙古','mon',1.02,1.12], ['波蘭翼','pol',1.15,1.2], ['法蘭西','fr',1.18,1.1], ['哥薩克','cos',1.0,1.1],
-    ['馬木留克','mam',1.12,1.12], ['武田赤備','tak',1.1,1.16], ['羅馬','rom',1.1,1.05], ['波斯具裝','per',1.22,1.1], ['阿拉伯','arb',0.96,1.12]
+  // 3. +78 100%-Unique Named Ranged Units (Total 90)
+  const rngNames = [
+    ['秦銳弩機手','青銅重弩齊射',98,35,4,290,52,1.65,{proj:'bolt',ps:560,ap:.62,ico:'crossbow'}],
+    ['漢強弩校尉','蹶張重弩破甲',108,41,5,315,50,1.75,{proj:'bolt',ps:590,ap:.7,ico:'crossbow'}],
+    ['蜀漢連弩營','四連發諸葛弩',100,15,4,250,54,.92,{proj:'bolt',ps:550,salvo:4,ap:.35,ico:'chukonu'}],
+    ['唐神策精弓手','角弓遠距拋射',96,24,4,330,60,1.12,{proj:'arrow',ps:460,ap:.25,ico:'archer'}],
+    ['宋神臂弓手','超遠重弩穿透',105,44,5,365,50,1.75,{proj:'bolt',ps:620,ap:.72,ico:'crossbow'}],
+    ['明神機營鳥銃手','三段擊火繩槍',96,52,4,280,56,1.48,{proj:'bullet',ps:760,ap:.76,kb:24,ico:'arquebus'}],
+    ['明三眼銃兵','近距三管齊射',115,26,5,190,60,1.6,{proj:'bullet',ps:720,salvo:3,ap:.65,kb:28,ico:'arquebus'}],
+    ['清滿洲重弓手','大拉力破甲清弓',112,34,5,340,58,1.35,{proj:'arrow',ps:500,ap:.5,ico:'longbow'}],
+    ['克里特神射手','地中海傳奇弓兵',95,27,3,360,64,1.08,{proj:'arrow',ps:490,crit:.25,ico:'archer'}],
+    ['羅德島投石大師','鉛彈精準飛石',85,26,2,300,72,.95,{proj:'boulder_sm',ps:520,ap:.4,kb:18,ico:'slinger'}],
+    ['敘利亞反曲弓手','沙漠速射複合弓',88,22,2,320,64,1.05,{proj:'arrow',ps:460,ico:'archer'}],
+    ['埃及法老弓兵','輕捷長射程弓隊',82,19,1,310,66,1.1,{proj:'arrow',ps:440,ico:'archer'}],
+    ['亞述重甲弓手','盾牌護衛重弓',135,24,8,310,50,1.2,{proj:'arrow',ps:450,block:.4,ico:'archer'}],
+    ['波斯輕裝弓手','密集箭雨散兵',76,17,1,295,68,1.02,{proj:'arrow',ps:430,ico:'archer'}],
+    ['巴列阿里飛石手','雙重投石索兵',82,21,2,285,74,.82,{proj:'boulder_sm',ps:500,kb:16,ico:'slinger'}],
+    ['努比亞黑木長弓','高穿刺非洲長弓',92,29,2,360,66,1.2,{proj:'arrow',ps:480,ap:.4,ico:'longbow'}],
+    ['羅馬輔助弓手','鎖甲紀律弓兵',110,21,6,305,56,1.18,{proj:'arrow',ps:440,ico:'archer'}],
+    ['羅馬輕步標槍手','重標槍破盾投擲',125,38,5,185,74,1.35,{proj:'javelin',ps:480,ap:.55,antiLarge:1.5,ico:'javelin'}],
+    ['凱爾特投矛散兵','疾速森林投矛',110,33,3,175,82,1.2,{proj:'javelin',ps:460,antiLarge:1.6,ico:'javelin'}],
+    ['法蘭克飛斧手','破甲迴旋重飛斧',135,44,6,165,72,1.35,{proj:'javelin',ps:440,ap:.55,kb:24,ico:'berserker'}],
+    ['維京擲斧獵手','雙持短斧投擲',130,38,5,170,76,1.18,{proj:'javelin',ps:450,ap:.45,ico:'berserker'}],
+    ['威爾士紅杉長弓','百步穿甲重箭',96,31,2,400,56,1.26,{proj:'arrow',ps:490,ap:.48,ico:'longbow'}],
+    ['熱那亞大盾弩手','背負巨盾重弩',155,36,10,295,46,1.72,{proj:'bolt',ps:570,ap:.68,block:.6,ico:'crossbow'}],
+    ['法國絞盤重弩手','鋼臂超高破甲弩',110,48,5,315,48,2.05,{proj:'bolt',ps:620,ap:.8,ico:'crossbow'}],
+    ['威尼斯僱傭弩手','精良連裝鋼弩',115,35,6,285,52,1.45,{proj:'bolt',ps:560,ap:.6,ico:'crossbow'}],
+    ['德意志獵弓弩手','重型鋼弦十字弩',112,42,6,300,50,1.75,{proj:'bolt',ps:600,ap:.72,ico:'crossbow'}],
+    ['西班牙大方陣火槍','重型叉架火繩槍',105,64,4,295,52,1.65,{proj:'bullet',ps:790,ap:.82,kb:30,ico:'arquebus'}],
+    ['織田鐵炮足輕','廉價三段火繩槍',84,47,2,265,56,1.58,{proj:'bullet',ps:740,ap:.72,kb:20,ico:'arquebus'}],
+    ['雜賀眾精銳火槍','狙擊級精準鐵炮',105,68,4,355,62,1.75,{proj:'bullet',ps:850,ap:.82,crit:.28,ico:'arquebus'}],
+    ['東洋和弓武士','重甲大弓精銳',135,30,8,350,60,1.22,{proj:'arrow',ps:490,ap:.38,ico:'longbow'}],
+    ['日本弓足輕','輕裝廉價弓兵',78,17,2,290,62,1.12,{proj:'arrow',ps:420,ico:'archer'}],
+    ['伊賀吹矢暗忍','隱蔽劇毒吹箭',90,18,2,250,94,.78,{proj:'arrow',ps:520,slow:true,burn:12,ico:'blowgun'}],
+    ['朝鮮角弓神射','高彈性反曲角弓',96,26,3,345,62,1.12,{proj:'arrow',ps:480,ap:.3,ico:'archer'}],
+    ['高麗神機火箭兵','多發火箭齊射',92,18,2,315,56,1.65,{proj:'firearrow',ps:440,salvo:3,burn:10,ico:'firearcher'}],
+    ['鄂圖曼御林弓手','精準複合弓手',105,28,4,340,62,1.1,{proj:'arrow',ps:480,ap:.35,ico:'archer'}],
+    ['鄂圖曼長管火槍','超長槍管火繩槍',110,66,5,345,54,1.72,{proj:'bullet',ps:830,ap:.8,kb:28,ico:'arquebus'}],
+    ['阿拉伯沙漠投矛手','游擊高速投槍',105,31,2,195,86,1.15,{proj:'javelin',ps:470,antiLarge:1.5,ico:'javelin'}],
+    ['印度竹弓射手','長射程竹製長弓',84,22,1,340,62,1.15,{proj:'arrow',ps:450,ico:'longbow'}],
+    ['錫克飛輪擲手','旋轉利刃查克拉',115,28,5,215,76,.88,{proj:'bolt',ps:540,salvo:2,ap:.4,ico:'shuriken'}],
+    ['莫臥兒火門槍手','重型火門槍齊射',102,54,4,270,54,1.65,{proj:'bullet',ps:760,ap:.74,kb:24,ico:'arquebus'}],
+    ['阿茲特克投槍器兵','阿特拉特爾重標',108,39,3,225,78,1.28,{proj:'javelin',ps:500,ap:.45,antiLarge:1.7,ico:'javelin'}],
+    ['印加高山投石手','重石暈眩投索',92,24,3,275,70,.95,{proj:'boulder_sm',ps:480,slow:true,kb:22,ico:'slinger'}],
+    ['亞馬遜毒箭獵手','叢林麻痺吹箭',85,16,1,245,88,.8,{proj:'arrow',ps:510,slow:true,burn:11,ico:'blowgun'}],
+    ['北美草原獵弓手','疾走連射短弓',92,20,2,285,84,.88,{proj:'arrow',ps:460,kite:true,ico:'archer'}],
+    ['澳洲迴旋鏢獵手','雙發迴旋飛鏢',98,22,2,225,86,.82,{proj:'bolt',ps:500,salvo:2,ico:'shuriken'}],
+    ['加勒比海盜火銃','短管大口徑火銃',115,58,3,195,72,1.45,{proj:'bullet',ps:740,ap:.7,kb:36,ico:'musketeer'}],
+    ['海盜雙槍船長','雙持燧發手槍',145,42,5,215,82,.95,{proj:'bullet',ps:780,salvo:2,crit:.3,ico:'musketeer'}],
+    ['加勒比擲雷水手','導火索黑火藥雷',130,60,4,195,68,2.0,{proj:'fireball',ps:360,aoe:58,burn:10,ico:'grenadier'}],
+    ['英國貝克來福槍','綠衣精銳線膛槍',118,74,4,390,66,1.65,{proj:'bullet',ps:880,ap:.84,crit:.25,ico:'musketeer'}],
+    ['法蘭西輕步散兵','高機動游擊滑膛',108,54,3,300,76,1.38,{proj:'bullet',ps:800,ap:.74,kite:true,ico:'musketeer'}],
+    ['普魯士獵兵步槍','精準長射程獵槍',115,72,4,385,64,1.62,{proj:'bullet',ps:870,ap:.82,ico:'musketeer'}],
+    ['北美獨立長步槍','邊疆遠距來福槍',105,76,3,410,66,1.72,{proj:'bullet',ps:890,ap:.84,crit:.28,ico:'musketeer'}],
+    ['俄國巴甫洛夫火槍','堅韌近衛滑膛槍',138,58,6,285,56,1.48,{proj:'bullet',ps:790,ap:.75,kb:32,ico:'musketeer'}],
+    ['瑞典卡洛林火槍','齊射後突擊排槍',125,60,5,280,64,1.45,{proj:'bullet',ps:800,ap:.76,kb:30,ico:'musketeer'}],
+    ['奧地利提洛爾獵兵','山地狙擊步槍手',112,75,4,405,64,1.68,{proj:'bullet',ps:880,ap:.82,ico:'musketeer'}],
+    ['西部左輪快槍手','六發左輪神射手',115,34,3,255,82,.62,{proj:'bullet',ps:840,crit:.34,ap:.55,ico:'musketeer'}],
+    ['溫徹斯特連珠槍','槓桿連發步槍手',122,42,4,325,70,.72,{proj:'bullet',ps:860,ap:.68,ico:'musketeer'}],
+    ['勃艮第重手砲兵','早期手持銅火砲',125,84,6,245,48,2.45,{proj:'cannonball',ps:620,aoe:38,ap:.85,kb:45,ico:'arquebus'}],
+    ['胡斯派手銃兵','車堡護衛火門槍',120,54,6,260,52,1.62,{proj:'bullet',ps:740,ap:.74,ico:'arquebus'}],
+    ['希臘火手投壺兵','燃燒陶罐投擲手',120,44,4,190,68,1.8,{proj:'fireball',ps:360,aoe:56,burn:16,ico:'grenadier'}],
+    ['大宋震天雷擲手','鐵殼火藥炸彈兵',135,66,5,195,60,2.15,{proj:'fireball',ps:350,aoe:62,kb:45,ap:.65,ico:'grenadier'}],
+    ['猛火油櫃噴火兵','古代手壓噴火筒',155,28,7,145,58,.62,{proj:'fireball',ps:340,aoe:44,burn:17,ico:'flamethrower'}],
+    ['大明神火飛鴉兵','自推進火藥火箭',110,58,3,365,54,2.45,{proj:'rocket',ps:460,aoe:54,burn:14,ico:'firearcher'}],
+    ['蒙古步戰強弓手','大磅數破甲步弓',115,32,5,345,62,1.25,{proj:'arrow',ps:490,ap:.45,ico:'longbow'}],
+    ['遼國皮室弓箭手','鐵甲精銳弓兵',130,27,7,325,60,1.18,{proj:'arrow',ps:460,ap:.35,ico:'archer'}],
+    ['金國重矢穿甲弓','重型鐵鏃破甲箭',125,35,6,335,58,1.32,{proj:'arrow',ps:480,ap:.55,ico:'longbow'}],
+    ['西夏神臂弩衛','精鋼機括重弩',115,43,6,340,52,1.68,{proj:'bolt',ps:600,ap:.72,ico:'crossbow'}],
+    ['越南叢林毒弩手','劇毒連射竹弩',95,22,2,270,74,1.15,{proj:'bolt',ps:520,slow:true,burn:10,ico:'blowgun'}],
+    ['緬甸密林獵弓手','靈巧叢林狙擊弓',92,26,2,330,78,1.1,{proj:'arrow',ps:470,crit:.25,ico:'archer'}],
+    ['衣索比亞投槍手','高原重型飛矛',115,36,4,205,78,1.25,{proj:'javelin',ps:480,antiLarge:1.65,ico:'javelin'}],
+    ['祖魯擲矛散兵','疾速連投短標槍',105,30,3,190,92,1.05,{proj:'javelin',ps:470,ico:'javelin'}],
+    ['斯基泰步戰毒弓','淬毒反曲步弓',92,23,2,320,68,1.1,{proj:'arrow',ps:460,burn:9,ico:'archer'}],
+    ['帕提亞重箭射手','精準反曲破甲弓',102,29,4,340,64,1.15,{proj:'arrow',ps:480,ap:.42,ico:'archer'}],
+    ['蘇格蘭高地手槍','雙管火槍突擊手',125,46,4,210,78,1.25,{proj:'bullet',ps:770,salvo:2,ap:.62,ico:'musketeer'}],
+    ['荷蘭殖民線列槍','穩健排槍火槍手',115,58,4,295,58,1.48,{proj:'bullet',ps:800,ap:.76,kb:28,ico:'musketeer'}],
+    ['風魔手裏劍忍眾','三連飛鏢暗影眾',108,19,3,225,112,.74,{proj:'bolt',ps:580,salvo:3,crit:.28,ico:'shuriken'}],
+    ['天竺燃燒瓶擲手','火油陶罐爆破兵',115,46,3,195,68,1.85,{proj:'fireball',ps:360,aoe:54,burn:15,ico:'grenadier'}],
+    ['西班牙火槍擲彈','火槍兼投雷精銳',145,62,6,245,60,1.8,{proj:'fireball',ps:420,aoe:46,ap:.68,burn:8,ico:'grenadier'}]
   ];
-  const cavTypes = [
-    ['輕騎兵','lgt','極速切後排',185,26,5,30,140,.92,{cav:true,charge:1.6,back:true,ico:'hussar'}],
-    ['重裝槍騎','hvy','重甲毀滅衝鋒',315,38,14,38,120,1.12,{cav:true,charge:2.4,kb:46,ico:'lancer'}],
-    ['游擊弓騎','ha','移動風箏射擊',168,22,4,245,130,1.1,{cav:true,proj:'arrow',ps:470,kite:true,ico:'horsearcher'}],
-    ['火槍龍騎','drg','高速破甲卡賓',210,48,7,245,126,1.48,{cav:true,proj:'bullet',ps:780,ap:.7,kite:true,ico:'dragoon'}]
-  ];
-  let cc = 0;
-  for (const [cn, ck, hM, aM] of cavCivs) {
-    for (const [tn, tk, role, hp, atk, def, rng, spd, cd, sp] of cavTypes) {
-      if (cc >= 52) break;
-      const H = Math.round(hp * hM), A = Math.round(atk * aM);
-      addU({id:`cav_${ck}_${tk}`, name:`${cn}${tn}`, cat:'cavalry', role, cost:calcCost(H,A,def,rng,cd,sp), hp:H, atk:A, def, range:rng, speed:spd, cd, radius:14, mass:3.0, ...sp, desc:`${cn}${tn}，${role}。`});
-      cc++;
-    }
-  }
-  addU({id:'cav_carthage_ele',name:'迦太基重甲戰象',cat:'cavalry',role:'重裝巨獸 · 踐踏',cost:420,hp:1150,atk:74,def:19,range:46,speed:66,cd:1.45,radius:25,mass:10.5,cav:true,large:true,cleave:72,kb:72,ico:'elephant',desc:'身披青銅重甲的迦太基戰象，無情碾壓步兵陣線。'});
+  addBatch('ranged','rx',9,.9,rngNames);
 
-  // E. Siege Engines (+36 -> 40 Siege)
-  const siegeList = [
-    ['輕型投石機','boulder',170,64,390,3.5,52,'catapult'],['配重巨型投石機','boulder',260,116,480,4.8,78,'catapult'],
-    ['回回巨砲','boulder',280,124,490,4.9,82,'catapult'],['火球投石車','fireball',210,84,440,4.0,68,'catapult'],
-    ['紅夷大砲','cannonball',310,162,660,3.2,58,'cannon'],['佛朗機子母砲','cannonball',250,96,570,2.0,42,'cannon'],
-    ['拿破崙野戰砲','cannonball',290,152,650,3.0,54,'cannon'],['青銅重臼砲','boulder',280,142,620,3.5,84,'catapult'],
-    ['三弓床子弩','heavybolt',230,78,560,1.65,0,'ballista'],['神臂床弩','heavybolt',210,64,520,1.35,0,'ballista'],
-    ['一窩蜂火箭車','rocket',200,36,520,3.6,50,'mlrs'],['架火戰車','rocket',220,42,540,3.8,54,'mlrs'],
-    ['希臘火噴射車','fireball',290,46,240,1.0,52,'ram'],['鐵甲衝撞戰車','ram',860,68,38,1.7,0,'ram'],
-    ['加特林手搖機槍','bullet',210,22,380,0.34,0,'cannon'],['馬克沁重機槍組','bullet',190,24,400,0.3,0,'cannon']
+  // 4. +53 100%-Unique Named Cavalry & Beasts (Total 60)
+  const cavNames = [
+    ['曹魏虎豹騎','天下驍銳重騎',365,44,16,40,126,1.08,{cav:true,charge:2.6,kb:52,ico:'lancer'}],
+    ['西涼鐵騎','狂野衝陣重騎',340,42,14,38,130,1.02,{cav:true,charge:2.5,berserk:true,ico:'lancer'}],
+    ['公孫瓚白馬義從','精銳疾馳弓騎',205,26,6,265,142,1.0,{cav:true,proj:'arrow',ps:500,kite:true,ico:'horsearcher'}],
+    ['大漢羽林騎','皇家長戟鐵騎',325,39,14,42,124,1.05,{cav:true,charge:2.3,antiCav:1.4,ico:'lancer'}],
+    ['大唐玄甲鐵騎','黑甲無敵重騎',395,46,18,40,118,1.1,{cav:true,charge:2.6,cleave:42,ico:'lancer'}],
+    ['岳家背嵬重騎','破金重錘精騎',385,48,17,36,120,1.06,{cav:true,ap:.75,charge:2.4,ico:'lancer'}],
+    ['大金鐵浮屠','連環重甲鐵牆',490,44,23,38,94,1.2,{cav:true,block:.65,charge:2.2,kb:60,ico:'lancer'}],
+    ['大金拐子馬','雙翼高速輕騎',220,31,7,32,148,.88,{cav:true,charge:1.8,back:true,ico:'hussar'}],
+    ['西夏鐵鷂子','冷鍛鋼甲重騎',410,43,19,38,112,1.1,{cav:true,block:.5,charge:2.4,ico:'lancer'}],
+    ['大明關寧鐵騎','三眼銃重甲騎',345,54,15,245,116,1.45,{cav:true,proj:'bullet',ps:760,ap:.74,kite:true,ico:'dragoon'}],
+    ['清朝八旗驍騎','重弓衝鋒馬隊',245,33,9,270,132,1.12,{cav:true,proj:'arrow',ps:490,ap:.42,kite:true,ico:'horsearcher'}],
+    ['蒙古怯薛親衛騎','大汗重甲親兵',360,44,16,38,128,1.02,{cav:true,charge:2.4,cleave:40,ico:'lancer'}],
+    ['蒙古具裝重騎','鐵甲衝鋒騎兵',350,41,16,38,120,1.1,{cav:true,charge:2.4,kb:48,ico:'lancer'}],
+    ['韃靼草原游騎','高速騷擾輕弓',175,21,4,250,146,1.02,{cav:true,proj:'arrow',ps:470,kite:true,ico:'horsearcher'}],
+    ['匈奴控弦弓騎','漠北神射游騎',185,24,4,265,144,1.05,{cav:true,proj:'arrow',ps:480,kite:true,ico:'horsearcher'}],
+    ['斯基泰金甲弓騎','毒箭高速弓騎',195,24,6,260,138,1.08,{cav:true,proj:'arrow',ps:480,burn:8,kite:true,ico:'horsearcher'}],
+    ['帕提亞回馬弓騎','安息射箭大師',210,27,7,285,140,1.05,{cav:true,proj:'arrow',ps:500,ap:.35,kite:true,ico:'horsearcher'}],
+    ['薩珊具裝鐵甲騎','人馬俱鎧重騎',440,45,21,42,102,1.18,{cav:true,block:.55,charge:2.5,ico:'lancer'}],
+    ['馬其頓夥伴騎兵','楔形衝鋒重騎',335,41,14,42,126,1.05,{cav:true,charge:2.6,kb:50,ico:'lancer'}],
+    ['色薩利重裝騎兵','希臘精銳長槍騎',310,36,13,40,124,1.06,{cav:true,charge:2.3,ico:'lancer'}],
+    ['羅馬公民重騎兵','圓盾長矛騎隊',265,31,11,34,124,1.02,{cav:true,block:.4,charge:1.9,ico:'hussar'}],
+    ['羅馬帝國鐵甲騎','後期全甲具裝騎',395,43,19,40,108,1.14,{cav:true,block:.5,charge:2.4,ico:'lancer'}],
+    ['努米底亞投矛騎','沙漠風箏標槍騎',180,34,3,200,152,1.1,{cav:true,proj:'javelin',ps:490,kite:true,antiLarge:1.5,ico:'hussar'}],
+    ['迦太基重甲戰象','青銅塔樓巨象',1180,76,19,46,66,1.45,{cav:true,large:true,cleave:74,kb:74,ico:'elephant',renderAs:'elephant'}],
+    ['天竺摩訶戰象','雙箭塔巨型戰象',1050,64,17,220,64,1.35,{cav:true,large:true,proj:'arrow',ps:460,salvo:2,cleave:64,ico:'elephant',renderAs:'elephant'}],
+    ['暹羅白象王衛','皇家重裝白象',1240,80,20,48,68,1.42,{cav:true,large:true,cleave:78,kb:78,ico:'elephant',renderAs:'elephant'}],
+    ['法老雙馬弓戰車','高速沙漠弓戰車',340,29,8,275,134,1.05,{cav:true,large:true,proj:'arrow',ps:480,salvo:2,kite:true,ico:'chariot'}],
+    ['赫梯三人重戰車','青銅撞陣重戰車',460,52,14,42,114,1.22,{cav:true,large:true,cleave:56,charge:2.3,kb:58,ico:'chariot'}],
+    ['波斯四馬鐮刀車','巨刃割裂重戰車',490,62,13,44,122,1.25,{cav:true,large:true,cleave:68,charge:2.6,kb:65,ico:'chariot'}],
+    ['凱爾特雙輪戰車','狂野投矛戰車',350,44,8,185,132,1.15,{cav:true,large:true,proj:'javelin',ps:480,charge:2.0,ico:'chariot'}],
+    ['拜占庭鐵甲聖騎','帝國重甲錘騎',420,48,20,36,106,1.12,{cav:true,ap:.72,charge:2.3,ico:'lancer'}],
+    ['法蘭克聖騎士','查理曼重甲騎士',380,45,17,40,120,1.08,{cav:true,charge:2.5,cleave:42,ico:'lancer'}],
+    ['法蘭西重裝憲兵','全身板甲槍騎士',430,49,20,42,114,1.12,{cav:true,charge:2.7,kb:56,ico:'lancer'}],
+    ['諾曼重裝衝鋒騎','鳶盾重矛騎士',335,40,14,40,124,1.06,{cav:true,block:.45,charge:2.4,ico:'lancer'}],
+    ['條頓大騎士騎兵','黑十字重甲衝鋒',445,50,21,42,110,1.14,{cav:true,charge:2.6,cleave:46,ico:'lancer'}],
+    ['波蘭翼騎兵','羽翼長槍無敵衝鋒',415,54,17,48,136,1.06,{cav:true,charge:3.1,kb:65,ap:.55,ico:'lancer'}],
+    ['匈牙利黑色驃騎','精銳切後排輕騎',245,35,8,32,148,.86,{cav:true,charge:1.9,back:true,ico:'hussar'}],
+    ['烏克蘭哥薩克騎','馬刀疾馳突襲',235,34,7,32,150,.84,{cav:true,charge:1.8,crit:.25,back:true,ico:'hussar'}],
+    ['頓河哥薩克槍騎','長矛突擊輕騎',255,36,8,40,142,.92,{cav:true,charge:2.2,ico:'lancer'}],
+    ['拿破崙胸甲重騎','亮銀鋼甲馬刀騎',385,46,18,36,124,1.04,{cav:true,block:.45,charge:2.4,ico:'lancer'}],
+    ['蘇格蘭灰馬重騎','高地重劍衝鋒騎',365,48,15,36,126,1.0,{cav:true,charge:2.5,cleave:44,ico:'lancer'}],
+    ['法蘭西波蘭槍騎','輕裝超長騎槍',290,41,11,46,138,.98,{cav:true,charge:2.6,antiCav:1.4,ico:'lancer'}],
+    ['西班牙精銳重騎','板甲劍盾騎兵',355,42,16,34,120,1.04,{cav:true,block:.4,charge:2.2,ico:'lancer'}],
+    ['貝都因沙漠駝騎','反騎兵快駝散兵',235,33,7,38,118,.96,{cav:true,antiCav:2.0,charge:1.6,ico:'camel'}],
+    ['馬木留克重甲騎','鎖甲彎刀弓雙修',340,42,15,34,128,.96,{cav:true,charge:2.2,crit:.25,ico:'lancer'}],
+    ['鄂圖曼西帕希騎','蘇丹重甲弓槍騎',315,38,14,265,126,1.1,{cav:true,proj:'arrow',ps:490,ap:.4,kite:true,ico:'horsearcher'}],
+    ['薩拉森新月輕騎','疾風彎刀切弓手',220,33,6,32,152,.82,{cav:true,back:true,crit:.24,ico:'hussar'}],
+    ['武田赤備重騎','緋紅疾風武士騎',355,47,15,38,134,.96,{cav:true,charge:2.6,crit:.28,ico:'lancer'}],
+    ['伊達騎馬鐵炮隊','獨眼龍火槍騎兵',255,54,10,255,130,1.42,{cav:true,proj:'bullet',ps:780,ap:.74,kite:true,ico:'dragoon'}],
+    ['流鏑馬武士弓騎','和弓疾馳神射騎',235,31,8,285,134,1.08,{cav:true,proj:'arrow',ps:500,ap:.35,kite:true,ico:'horsearcher'}],
+    ['北美野馬戰斧騎','無鞍高速游擊騎',195,33,4,30,154,.82,{cav:true,back:true,charge:1.7,ico:'hussar'}],
+    ['北境雪原馴狼騎','巨狼撕咬突襲騎',260,42,7,34,148,.76,{cav:true,crit:.32,back:true,ico:'hussar'}],
+    ['極地重甲巨熊騎','鋼甲戰熊重擊騎',540,64,18,40,98,1.18,{cav:true,large:true,cleave:58,kb:62,ico:'lancer'}]
   ];
-  const siegeTiers = [['標準','std',1.0,1.0], ['帝國精銳','elt',1.25,1.2]];
-  let sc = 0;
-  for (const [sn, proj, hp, atk, rng, cd, aoe, ico] of siegeList) {
-    for (const [tn, tk, mH, mA] of siegeTiers) {
-      if (sc >= 32) break;
-      const H = Math.round(hp * mH), A = Math.round(atk * mA);
-      const sp = proj==='ram'
-        ? {block:.82,kb:72,ap:.75,ico}
-        : {proj, ps:proj==='bullet'?840:proj==='cannonball'?760:proj==='heavybolt'?700:320, aoe, pierce:proj==='cannonball'?6:(proj==='heavybolt'?3:0), salvo:proj==='rocket'?4:1, burn:proj==='fireball'||proj==='rocket'?10:0, kb:aoe?55:18, ap:.78, ico};
-      addU({id:`sg_${sc}_${tk}`, name:(tk==='std'?'':tn)+sn, cat:'siege', role:`重型器械 · ${proj==='ram'?'破陣':'遠程火力'}`, cost:calcCost(H,A,9,rng,cd,sp), hp:H, atk:A, def:9, range:rng, speed:proj==='ram'?46:24, cd, radius:19, mass:5.8, ...sp, desc:`${tn}${sn}，戰場攻堅重器。`});
-      sc++;
-    }
-  }
-  for (const [id,nm,hp,atk,rng,cd,aoe,ico] of [
-    ['sg_ox','齊國火牛陣',160,95,30,1.0,85,'fireship'],
-    ['sg_tower','移動攻城塔',1100,32,260,1.2,0,'watchtower'],
-    ['sg_rail','巨型攻城巨砲',360,185,720,5.6,105,'cannon'],
-    ['sg_mortar_h','蒸汽重型榴彈砲',320,155,660,4.8,95,'cannon']
-  ]) {
-    const sp = id==='sg_ox' ? {cav:true,suicideBoom:true,aoe,burn:14,ico} : (id==='sg_tower' ? {block:.8,proj:'arrow',ps:460,ico} : {proj:'boulder',ps:420,aoe,kb:75,ap:.85,ico});
-    addU({id,name:nm,cat:'siege',role:'特種攻城器械',cost:calcCost(hp,atk,12,rng,cd,sp),hp,atk,def:12,range:rng,speed:id==='sg_ox'?118:22,cd,radius:21,mass:6.5,...sp,desc:`特種攻城單位：${nm}。`});
-  }
+  addBatch('cavalry','cx',14,3.0,cavNames);
 
-  // F. Naval Warships (+44 -> 50 Navy)
-  const navBase = [
-    ['三層槳撞角船','galley',340,46,9,38,116,1.0,{naval:true,charge:2.1,kb:55,ico:'galley'}],
-    ['維京龍頭長船','galley',380,52,10,40,118,.95,{naval:true,charge:2.0,cleave:48,ico:'galley'}],
-    ['希臘火戰船','fireship',420,42,10,240,92,1.1,{naval:true,proj:'fireball',ps:390,aoe:55,burn:16,ico:'fireship'}],
-    ['東吳蒙衝快船','galley',310,44,8,38,124,.95,{naval:true,charge:2.2,ico:'galley'}],
-    ['朝鮮龜甲船','ironclad',920,62,22,280,66,1.6,{naval:true,proj:'fireball',ps:420,aoe:52,block:.7,ico:'tower_ship'}],
-    ['日本安宅巨艦','tower_ship',780,36,15,310,58,1.05,{naval:true,proj:'arrow',ps:480,salvo:2,block:.5,ico:'tower_ship'}],
-    ['鄭和寶船旗艦','tower_ship',1250,68,18,390,54,1.8,{naval:true,proj:'cannonball',ps:620,pierce:3,aoe:42,block:.55,ico:'tower_ship'}],
-    ['西班牙大帆船','frigate',960,94,15,470,54,3.0,{naval:true,proj:'cannonball',ps:660,pierce:4,aoe:46,ap:.8,ico:'frigate'}],
-    ['海盜黑帆快船','frigate',620,76,10,410,78,2.4,{naval:true,proj:'cannonball',ps:660,pierce:3,ap:.75,ico:'frigate'}],
-    ['一級戰列艦','frigate',1150,118,17,510,50,3.1,{naval:true,proj:'cannonball',ps:680,pierce:5,aoe:52,ap:.85,ico:'frigate'}],
-    ['魚雷快艇','galley',280,135,6,340,128,3.2,{naval:true,proj:'rocket',ps:520,aoe:62,ap:.9,ico:'galley'}],
-    ['神盾驅逐艦','ironclad',1450,86,20,560,72,1.6,{naval:true,proj:'rocket',ps:680,salvo:2,aoe:54,antiAir:2.2,ap:.82,ico:'ironclad'}],
-    ['飛彈巡洋艦','ironclad',1850,108,24,620,64,2.2,{naval:true,proj:'rocket',ps:640,salvo:3,aoe:66,antiAir:2.0,ap:.85,ico:'ironclad'}],
-    ['大和級戰列艦','ironclad',2600,195,30,680,44,4.2,{naval:true,proj:'boulder',ps:520,aoe:105,kb:85,ap:.92,block:.72,ico:'ironclad'}],
-    ['核動力超級航母','carrier',3100,56,28,600,42,1.0,{naval:true,kite:true,proj:'bullet',ps:880,block:.75,spawnUnit:'jet',summon:2.8,hangarCap:10,ico:'carrier'}]
+  // 5. +36 100%-Unique Named Siege Engines (Total 40, accurate tech-era range!)
+  const sgNames = [
+    ['墨家連弩重車','高速機關巨弩',215,44,8,450,28,1.0,{proj:'heavybolt',ps:690,pierce:2,ap:.7,ico:'ballista'}],
+    ['漢代單梢拋石機','輕型古拋石車',165,62,6,385,26,3.4,{proj:'boulder',ps:290,aoe:50,kb:42,ico:'catapult'}],
+    ['唐代七梢巨砲','多人牽引巨石車',245,104,8,455,22,4.4,{proj:'boulder',ps:300,aoe:72,kb:60,ico:'catapult'}],
+    ['宋代三弓床子弩','超遠重型穿甲弩',235,84,8,540,26,1.65,{proj:'heavybolt',ps:720,pierce:3,ap:.8,antiLarge:1.7,ico:'ballista'}],
+    ['宋代八牛巨弩','巨獸剋星重床弩',260,115,9,565,24,2.15,{proj:'heavybolt',ps:740,pierce:4,ap:.85,antiLarge:2.0,ico:'ballista'}],
+    ['宋代旋風砲車','快速機動拋石機',185,72,7,410,34,3.1,{proj:'boulder',ps:300,aoe:56,kb:44,ico:'catapult'}],
+    ['元代回回巨砲','重型配重攻城砲',285,126,10,490,20,4.8,{proj:'boulder',ps:310,aoe:84,kb:72,ap:.7,ico:'catapult'}],
+    ['大明一窩蜂火箭','多管集束火箭車',195,34,6,505,30,3.5,{proj:'rocket',ps:450,salvo:5,aoe:48,burn:10,ico:'mlrs'}],
+    ['大明架火戰車','重型多發火龍車',235,44,8,530,28,3.8,{proj:'rocket',ps:470,salvo:6,aoe:54,burn:12,ico:'mlrs'}],
+    ['大明虎蹲砲','近中程散彈火砲',225,48,9,450,30,2.2,{proj:'cannonball',ps:680,salvo:3,aoe:34,ap:.75,ico:'cannon'}],
+    ['大明紅夷大砲','跨代重型火藥砲',315,165,12,665,22,3.2,{proj:'cannonball',ps:770,pierce:6,aoe:58,kb:70,ap:.92,ico:'cannon'}],
+    ['佛朗機子母砲','速裝後膛子砲',255,98,10,575,26,1.95,{proj:'cannonball',ps:730,pierce:4,aoe:42,ap:.86,ico:'cannon'}],
+    ['大明威遠將軍砲','長管遠射銅砲',295,148,11,645,22,3.1,{proj:'cannonball',ps:760,pierce:6,aoe:52,ap:.9,ico:'cannon'}],
+    ['神威無敵大將軍','清代超級重銅砲',340,178,13,680,20,3.5,{proj:'cannonball',ps:780,pierce:7,aoe:64,kb:76,ap:.92,ico:'cannon'}],
+    ['希臘扭力拋石機','古典雙臂投石機',180,68,7,405,25,3.6,{proj:'boulder',ps:290,aoe:54,kb:46,ico:'catapult'}],
+    ['希臘腹弩重砲','重型扭力穿甲弩',205,62,7,480,26,1.5,{proj:'heavybolt',ps:680,pierce:2,ap:.72,ico:'ballista'}],
+    ['羅馬蠍子弩砲','精準狙擊輕弩砲',190,54,7,510,30,1.25,{proj:'heavybolt',ps:710,pierce:2,ap:.75,crit:.25,ico:'ballista'}],
+    ['羅馬野驢投石機','單臂重石拋射機',215,86,8,435,24,4.0,{proj:'boulder',ps:295,aoe:62,kb:54,ico:'catapult'}],
+    ['羅馬巨型攻城塔','移動箭樓堡壘',1150,34,20,270,30,1.1,{block:.82,proj:'arrow',ps:470,salvo:2,ico:'watchtower'}],
+    ['拜占庭希臘火車','持續烈焰噴射車',360,44,12,240,34,.85,{proj:'fireball',ps:380,aoe:56,burn:18,ap:.6,ico:'ram'}],
+    ['配重巨型投石機','中世紀巨無霸',270,120,9,485,20,4.7,{proj:'boulder',ps:310,aoe:82,kb:70,ico:'catapult'}],
+    ['英格蘭戰狼巨機','傳說級超巨投石',310,138,10,505,18,5.1,{proj:'boulder',ps:315,aoe:92,kb:80,ico:'catapult'}],
+    ['鄂圖曼烏爾班巨砲','轟碎君士坦丁堡',380,225,14,695,16,4.8,{proj:'boulder',ps:520,aoe:108,kb:90,ap:.94,ico:'cannon'}],
+    ['格里博瓦爾野砲','靈活法式野戰砲',275,142,10,635,28,2.85,{proj:'cannonball',ps:760,pierce:5,aoe:50,ap:.88,ico:'cannon'}],
+    ['拿破崙12磅銅砲','高射速帝國重砲',295,154,11,655,26,2.95,{proj:'cannonball',ps:770,pierce:6,aoe:56,ap:.9,ico:'cannon'}],
+    ['康格里夫火箭架','近代軍用火箭砲',220,46,7,585,28,3.6,{proj:'rocket',ps:500,salvo:5,aoe:54,burn:11,ap:.7,ico:'mlrs'}],
+    ['克虜伯後膛鋼砲','工業時代線膛砲',330,182,13,715,24,2.8,{proj:'cannonball',ps:840,pierce:7,aoe:62,ap:.94,ico:'cannon'}],
+    ['俄國沙皇巨臼砲','超大口徑攻城臼',360,195,13,640,18,4.4,{proj:'boulder',ps:460,aoe:105,kb:86,ap:.9,ico:'cannon'}],
+    ['加特林手搖機槍','多管轉輪掃射車',225,24,8,405,28,.28,{proj:'bullet',ps:860,ap:.65,ico:'cannon'}],
+    ['馬克沁重機槍陣','水冷收割機槍組',215,26,9,425,24,.24,{proj:'bullet',ps:880,ap:.68,ico:'cannon'}],
+    ['克虜伯鐵道巨砲','超遠戰略攻城砲',450,260,16,820,14,5.4,{proj:'boulder',ps:580,aoe:125,kb:95,ap:.96,ico:'cannon'}],
+    ['胡斯派大車堡','移動射擊馬車堡',880,46,18,280,36,1.3,{block:.75,proj:'bullet',ps:760,salvo:2,ap:.7,ico:'ram'}],
+    ['齊國火牛衝鋒陣','自爆烈焰牛群',175,98,4,32,124,1.0,{cav:true,suicideBoom:true,aoe:88,burn:15,ico:'fireship'}],
+    ['達文西裝甲戰車','環形火砲木裝甲',760,62,18,260,42,1.65,{block:.72,proj:'cannonball',ps:640,salvo:2,aoe:36,ap:.8,ico:'ram'}],
+    ['蒸汽裝甲噴火車','重甲近戰烈焰車',790,54,18,195,46,.78,{block:.75,proj:'fireball',ps:380,aoe:58,burn:18,ico:'ram'}],
+    ['爆破工兵攻城車','滿載炸藥自爆車',420,165,12,34,74,1.0,{block:.65,suicideBoom:true,aoe:125,burn:16,ico:'ram'}]
   ];
-  const navNations = [['皇家','roy',1.05,1.06],['帝國','imp',1.12,1.08],['聯邦','fed',1.0,1.12]];
-  let nc = 0;
-  for (const [bn, modelId, hp, atk, def, rng, spd, cd, sp] of navBase) {
-    for (const [nn, nk, mH, mA] of navNations) {
-      if (nc >= 44) break;
-      const H = Math.round(hp * mH), A = Math.round(atk * mA);
-      addU({id:`nav_${nc}_${nk}`, name:`${nn}${bn}`, cat:'navy', role:`海軍艦艇 · ${bn}`, cost:calcCost(H,A,def,rng,cd,sp), hp:H, atk:A, def, range:rng, speed:spd, cd, radius:sp.hangarCap?32:(H>1000?25:20), mass:H>1000?13:6.5, renderAs:modelId, ...sp, desc:`${nn}海軍編制${bn}。`});
-      nc++;
-    }
-  }
+  addBatch('siege','sgx',20,6.0,sgNames);
 
-  // G. Modern Land, Armor & Air Force (+50 -> 58 Modern)
-  const modList = [
-    ['步槍班','marine',185,24,6,275,80,.44,{proj:'bullet',ps:820,ap:.55,ico:'marine'}],
-    ['重機槍組','marine',220,30,8,340,56,.28,{proj:'bullet',ps:860,ap:.6,ico:'marine'}],
-    ['反坦克火箭兵','marine',165,115,5,330,72,2.4,{proj:'rocket',ps:620,aoe:52,ap:.92,antiLarge:1.8,ico:'mlrs'}],
-    ['防空飛彈兵','marine',160,92,5,440,70,1.8,{proj:'rocket',ps:780,aoe:40,antiAir:2.8,ap:.8,ico:'flak_tower'}],
-    ['外骨骼裝甲兵','marine',420,42,18,300,92,.4,{proj:'bullet',ps:880,ap:.7,block:.5,ico:'marine'}],
-    ['輕型偵察坦克','tank',680,78,18,340,108,1.9,{proj:'cannonball',ps:700,aoe:42,ap:.78,ico:'tank'}],
-    ['虎式重型坦克','tank',1350,145,30,410,64,2.8,{proj:'cannonball',ps:720,aoe:62,ap:.88,block:.7,ico:'tank'}],
-    ['豹2主戰坦克','tank',1220,140,29,430,84,2.4,{proj:'cannonball',ps:780,aoe:58,ap:.9,block:.68,ico:'tank'}],
-    ['M1艾布蘭坦克','tank',1280,144,30,425,82,2.45,{proj:'cannonball',ps:780,aoe:60,ap:.9,block:.7,ico:'tank'}],
-    ['99A主戰坦克','tank',1260,146,29,435,85,2.4,{proj:'cannonball',ps:790,aoe:60,ap:.9,block:.68,ico:'tank'}],
-    ['雙管天啟重坦','tank',1950,115,34,420,58,2.2,{proj:'cannonball',ps:720,salvo:2,aoe:64,ap:.92,block:.75,ico:'tank'}],
-    ['自走榴彈砲','mlrs',520,135,12,700,60,4.0,{proj:'boulder',ps:480,aoe:88,kb:70,ap:.85,ico:'mlrs'}],
-    ['自行防空砲車','tank',640,42,16,460,82,.35,{proj:'bullet',ps:940,antiAir:2.6,ap:.7,ico:'flak_tower'}],
-    ['喀秋莎火箭車','mlrs',340,46,6,640,66,4.0,{proj:'rocket',ps:460,salvo:6,aoe:58,burn:10,ap:.7,ico:'mlrs'}],
-    ['阿帕契直升機','heli',660,52,15,380,175,.38,{air:true,kite:true,airDodge:.28,proj:'rocket',ps:740,aoe:42,ap:.78,ico:'heli'}],
-    ['A-10對地攻擊機','jet',780,48,18,390,210,.26,{air:true,kite:true,airDodge:.32,proj:'bullet',ps:920,aoe:38,ap:.85,ico:'jet'}],
-    ['隱形五代戰機','jet',620,110,14,460,285,1.15,{air:true,kite:true,airDodge:.52,proj:'rocket',ps:760,salvo:2,aoe:78,ap:.9,ico:'jet'}],
-    ['戰略重轟炸機','jet',1150,95,18,420,175,2.4,{air:true,kite:true,airDodge:.22,proj:'boulder',ps:420,salvo:4,aoe:92,burn:14,ap:.85,ico:'jet'}],
-    ['察打一體無人機','jet',240,64,6,430,190,1.5,{air:true,kite:true,airDodge:.38,proj:'rocket',ps:660,aoe:54,ap:.78,ico:'jet'}],
-    ['電磁磁軌砲坦','tank',1580,210,32,560,72,3.2,{proj:'cannonball',ps:1100,pierce:6,aoe:48,ap:.96,block:.72,ico:'tank'}]
+  // 6. +44 100%-Unique Named Naval Warships (Total 50)
+  const navNames = [
+    ['東吳蒙衝快船','包牛皮高速突襲',330,46,9,38,122,.96,{naval:true,charge:2.2,kb:54,ico:'galley',renderAs:'galley'}],
+    ['大漢鬥艦','高舷弩箭戰艦',560,28,12,285,68,1.15,{naval:true,proj:'arrow',ps:450,block:.4,ico:'tower_ship',renderAs:'tower_ship'}],
+    ['東吳走舸突擊艇','極速接舷小艇',245,38,6,34,138,.82,{naval:true,charge:2.0,ico:'galley',renderAs:'galley'}],
+    ['大宋明輪車船','腳踏明輪撞角巨艦',680,58,15,44,96,1.1,{naval:true,charge:2.4,kb:68,cleave:54,ico:'tower_ship',renderAs:'tower_ship'}],
+    ['大宋海鶻戰船','抗風浪快速砲船',460,44,10,270,84,1.5,{naval:true,proj:'fireball',ps:400,aoe:44,burn:12,ico:'galley',renderAs:'galley'}],
+    ['大明福船主力艦','高艏重砲遠洋艦',780,76,15,410,60,2.5,{naval:true,proj:'cannonball',ps:640,pierce:3,aoe:42,ap:.78,ico:'tower_ship',renderAs:'tower_ship'}],
+    ['大明廣船鐵木艦','鐵力木耐撞砲艦',860,82,18,420,56,2.6,{naval:true,proj:'cannonball',ps:650,pierce:3,block:.5,ap:.8,ico:'tower_ship',renderAs:'tower_ship'}],
+    ['大明蜈蚣槳船','百槳佛朗機快船',490,62,10,430,94,1.9,{naval:true,proj:'cannonball',ps:680,pierce:2,ap:.78,ico:'galley',renderAs:'galley'}],
+    ['鄭和寶船旗艦','九桅超級遠洋巨艦',1380,92,20,460,50,2.2,{naval:true,proj:'cannonball',ps:660,salvo:2,pierce:4,aoe:48,block:.58,ico:'tower_ship',renderAs:'tower_ship'}],
+    ['朝鮮龜甲戰船','鐵刺龜背抗箭艦',980,68,24,310,66,1.65,{naval:true,proj:'fireball',ps:440,aoe:56,burn:14,block:.74,ico:'ironclad',renderAs:'ironclad'}],
+    ['朝鮮板屋戰船','雙層甲板火砲船',720,66,14,390,64,2.3,{naval:true,proj:'cannonball',ps:620,pierce:3,aoe:38,ico:'tower_ship',renderAs:'tower_ship'}],
+    ['織田鐵甲安宅船','包鐵重甲浮動堡壘',1080,82,21,410,50,2.4,{naval:true,proj:'cannonball',ps:650,pierce:4,block:.66,ap:.82,ico:'tower_ship',renderAs:'tower_ship'}],
+    ['戰國關船中艦','鐵炮齊射中型艦',540,48,11,310,82,1.4,{naval:true,proj:'bullet',ps:760,salvo:2,ap:.7,ico:'galley',renderAs:'galley'}],
+    ['戰國小早快船','偵察高速火矢艇',290,32,6,275,116,1.15,{naval:true,proj:'firearrow',ps:450,burn:11,ico:'galley',renderAs:'galley'}],
+    ['雅典三層槳戰艦','青銅衝角古戰船',360,50,9,40,120,.95,{naval:true,charge:2.3,kb:58,ico:'galley',renderAs:'galley'}],
+    ['迦太基五層槳艦','重型古地中海旗艦',620,62,14,44,96,1.15,{naval:true,charge:2.4,cleave:52,kb:66,ico:'galley',renderAs:'galley'}],
+    ['羅馬烏鸦吊橋艦','強行接舷步兵艦',580,54,14,42,92,1.0,{naval:true,cleave:56,block:.45,ico:'galley',renderAs:'galley'}],
+    ['拜占庭德羅蒙艦','船首噴射希臘火',520,46,12,265,92,.95,{naval:true,proj:'fireball',ps:410,aoe:58,burn:18,ico:'fireship',renderAs:'fireship'}],
+    ['維京龍首長船','狂戰士劫掠長船',420,56,10,40,124,.9,{naval:true,charge:2.1,cleave:48,ico:'galley',renderAs:'galley'}],
+    ['威尼斯大槳帆船','重砲護航槳帆艦',740,78,14,430,74,2.4,{naval:true,proj:'cannonball',ps:660,pierce:3,aoe:40,ico:'frigate',renderAs:'frigate'}],
+    ['葡萄牙卡拉克帆船','大航海武裝巨帆',840,86,15,455,58,2.7,{naval:true,proj:'cannonball',ps:660,pierce:4,aoe:44,ap:.8,ico:'frigate',renderAs:'frigate'}],
+    ['西班牙無敵大帆船','四層甲板黃金艦',1080,104,17,485,52,2.95,{naval:true,proj:'cannonball',ps:670,pierce:5,aoe:50,ap:.82,ico:'frigate',renderAs:'frigate'}],
+    ['荷蘭東印度戰船','均衡武裝遠洋艦',760,82,13,460,64,2.6,{naval:true,proj:'cannonball',ps:660,pierce:4,aoe:42,ico:'frigate',renderAs:'frigate'}],
+    ['瑪麗玫瑰號重艦','都鐸王朝主力艦',980,96,16,475,54,2.8,{naval:true,proj:'cannonball',ps:670,pierce:4,aoe:48,ap:.82,ico:'frigate',renderAs:'frigate'}],
+    ['勝利號一級戰列艦','百門巨砲傳奇旗艦',1360,124,19,530,48,2.85,{naval:true,proj:'cannonball',ps:700,pierce:6,aoe:56,ap:.86,ico:'frigate',renderAs:'frigate'}],
+    ['太陽王號主力艦','法蘭西皇家旗艦',1280,118,18,520,50,2.9,{naval:true,proj:'cannonball',ps:690,pierce:5,aoe:54,ap:.85,ico:'frigate',renderAs:'frigate'}],
+    ['皇家高速護衛艦','機動追擊砲艦',680,78,12,465,80,2.3,{naval:true,proj:'cannonball',ps:680,pierce:3,aoe:38,ico:'frigate',renderAs:'frigate'}],
+    ['黑珍珠海盜快船','極速掠奪黑帆船',640,82,11,430,92,2.15,{naval:true,proj:'cannonball',ps:690,pierce:3,crit:.28,ico:'frigate',renderAs:'frigate'}],
+    ['安妮女王復仇號','黑鬍子重砲海盜艦',920,98,14,465,72,2.5,{naval:true,proj:'cannonball',ps:680,pierce:4,aoe:48,burn:10,ico:'frigate',renderAs:'frigate'}],
+    ['加勒比武裝縱帆船','靈巧雙桅襲擊艇',420,54,8,385,98,1.9,{naval:true,proj:'cannonball',ps:660,pierce:2,ico:'galley',renderAs:'galley'}],
+    ['英國重型迫擊砲艇','專炸海岸與要塞',580,126,10,590,54,3.8,{naval:true,proj:'boulder',ps:420,aoe:86,kb:70,ap:.84,ico:'frigate',renderAs:'frigate'}],
+    ['美國憲法號重巡','鐵腰厚木超級護衛',1040,102,19,500,68,2.55,{naval:true,proj:'cannonball',ps:700,pierce:5,block:.55,ap:.85,ico:'frigate',renderAs:'frigate'}],
+    ['莫尼特號旋轉砲艦','首艘旋轉砲塔鐵甲',1180,112,24,520,52,2.9,{naval:true,proj:'cannonball',ps:720,pierce:4,aoe:54,block:.7,ap:.88,ico:'ironclad',renderAs:'ironclad'}],
+    ['維吉尼亞鐵甲撞艦','斜面裝甲撞角艦',1260,108,25,460,50,2.8,{naval:true,proj:'cannonball',ps:700,aoe:50,charge:2.2,block:.72,ico:'ironclad',renderAs:'ironclad'}],
+    ['無畏號主力戰列艦','全重砲鋼鐵巨艦',1780,148,26,600,50,3.4,{naval:true,proj:'boulder',ps:500,aoe:86,kb:75,ap:.9,block:.68,ico:'ironclad',renderAs:'ironclad'}],
+    ['俾斯麥號戰列艦','德意志鋼鐵巨獸',2250,168,29,645,54,3.5,{naval:true,proj:'boulder',ps:540,aoe:94,kb:82,ap:.92,block:.72,ico:'ironclad',renderAs:'ironclad'}],
+    ['大和號超級戰列艦','460毫米巨砲王者',2850,215,32,710,44,4.2,{naval:true,proj:'boulder',ps:560,aoe:112,kb:92,ap:.95,block:.75,ico:'ironclad',renderAs:'ironclad'}],
+    ['衣阿華號高速戰艦','高速精準重砲戰艦',2350,174,28,675,60,3.4,{naval:true,proj:'boulder',ps:560,aoe:96,ap:.92,block:.7,ico:'ironclad',renderAs:'ironclad'}],
+    ['提爾皮茨重巡洋艦','北方孤獨女王艦',2100,158,28,635,54,3.45,{naval:true,proj:'boulder',ps:530,aoe:90,ap:.9,block:.7,ico:'ironclad',renderAs:'ironclad'}],
+    ['U型遠洋攻擊潛艇','高破甲魚雷伏擊艇',520,175,10,420,76,3.4,{naval:true,proj:'rocket',ps:540,aoe:66,ap:.94,ico:'galley',renderAs:'galley'}],
+    ['高速魚雷突擊艇','極速偷襲巨艦快艇',290,145,6,355,134,3.0,{naval:true,proj:'rocket',ps:560,aoe:62,ap:.92,ico:'galley',renderAs:'galley'}],
+    ['阿利伯克神盾驅逐','防空反艦飛彈驅逐',1550,92,22,590,74,1.55,{naval:true,proj:'rocket',ps:720,salvo:2,aoe:56,antiAir:2.5,ap:.85,ico:'ironclad',renderAs:'ironclad'}],
+    ['基洛夫核動力巡洋','武庫艦飽和飛彈',2150,112,26,655,62,2.15,{naval:true,proj:'rocket',ps:680,salvo:3,aoe:68,antiAir:2.2,ap:.88,ico:'ironclad',renderAs:'ironclad'}],
+    ['福特級核動力航母','電磁彈射10機巨艦',3200,62,28,600,42,1.0,{naval:true,kite:true,proj:'bullet',ps:900,block:.76,spawnUnit:'jet',summon:2.6,hangarCap:10,ico:'carrier',renderAs:'carrier'}]
   ];
-  const modVar = [['標準','std',1.0,1.0],['精銳改進型','mk2',1.2,1.18],['重裝突擊型','hvy',1.35,1.1]];
-  let mc = 0;
-  for (const [mn, mRender, hp, atk, def, rng, spd, cd, sp] of modList) {
-    for (const [vn, vk, mH, mA] of modVar) {
-      if (mc >= 50) break;
-      const H = Math.round(hp * mH), A = Math.round(atk * mA);
-      addU({id:`mod_${mc}_${vk}`, name:(vk==='std'?'':vn)+mn, cat:'modern', role:`現代裝備 · ${mn}`, cost:calcCost(H,A,def,rng,cd,sp), hp:H, atk:A, def, range:rng, speed:spd, cd, radius:mRender==='marine'?10:(mRender==='tank'||mRender==='mlrs'?21:17), mass:mRender==='tank'?11:(sp.air?3.2:1.5), renderAs:mRender, ...sp, desc:`現代化軍種：${vn}${mn}。`});
-      mc++;
-    }
-  }
+  addBatch('navy','nx',21,7.0,navNames);
 
-  // H. Mythic & Fantasy (+25 -> 30 Mythic)
-  const mythList = [
-    ['雷電大法師',150,62,4,350,54,1.9,{proj:'frostbolt',ps:520,aoe:66,ap:.75,ico:'pyro'}],
-    ['遠古紅龍',1850,125,22,360,155,1.5,{air:true,large:true,airDodge:.2,proj:'fireball',ps:460,aoe:95,burn:20,ap:.8,ico:'jet'}],
-    ['冰霜巨龍',1780,108,23,360,150,1.55,{air:true,large:true,airDodge:.2,proj:'frostbolt',ps:460,aoe:105,slow:true,ap:.75,ico:'frost'}],
-    ['獅鷲騎士',520,62,12,260,170,1.0,{air:true,airDodge:.25,proj:'javelin',ps:540,ap:.5,ico:'heli'}],
-    ['聖光大天使',1350,95,20,310,165,1.15,{air:true,airDodge:.3,proj:'fireball',ps:520,aoe:70,ap:.75,ico:'cleric'}],
-    ['炎魔領主',1650,118,20,56,64,1.4,{large:true,cleave:95,burn:18,kb:85,ap:.65,ico:'titan'}],
-    ['冰霜泰坦',1720,98,22,56,52,1.6,{large:true,cleave:92,slow:true,kb:80,ico:'titan'}],
-    ['牛頭人重斧手',540,64,13,38,76,1.1,{large:true,cleave:58,kb:55,ico:'berserker'}],
-    ['半人馬神射手',290,34,6,310,136,1.0,{cav:true,kite:true,proj:'arrow',ps:520,ap:.45,ico:'horsearcher'}],
-    ['精靈神箭手',125,36,4,420,76,.95,{proj:'arrow',ps:560,ap:.55,crit:.35,ico:'longbow'}],
-    ['矮人重錘衛士',360,46,20,28,46,1.1,{ap:.82,block:.55,kb:40,ico:'warhammer'}],
-    ['獸人狂戰士',310,48,7,30,86,.78,{berserk:true,cleave:42,ico:'berserker'}],
-    ['哥布林爆破手',95,90,1,150,105,1.4,{proj:'fireball',ps:360,aoe:62,burn:12,ico:'grenadier'}],
-    ['吸血鬼伯爵',640,68,14,34,112,.75,{lifesteal:.4,crit:.35,ico:'assassin'}],
-    ['暗影狼人',420,58,9,30,126,.68,{berserk:true,crit:.3,back:true,ico:'assassin'}],
-    ['岩石魔像',1180,68,28,40,42,1.6,{large:true,cleave:64,kb:70,block:.6,ico:'titan'}],
-    ['不死鳳凰',960,82,12,330,180,1.25,{air:true,airDodge:.32,proj:'fireball',ps:500,aoe:78,burn:18,ico:'jet'}],
-    ['德魯伊祭司',220,30,6,290,60,1.8,{healer:true,ico:'cleric'}],
-    ['深淵死靈王',580,54,12,340,56,1.5,{proj:'shadowbolt',ps:480,aoe:54,summon:4.5,ico:'necro'}],
-    ['聖殿光明法師',210,58,8,350,58,1.7,{proj:'fireball',ps:480,aoe:64,ap:.7,ico:'cleric'}],
-    ['鋼鐵巨像',1480,96,30,48,46,1.6,{large:true,cleave:76,kb:80,ap:.75,block:.7,ico:'titan'}],
-    ['風暴女武神',560,66,14,280,172,.95,{air:true,airDodge:.3,proj:'javelin',ps:580,ap:.6,ico:'heli'}],
-    ['地獄三頭犬',680,76,12,38,118,.82,{cav:true,cleave:56,burn:14,ico:'hussar'}],
-    ['虛空刺客',260,72,6,28,142,.58,{crit:.48,back:true,ap:.65,ico:'assassin'}],
-    ['上古黃金泰坦',2200,132,26,58,56,1.5,{large:true,cleave:105,kb:95,ap:.75,ico:'titan'}]
+  // 7. +50 100%-Unique Named Modern Land, Armor & Air Units (Total 58)
+  const modNames = [
+    ['步槍班尖兵','靈活自動步槍兵',180,23,6,275,84,.44,{proj:'bullet',ps:820,ap:.55,ico:'marine'}],
+    ['班用輕機槍手','持續彈鏈火力壓制',205,22,7,320,68,.26,{proj:'bullet',ps:850,ap:.58,ico:'marine'}],
+    ['重機槍陣地組','高穿甲重機槍掃射',240,32,9,365,52,.28,{proj:'bullet',ps:880,ap:.68,ico:'marine'}],
+    ['RPG反坦克火箭兵','高爆破甲火箭筒',165,122,5,335,72,2.35,{proj:'rocket',ps:620,aoe:54,ap:.92,antiLarge:1.8,ico:'mlrs'}],
+    ['標槍反坦克飛彈','攻頂專殺重型坦克',175,165,6,425,66,2.85,{proj:'rocket',ps:700,aoe:58,ap:.96,antiLarge:2.0,ico:'mlrs'}],
+    ['毒刺單兵防空兵','肩扛防空飛彈射手',165,98,5,465,70,1.7,{proj:'rocket',ps:820,aoe:42,antiAir:3.0,ap:.82,ico:'flak_tower'}],
+    ['82毫米迫擊砲組','步兵伴隨曲射砲',185,84,5,540,46,2.95,{proj:'boulder',ps:390,aoe:72,kb:50,ap:.75,ico:'catapult'}],
+    ['突擊爆破工兵','C4炸藥近戰破陣',215,92,8,165,78,1.95,{proj:'fireball',ps:380,aoe:68,ap:.85,kb:55,ico:'grenadier'}],
+    ['霰彈槍破門手','近距五發霰彈轟擊',235,24,10,165,86,1.15,{proj:'bullet',ps:780,salvo:5,kb:38,ap:.5,ico:'marine'}],
+    ['防暴重盾特警','防彈盾衝鋒槍手',320,22,16,210,64,.48,{proj:'bullet',ps:800,block:.72,ico:'legionary'}],
+    ['外骨骼動力步兵','重裝機械外骨骼',460,44,19,310,94,.38,{proj:'bullet',ps:900,ap:.74,block:.55,ico:'marine'}],
+    ['武裝四足機械狗','無人突擊機槍犬',280,26,12,265,126,.32,{proj:'bullet',ps:860,ap:.6,back:true,ico:'hussar'}],
+    ['悍馬機槍突擊車','高速輕裝機槍吉普',420,30,12,340,136,.26,{proj:'bullet',ps:880,ap:.64,kite:true,ico:'tank',renderAs:'tank'}],
+    ['史崔克輪式裝甲車','八輪高機動裝甲',660,54,18,370,116,.95,{proj:'bullet',ps:900,aoe:34,ap:.76,ico:'tank',renderAs:'tank'}],
+    ['布雷德利步兵戰車','鏈砲配反坦克飛彈',840,76,22,400,94,1.35,{proj:'rocket',ps:760,aoe:48,ap:.84,ico:'tank',renderAs:'tank'}],
+    ['BMP-3重火力步戰','雙管百毫米砲車',790,94,20,410,98,1.65,{proj:'cannonball',ps:720,aoe:56,ap:.82,ico:'tank',renderAs:'tank'}],
+    ['AMX輕型偵察坦克','高機動游擊輕坦',720,86,19,385,112,1.85,{proj:'cannonball',ps:740,aoe:46,ap:.82,kite:true,ico:'tank',renderAs:'tank'}],
+    ['T-34經典中型坦','傾斜裝甲高速中坦',920,104,23,375,92,2.25,{proj:'cannonball',ps:720,aoe:52,ap:.82,ico:'tank',renderAs:'tank'}],
+    ['雪曼M4中型坦克','高射速穩健中坦',890,98,22,370,88,2.05,{proj:'cannonball',ps:720,aoe:50,ap:.8,ico:'tank',renderAs:'tank'}],
+    ['虎式重型坦克','88毫米神砲重坦',1420,152,31,435,62,2.75,{proj:'cannonball',ps:760,aoe:64,ap:.9,block:.7,ico:'tank',renderAs:'tank'}],
+    ['黑豹中型坦克','長管精準反坦豹',1160,138,26,430,84,2.35,{proj:'cannonball',ps:790,aoe:54,ap:.9,ico:'tank',renderAs:'tank'}],
+    ['IS-2重型突破坦','122毫米重砲巨獸',1480,174,31,415,64,3.3,{proj:'cannonball',ps:740,aoe:76,kb:72,ap:.92,block:.7,ico:'tank',renderAs:'tank'}],
+    ['T-72主戰坦克','低矮輪廓自動裝彈',1120,132,27,420,84,2.3,{proj:'cannonball',ps:780,aoe:56,ap:.88,block:.65,ico:'tank',renderAs:'tank'}],
+    ['豹2A7主戰坦克','極致火控德國重坦',1360,154,31,465,86,2.3,{proj:'cannonball',ps:820,aoe:62,ap:.93,block:.72,ico:'tank',renderAs:'tank'}],
+    ['M1A2艾布蘭坦克','貧鈾裝甲渦輪重坦',1440,156,32,460,84,2.35,{proj:'cannonball',ps:820,aoe:64,ap:.93,block:.74,ico:'tank',renderAs:'tank'}],
+    ['99A主戰坦克','高速高穿甲重坦',1380,158,31,465,88,2.3,{proj:'cannonball',ps:830,aoe:62,ap:.93,block:.72,ico:'tank',renderAs:'tank'}],
+    ['梅卡瓦重防護坦','極致生存主戰坦克',1620,144,34,445,76,2.45,{proj:'cannonball',ps:800,aoe:60,ap:.9,block:.78,ico:'tank',renderAs:'tank'}],
+    ['T-14阿瑪塔坦克','無人砲塔次世代坦',1460,162,32,475,88,2.25,{proj:'cannonball',ps:840,aoe:64,ap:.94,block:.74,ico:'tank',renderAs:'tank'}],
+    ['雙管天啟重型坦','雙聯裝重砲鋼鐵巨獸',2150,124,35,440,56,2.1,{proj:'cannonball',ps:760,salvo:2,aoe:68,ap:.92,block:.78,ico:'tank',renderAs:'tank'}],
+    ['電磁磁軌砲坦克','超音速直線貫穿坦',1680,225,33,590,72,3.1,{proj:'cannonball',ps:1180,pierce:7,aoe:50,ap:.97,block:.74,ico:'tank',renderAs:'tank'}],
+    ['帕拉丁自走榴彈砲','遠程裝甲自走砲',580,148,14,740,62,3.9,{proj:'boulder',ps:500,aoe:92,kb:74,ap:.86,ico:'mlrs',renderAs:'mlrs'}],
+    ['PzH2000自走砲','高速連射現代巨砲',640,144,16,760,64,3.1,{proj:'boulder',ps:520,aoe:88,kb:72,ap:.88,ico:'mlrs',renderAs:'mlrs'}],
+    ['喀秋莎火箭砲車','蘇聯6連發飽和轟炸',360,48,6,660,68,3.9,{proj:'rocket',ps:480,salvo:6,aoe:58,burn:11,ap:.72,ico:'mlrs',renderAs:'mlrs'}],
+    ['海馬斯精準火箭','超遠高爆精準打擊',440,118,9,790,76,4.2,{proj:'rocket',ps:620,salvo:3,aoe:78,ap:.9,ico:'mlrs',renderAs:'mlrs'}],
+    ['獵豹自行防空砲','雙管35mm空軍噩夢',680,46,17,490,82,.3,{proj:'bullet',ps:980,antiAir:2.9,ap:.74,ico:'flak_tower',renderAs:'tank'}],
+    ['鎧甲彈砲合一車','近防機砲加飛彈車',760,72,18,525,80,.78,{proj:'rocket',ps:860,aoe:44,antiAir:2.8,ap:.82,ico:'flak_tower',renderAs:'tank'}],
+    ['愛國者防空飛彈車','超遠程防空攔截陣',540,142,12,640,56,2.1,{proj:'rocket',ps:920,aoe:58,antiAir:3.4,ap:.9,ico:'flak_tower',renderAs:'mlrs'}],
+    ['斯帕德雙翼偵察機','一戰輕型螺旋槳機',290,28,5,295,185,.58,{air:true,kite:true,airDodge:.22,proj:'bullet',ps:780,ico:'jet',renderAs:'jet'}],
+    ['噴火螺旋槳戰機','二戰靈巧空中格鬥',420,42,8,340,225,.48,{air:true,kite:true,airDodge:.35,proj:'bullet',ps:860,ap:.65,ico:'jet',renderAs:'jet'}],
+    ['斯圖卡俯衝轟炸機','尖嘯精準俯衝重彈',480,148,10,335,195,2.2,{air:true,kite:true,airDodge:.24,proj:'boulder',ps:460,aoe:86,kb:68,ap:.85,ico:'jet',renderAs:'jet'}],
+    ['B-17空中堡壘','四發重型地毯轟炸',1280,104,19,430,165,2.4,{air:true,kite:true,airDodge:.2,proj:'boulder',ps:440,salvo:4,aoe:96,burn:14,ap:.86,ico:'jet',renderAs:'jet'}],
+    ['黑鷹武裝運輸機','重裝機槍突擊直升機',640,36,15,340,168,.36,{air:true,kite:true,airDodge:.22,proj:'bullet',ps:880,aoe:28,ap:.65,ico:'heli',renderAs:'heli'}],
+    ['眼鏡蛇輕型武直','纖細高速反坦武直',540,62,12,375,182,.62,{air:true,kite:true,airDodge:.3,proj:'rocket',ps:760,aoe:44,ap:.82,ico:'heli',renderAs:'heli'}],
+    ['阿帕契長弓武直','全能重型空中殺手',760,72,16,410,175,.52,{air:true,kite:true,airDodge:.3,proj:'rocket',ps:800,aoe:50,ap:.86,ico:'heli',renderAs:'heli'}],
+    ['卡-52短吻鱷武直','雙共軸重甲攻擊機',840,76,18,405,172,.56,{air:true,kite:true,airDodge:.28,proj:'rocket',ps:790,aoe:54,ap:.86,ico:'heli',renderAs:'heli'}],
+    ['A-10雷電攻擊機','30毫米貧鈾彈洗地',920,54,20,395,205,.24,{air:true,kite:true,airDodge:.32,proj:'bullet',ps:960,aoe:42,ap:.9,ico:'jet',renderAs:'jet'}],
+    ['F-15鷹式制空戰機','超音速雙發空優機',620,96,13,450,275,1.15,{air:true,kite:true,airDodge:.46,proj:'rocket',ps:760,salvo:2,aoe:72,antiAir:1.6,ap:.86,ico:'jet',renderAs:'jet'}],
+    ['蘇-27側衛重戰機','眼鏡蛇機動重型機',650,98,14,445,270,1.18,{air:true,kite:true,airDodge:.48,proj:'rocket',ps:760,salvo:2,aoe:76,antiAir:1.5,ap:.86,ico:'jet',renderAs:'jet'}],
+    ['F-22猛禽隱形戰機','五代隱形空中霸主',720,118,16,490,305,1.1,{air:true,kite:true,airDodge:.56,proj:'rocket',ps:840,salvo:2,aoe:82,antiAir:1.8,ap:.92,ico:'jet',renderAs:'jet'}],
+    ['殲-20威龍隱形戰機','鴨翼隱形遠程打擊',740,120,16,505,300,1.12,{air:true,kite:true,airDodge:.56,proj:'rocket',ps:850,salvo:2,aoe:84,antiAir:1.8,ap:.92,ico:'jet',renderAs:'jet'}]
   ];
-  for (let i = 0; i < mythList.length; i++) {
-    const [nm, hp, atk, def, rng, spd, cd, sp] = mythList[i];
-    addU({id:`myth_${i}`, name:nm, cat:'mythic', role:`奇幻神話 · ${sp.air?'空中巨獸':sp.large?'巨型單位':'魔法戰力'}`, cost:calcCost(hp,atk,def,rng,cd,sp), hp, atk, def, range:rng, speed:spd, cd, radius:sp.large?26:(sp.air?17:12), mass:sp.large?11:(sp.air?3.5:1.6), renderAs:sp.air?(sp.large?'jet':'heli'):undefined, ...sp, desc:`傳說奇幻單位：${nm}。`});
-  }
+  addBatch('modern','mx',16,4.0,modNames);
 
-  // I. Fortifications & Production Buildings (+15 -> 20 Buildings, brings exact total to 500!)
-  const bldList = [
-    ['重弩哨塔',980,44,20,410,1.1,{building:true,proj:'bolt',ps:620,ap:.65,block:.55,ico:'watchtower'}],
-    ['火砲碉堡',1380,112,26,520,2.8,{building:true,proj:'cannonball',ps:680,pierce:4,aoe:46,ap:.85,block:.65,ico:'artillery_tower'}],
-    ['防空飛彈陣地',1050,115,20,560,1.6,{building:true,proj:'rocket',ps:820,aoe:52,antiAir:3.0,ap:.85,ico:'flak_tower'}],
-    ['光棱雷射塔',1120,138,22,490,1.8,{building:true,proj:'bullet',ps:1100,aoe:42,ap:.95,ico:'flak_tower'}],
-    ['火焰噴射碉堡',1150,48,22,220,.65,{building:true,proj:'fireball',ps:380,aoe:62,burn:18,ico:'artillery_tower'}],
-    ['寒冰減速塔',960,38,18,380,1.4,{building:true,proj:'frostbolt',ps:480,aoe:78,slow:true,ico:'watchtower'}],
-    ['騎兵馬廄',1450,0,18,0,1.0,{building:true,spawnUnit:'lancer',summon:8.5,ico:'barracks'}],
-    ['現代裝甲工廠',1950,0,24,0,1.0,{building:true,spawnUnit:'tank',summon:11.0,ico:'barracks'}],
-    ['前線空軍機場',1850,0,20,0,1.0,{building:true,spawnUnit:'jet',summon:9.5,hangarCap:6,ico:'barracks'}],
-    ['野戰醫療總部',1100,0,16,300,1.8,{building:true,healer:true,ico:'med_tent'}],
-    ['超重型城門堡壘',2800,56,34,360,1.4,{building:true,proj:'arrow',ps:520,salvo:3,block:.75,ico:'watchtower'}],
-    ['雙管重砲陣地',1520,108,26,600,3.0,{building:true,proj:'boulder',ps:480,salvo:2,aoe:74,ap:.85,ico:'artillery_tower'}],
-    ['近防加特林塔',1080,32,20,380,.26,{building:true,proj:'bullet',ps:920,ap:.68,antiAir:2.0,ico:'flak_tower'}],
-    ['亡靈召喚祭壇',1250,0,16,0,1.0,{building:true,spawnUnit:'skeleton',summon:4.5,ico:'barracks'}],
-    ['帝國指揮中樞',2600,45,28,420,1.5,{building:true,proj:'bullet',ps:820,aura:'atk',reach:320,ico:'watchtower'}],
-    ['斯巴達訓練營',1550,0,20,0,1.0,{building:true,spawnUnit:'spartan',summon:8.0,ico:'barracks'}],
-    ['火槍手兵營',1400,0,18,0,1.0,{building:true,spawnUnit:'musketeer',summon:7.5,ico:'barracks'}],
-    ['突擊兵營地',1650,0,20,0,1.0,{building:true,spawnUnit:'marine',summon:7.5,ico:'barracks'}]
-  ];
-  for (let i = 0; i < bldList.length; i++) {
-    const [nm, hp, atk, def, rng, cd, sp] = bldList[i];
-    addU({id:`bld_${i}`, name:nm, cat:'building', role:`防禦與生產建築`, cost:calcCost(hp,atk,def,rng,cd,sp), hp, atk, def, range:rng, speed:0, cd, radius:21, mass:999, ...sp, desc:`戰地建築：${nm}。`});
-  }
+  // 8. +25 100%-Unique Mythic & Fantasy Units (Total 30)
+  addBatch('mythic','myx',13,1.8,[
+    ['雷電大法師','連鎖閃電爆破',155,66,4,355,56,1.85,{proj:'frostbolt',ps:540,aoe:68,ap:.75,ico:'pyro'}],
+    ['遠古紅龍','煉獄龍息焚城',1920,128,22,365,158,1.45,{air:true,large:true,airDodge:.22,proj:'fireball',ps:470,aoe:98,burn:22,ap:.82,ico:'jet',renderAs:'jet'}],
+    ['冰霜巨龍','極寒吐息凍結大軍',1840,112,23,365,152,1.5,{air:true,large:true,airDodge:.22,proj:'frostbolt',ps:470,aoe:108,slow:true,ap:.76,ico:'frost',renderAs:'jet'}],
+    ['獅鷲騎士','重甲空騎突襲',540,64,13,265,174,.96,{air:true,airDodge:.26,proj:'javelin',ps:560,ap:.52,ico:'heli',renderAs:'heli'}],
+    ['聖光大天使','審判聖焰空降',1420,98,20,315,168,1.1,{air:true,airDodge:.32,proj:'fireball',ps:540,aoe:72,ap:.78,ico:'cleric',renderAs:'heli'}],
+    ['炎魔領主','烈焰巨鞭橫掃',1720,122,20,58,64,1.38,{large:true,cleave:98,burn:20,kb:88,ap:.68,ico:'titan'}],
+    ['冰霜泰坦','寒冰巨錘凍地',1780,102,23,58,52,1.55,{large:true,cleave:94,slow:true,kb:82,ico:'titan'}],
+    ['牛頭人重斧手','蠻力巨斧震飛',560,68,13,38,78,1.08,{large:true,cleave:60,kb:58,ico:'berserker'}],
+    ['半人馬神射手','四蹄疾奔遊射',295,35,6,315,138,.98,{cav:true,kite:true,proj:'arrow',ps:530,ap:.46,ico:'horsearcher'}],
+    ['精靈神箭手','超遠百發百中',125,38,4,435,78,.92,{proj:'arrow',ps:580,ap:.58,crit:.38,ico:'longbow'}],
+    ['矮人重錘衛士','秘銀重甲破盾',380,48,21,28,46,1.08,{ap:.84,block:.58,kb:42,ico:'warhammer'}],
+    ['獸人狂戰士','綠皮血怒狂斧',320,50,7,30,88,.76,{berserk:true,cleave:44,ico:'berserker'}],
+    ['哥布林爆破手','瘋狂火藥桶投擲',95,94,1,155,108,1.38,{proj:'fireball',ps:360,aoe:64,burn:12,ico:'grenadier'}],
+    ['吸血鬼伯爵','極速吸血暗影斬',660,72,14,34,116,.72,{lifesteal:.42,crit:.36,ico:'assassin'}],
+    ['暗影狼人','月夜撕裂獵殺',440,60,9,30,128,.66,{berserk:true,crit:.32,back:true,ico:'assassin'}],
+    ['岩石魔像','花崗岩不滅巨像',1240,70,29,40,42,1.58,{large:true,cleave:66,kb:72,block:.64,ico:'titan'}],
+    ['不死鳳凰','涅槃烈焰空襲',980,86,12,335,184,1.22,{air:true,airDodge:.34,proj:'fireball',ps:520,aoe:80,burn:20,ico:'jet',renderAs:'jet'}],
+    ['德魯伊大祭司','自然甘霖群療',235,32,6,295,62,1.75,{healer:true,ico:'cleric'}],
+    ['深淵死靈王','亡靈海源源不斷',620,56,12,345,56,1.45,{proj:'shadowbolt',ps:490,aoe:56,summon:4.2,ico:'necro'}],
+    ['光明大魔導師','聖光隕星爆破',225,64,8,360,58,1.65,{proj:'fireball',ps:490,aoe:66,ap:.74,ico:'cleric'}],
+    ['鋼鐵巨像','秘銀驅動重巨神',1560,100,31,48,46,1.55,{large:true,cleave:78,kb:84,ap:.78,block:.72,ico:'titan'}],
+    ['風暴女武神','天界雷槍空騎',580,68,14,285,176,.92,{air:true,airDodge:.32,proj:'javelin',ps:600,ap:.62,ico:'heli',renderAs:'heli'}],
+    ['地獄三頭犬','烈焰疾奔魔獸',710,78,12,38,122,.8,{cav:true,cleave:58,burn:15,ico:'hussar'}],
+    ['虛空刺客','次元瞬殺影刃',275,76,6,28,146,.56,{crit:.5,back:true,ap:.68,ico:'assassin'}],
+    ['上古黃金泰坦','毀天滅地終極神像',2350,138,27,60,56,1.45,{large:true,cleave:108,kb:98,ap:.78,ico:'titan'}]
+  ]);
+
+  // 9. +17 100%-Unique Fortifications & Production Buildings (Exact Total: 500 Units!)
+  addBatch('building','bx',21,999,[
+    ['重弩哨塔','高破甲重弩防塔',980,46,20,415,0,1.08,{building:true,proj:'bolt',ps:630,ap:.66,block:.55,ico:'watchtower'}],
+    ['火砲碉堡','鋼筋直瞄重砲堡',1420,118,26,560,0,2.7,{building:true,proj:'cannonball',ps:720,pierce:5,aoe:48,ap:.86,block:.66,ico:'artillery_tower'}],
+    ['防空飛彈陣地','遠程防空飛彈發射井',1080,122,20,585,0,1.55,{building:true,proj:'rocket',ps:850,aoe:54,antiAir:3.2,ap:.86,ico:'flak_tower'}],
+    ['光棱雷射塔','高能穿透光束防塔',1160,145,22,510,0,1.75,{building:true,proj:'bullet',ps:1150,aoe:44,ap:.96,ico:'flak_tower'}],
+    ['火焰噴射碉堡','近防烈焰拒止塔',1180,50,22,225,0,.62,{building:true,proj:'fireball',ps:390,aoe:64,burn:19,ico:'artillery_tower'}],
+    ['寒冰減速塔','極寒新星控場塔',980,40,18,385,0,1.35,{building:true,proj:'frostbolt',ps:490,aoe:82,slow:true,ico:'watchtower'}],
+    ['皇家騎兵馬廄','自動徵召重裝衝鋒騎',1480,0,18,0,0,1.0,{building:true,spawnUnit:'lancer',summon:8.5,ico:'barracks'}],
+    ['現代裝甲工廠','自動生產主戰坦克',2050,0,24,0,0,1.0,{building:true,spawnUnit:'tank',summon:11.0,ico:'barracks'}],
+    ['前線空軍機場','機庫6架戰機起飛返航',1920,0,20,0,0,1.0,{building:true,spawnUnit:'jet',summon:5.5,hangarCap:6,ico:'barracks'}],
+    ['野戰醫療總部','超大範圍戰地醫院',1150,0,16,315,0,1.7,{building:true,healer:true,ico:'med_tent'}],
+    ['超重型城門堡壘','三連箭雨鋼鐵要塞',2900,58,34,375,0,1.35,{building:true,proj:'arrow',ps:530,salvo:3,block:.76,ico:'watchtower'}],
+    ['雙管重砲陣地','雙聯裝超遠重砲台',1580,112,26,645,0,2.95,{building:true,proj:'boulder',ps:500,salvo:2,aoe:76,ap:.86,ico:'artillery_tower'}],
+    ['近防加特林砲塔','超高射速攔截陣地',1120,34,20,395,0,.24,{building:true,proj:'bullet',ps:950,ap:.7,antiAir:2.2,ico:'flak_tower'}],
+    ['亡靈召喚祭壇','不斷喚醒骷髏大軍',1280,0,16,0,0,1.0,{building:true,spawnUnit:'skeleton',summon:4.2,ico:'barracks'}],
+    ['帝國指揮中樞','強化周圍攻擊核心堡',2650,48,28,435,0,1.45,{building:true,proj:'bullet',ps:840,aura:'atk',reach:330,ico:'watchtower'}],
+    ['斯巴達訓練營','自動訓練斯巴達方陣',1580,0,20,0,0,1.0,{building:true,spawnUnit:'spartan',summon:8.0,ico:'barracks'}],
+    ['火槍手軍營','自動訓練帝國火槍手',1440,0,18,0,0,1.0,{building:true,spawnUnit:'musketeer',summon:7.5,ico:'barracks'}]
+  ]);
 })();
 
 const presets=[
