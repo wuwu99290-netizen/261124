@@ -650,8 +650,8 @@ roster('cavalry',[
  ['chariot','鐮刀重戰車','輪刃碾壓 · 範圍衝鋒',210,420,54,12,40,120,1.25,18,5.2,{cav:true,large:true,cleave:58,charge:2.2,kb:55},'雙馬牽引的古戰車，輪軸裝配長鐮刀，高速衝陣大範圍割裂步兵群！']
 ]);
 roster('siege',[
- ['catapult','重型投石车','超远抛射 · 范围轰炸',260,220,88,8,560,24,4,20,5.5,{proj:'boulder',ps:310,aoe:68,kb:55},'巨石落地造成大范围溅射与击飞。'],
- ['cannon','帝国加农炮','直线穿透 · 破阵',300,200,105,6,520,22,4.3,19,5.5,{proj:'cannonball',ps:640,pierce:5,aoe:34,kb:60,ap:.85},'实心铁弹沿直线穿透最多五名敌人。'],
+ ['catapult','重型投石车','中远抛射 · 巨石溅射',220,210,82,7,430,24,4.2,20,5.5,{proj:'boulder',ps:290,aoe:62,kb:52},'中世纪抛石机，对密集步兵有效，但射程与初速远不如近代火药大炮。'],
+ ['cannon','帝国加农炮','超远直瞄 · 穿透破阵',310,270,132,10,610,24,3.3,19,5.8,{proj:'cannonball',ps:740,pierce:6,aoe:48,kb:65,ap:.9},'近代火药重炮，射程全面压制古代投石车，高速铁弹沿直线轰穿六名敌人！'],
  ['ballista','诸葛连弩车','高速连射 · 穿透',240,195,42,7,470,28,1.15,17,4.5,{proj:'heavybolt',ps:680,pierce:2,ap:.7,antiLarge:1.5},'连发重型弩箭，擅长对付大型目标。'],
  ['ram','铁甲攻城车','超高箭抗 · 破阵',220,760,55,18,36,44,1.8,21,8,{block:.8,kb:70,ap:.75},'铁板顶盖可减免 80% 远程伤害。']
 ]);
@@ -813,10 +813,10 @@ defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,a
 
   // E. Siege Engines (+36 -> 40 Siege)
   const siegeList = [
-    ['輕型投石機','boulder',180,68,510,3.2,58,'catapult'],['配重巨型投石機','boulder',290,128,640,4.6,86,'catapult'],
-    ['回回巨砲','boulder',310,136,630,4.8,90,'catapult'],['火球投石車','fireball',220,92,560,3.8,76,'catapult'],
-    ['紅夷大砲','cannonball',240,122,560,4.2,40,'cannon'],['佛朗機子母砲','cannonball',210,78,490,2.5,32,'cannon'],
-    ['拿破崙野戰砲','cannonball',230,115,550,3.6,38,'cannon'],['青銅重臼砲','boulder',250,110,590,4.0,82,'catapult'],
+    ['輕型投石機','boulder',170,64,390,3.5,52,'catapult'],['配重巨型投石機','boulder',260,116,480,4.8,78,'catapult'],
+    ['回回巨砲','boulder',280,124,490,4.9,82,'catapult'],['火球投石車','fireball',210,84,440,4.0,68,'catapult'],
+    ['紅夷大砲','cannonball',310,162,660,3.2,58,'cannon'],['佛朗機子母砲','cannonball',250,96,570,2.0,42,'cannon'],
+    ['拿破崙野戰砲','cannonball',290,152,650,3.0,54,'cannon'],['青銅重臼砲','boulder',280,142,620,3.5,84,'catapult'],
     ['三弓床子弩','heavybolt',230,78,560,1.65,0,'ballista'],['神臂床弩','heavybolt',210,64,520,1.35,0,'ballista'],
     ['一窩蜂火箭車','rocket',200,36,520,3.6,50,'mlrs'],['架火戰車','rocket',220,42,540,3.8,54,'mlrs'],
     ['希臘火噴射車','fireball',290,46,240,1.0,52,'ram'],['鐵甲衝撞戰車','ram',860,68,38,1.7,0,'ram'],
@@ -830,7 +830,7 @@ defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,a
       const H = Math.round(hp * mH), A = Math.round(atk * mA);
       const sp = proj==='ram'
         ? {block:.82,kb:72,ap:.75,ico}
-        : {proj, ps:proj==='bullet'?840:proj==='cannonball'?650:proj==='heavybolt'?700:360, aoe, pierce:proj==='cannonball'?5:(proj==='heavybolt'?3:0), salvo:proj==='rocket'?4:1, burn:proj==='fireball'||proj==='rocket'?10:0, kb:aoe?55:18, ap:.78, ico};
+        : {proj, ps:proj==='bullet'?840:proj==='cannonball'?760:proj==='heavybolt'?700:320, aoe, pierce:proj==='cannonball'?6:(proj==='heavybolt'?3:0), salvo:proj==='rocket'?4:1, burn:proj==='fireball'||proj==='rocket'?10:0, kb:aoe?55:18, ap:.78, ico};
       addU({id:`sg_${sc}_${tk}`, name:(tk==='std'?'':tn)+sn, cat:'siege', role:`重型器械 · ${proj==='ram'?'破陣':'遠程火力'}`, cost:calcCost(H,A,9,rng,cd,sp), hp:H, atk:A, def:9, range:rng, speed:proj==='ram'?46:24, cd, radius:19, mass:5.8, ...sp, desc:`${tn}${sn}，戰場攻堅重器。`});
       sc++;
     }
