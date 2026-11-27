@@ -269,7 +269,7 @@ body.fold aside{display:none}
   </div>
   <div class="roster-title"><h3>兵种名册</h3><span id="roster-count"></span></div>
   <nav id="categories" aria-label="兵种分类"></nav>
-  <div class="search-wrap"><input id="unitSearch" type="search" placeholder="🔍 搜尋 500 種兵種、文明或武器..."></div>
+  <div class="search-wrap"><input id="unitSearch" type="search" placeholder="🔍 搜尋 518 種兵種、建築、文明或武器..."></div>
   <div id="cards" aria-label="兵种名册"></div>
   <section id="inspect" aria-label="兵种详情"></section>
  </aside>
@@ -684,7 +684,7 @@ defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,a
   const existing = new Set(UNITS.map(u => u.id));
   const usedNames = new Set(UNITS.map(u => u.name));
   function addU(u) {
-    if (existing.has(u.id) || usedNames.has(u.name) || UNITS.length >= 500) return;
+    if (existing.has(u.id) || usedNames.has(u.name)) return;
     existing.add(u.id); usedNames.add(u.name);
     UNITS.push(u); defs[u.id] = u;
   }
@@ -1188,7 +1188,15 @@ defs.skeleton={...defs.spearman,id:'skeleton',name:'骷髅战士',cost:0,hp:65,a
     ['亡靈召喚祭壇','不斷喚醒骷髏大軍',1280,0,16,0,0,1.0,{building:true,spawnUnit:'skeleton',summon:4.2,ico:'barracks'}],
     ['帝國指揮中樞','強化周圍攻擊核心堡',2650,48,28,435,0,1.45,{building:true,proj:'bullet',ps:840,aura:'atk',reach:330,ico:'watchtower'}],
     ['斯巴達訓練營','自動訓練斯巴達方陣',1580,0,20,0,0,1.0,{building:true,spawnUnit:'spartan',summon:8.0,ico:'barracks'}],
-    ['火槍手軍營','自動訓練帝國火槍手',1440,0,18,0,0,1.0,{building:true,spawnUnit:'musketeer',summon:7.5,ico:'barracks'}]
+    ['火槍手軍營','自動訓練帝國火槍手',1440,0,18,0,0,1.0,{building:true,spawnUnit:'musketeer',summon:7.5,ico:'barracks'}],
+    ['磁暴特斯拉線圈','高壓電弧專克重甲坦克',1180,152,22,420,0,1.65,{building:true,proj:'frostbolt',ps:1050,aoe:54,ap:.95,antiLarge:1.5,ico:'flak_tower'}],
+    ['重型岸防巨砲台','740 超遠射程專炸戰艦',1680,195,28,740,0,3.8,{building:true,proj:'boulder',ps:620,aoe:92,kb:80,ap:.92,block:.7,ico:'artillery_tower'}],
+    ['水上造船廠','水域部署 · 自動下水戰船',1850,25,20,260,0,1.6,{building:true,naval:true,proj:'bullet',ps:780,spawnUnit:'galley',summon:8.5,ico:'carrier'}],
+    ['反裝甲地雷陣','廉價伏擊 · 接敵自爆清場',220,170,4,46,0,0.5,{building:true,suicideBoom:true,aoe:115,burn:14,ico:'grenadier'}],
+    ['聖光祝福祭壇','治療友軍兼強化攻擊光環',1280,0,18,310,0,1.6,{building:true,healer:true,aura:'atk',reach:280,ico:'med_tent'}],
+    ['高空狙擊哨樓','620 超遠反器材狙殺將領',940,158,18,620,0,2.2,{building:true,proj:'bullet',ps:1150,ap:.94,crit:.42,back:true,ico:'watchtower'}],
+    ['戰略飛彈發射井','780 全圖打擊三連發飛彈',1950,128,26,780,0,5.2,{building:true,proj:'rocket',ps:680,salvo:3,aoe:86,burn:16,ap:.9,ico:'mlrs'}],
+    ['鋼鐵拒馬防線','極低造價超高血量肉盾牆',1350,0,24,0,0,1.0,{building:true,block:.85,ico:'legionary'}]
   ]);
 })();
 
