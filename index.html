@@ -267,6 +267,26 @@ body.fold aside{display:none}
 .model-badge{display:inline-block;flex:none;width:56px;height:56px;background-image:var(--unit-texture);background-size:800% 600%;background-repeat:no-repeat}
 .card-art:has(.model-badge){align-self:stretch;place-items:center;margin-top:2px}
 .detail-heading .model-badge{width:44px;height:44px}
+
+/* Keep battlefield controls at the edge. The map receives touches everywhere
+   outside the disclosure, even on a narrow screen. */
+#fieldTools{position:absolute;top:8px;right:8px;z-index:7;width:max-content;max-width:calc(100% - 16px)}
+#fieldTools summary{margin-left:auto;display:flex;align-items:center;justify-content:center;gap:7px;width:max-content;min-height:40px;padding:0 12px;list-style:none;cursor:pointer;border:1px solid #716b54;border-radius:5px;color:#e5ddc5;background:#272b24eb;font-size:12px;touch-action:manipulation}
+#fieldTools summary::-webkit-details-marker{display:none}
+#fieldTools summary::after{content:'';width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg)}
+#fieldTools[open] summary::after{transform:translateY(2px) rotate(225deg)}
+#fieldTools .tools-close,#fieldTools[open] .tools-open{display:none}
+#fieldTools[open] .tools-close{display:inline}
+#fieldTools[open]{height:calc(100% - 16px);pointer-events:none}
+#fieldTools summary,#fieldToolPanel{pointer-events:auto}
+#fieldToolPanel{box-sizing:border-box;width:282px;max-width:100%;max-height:calc(100% - 48px);overflow:auto;overscroll-behavior:contain;margin-top:4px;padding:8px;background:#252921fa;border:1px solid #736b52;border-radius:5px;box-shadow:0 4px 14px #0004}
+#fieldToolPanel :is(#zoomTools,#ordnanceBar,#dock){position:static;transform:none;max-width:none;flex-wrap:wrap;justify-content:flex-start;gap:4px;overflow:visible;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+#fieldToolPanel :is(#ordnanceBar,#dock){margin-top:8px;padding-top:8px;border-top:1px solid #514f40}
+#fieldToolPanel :is(.orders,.cmd-corps,#skills){flex-wrap:wrap;border:0;padding:0}
+#fieldToolPanel .cmd-corps{flex-basis:100%}
+#fieldToolPanel .ord-sep{display:none}
+#fieldToolPanel button,#fieldToolPanel label{min-height:34px}
+@media(pointer:coarse){#fieldTools summary,#fieldToolPanel button,#fieldToolPanel label{min-height:44px}#fieldToolPanel button{min-width:44px}}
 </style>
 </head>
 <body>
@@ -331,6 +351,9 @@ body.fold aside{display:none}
    <canvas id="canvas" aria-label="互动战场"></canvas>
    <div class="map-plaque"><span class="plaque-icon" data-icon="terrain"></span><div><span id="mapName"></span><small id="mapEnglish"></small></div></div>
    <canvas id="minimap" width="154" height="94" title="点击或拖动小地图快速移动视野"></canvas>
+   <details id="fieldTools">
+    <summary aria-controls="fieldToolPanel"><span class="tools-open">战场工具</span><span class="tools-close">收起工具</span></summary>
+    <div id="fieldToolPanel">
    <div id="zoomTools">
     <button id="panBtn" aria-label="漫游/拖拽镜头模式" title="漫游镜头（开启后点击拖拽只移动地图，不放单位）" data-icon="hand"></button>
     <button id="plus" aria-label="放大">+</button>
@@ -341,6 +364,8 @@ body.fold aside{display:none}
    </div>
    <div id="ordnanceBar" hidden><button id="liveDeployBtn" title="开启后可在战斗进行中直接点击战场投放左侧选中的部队！">➕ 战中放兵</button><span class="ord-sep"></span><button data-strike="artillery" title="155mm 重炮齐射：6发高抛物线榴弹轰炸目标区域">💣 炮弹</button><button data-strike="guided" title="激光精确制导导弹：3枚自动追踪锁定敌方高价值目标">🎯 制导</button><button data-strike="bomber" title="战略轰炸机编队空袭：3架轰炸机计算提前量抛物线投弹">✈️ 轰炸机</button><button data-strike="nuke" title="战略核打击：弹道核导弹、蘑菇云冲击波与辐射焦土">☢️ 核弹</button><button data-strike="droplet" title="三体强互作用力水滴：超高速锐角穿刺敌阵">💧 水滴</button><button data-strike="foil" title="歌者二向箔：展开二维化跌落力场，将范围内单位压扁吞噬">🌌 二向箔</button></div>
    <div id="dock" hidden><div class="cmd-corps" id="battleCorpsBar"><button data-bc="0" class="on">全军</button><button data-bc="1">1军</button><button data-bc="2">2军</button><button data-bc="3">3军</button><button data-bc="4">4军</button></div><div class="orders" id="orders"><button data-order="charge" class="on" title="全军自由进攻">突击</button><button data-order="hold" title="近战坚守阵地，远程原地齐射">固守</button><button data-order="snipe" title="骑兵、刺客与远程优先集火敌方将领">斩将</button></div><label><input id="auto" type="checkbox" checked> 自动绝技</label><div id="skills"></div></div>
+    </div>
+   </details>
    <div id="ctrlHud" hidden>
     <div class="ctrl-head"><span id="ctrlName">控制中</span><button id="exitCtrl">退出(Esc)</button></div>
     <div class="ctrl-pad">
@@ -4311,6 +4336,118 @@ function drawWarhammerModel(u, rid, r, color, isAir){
   ctx.restore();
 }
 
+const patchedUnitModels = (() => {
+const TAU=Math.PI*2, MAGIC={fireball:'#fb923c',frostbolt:'#7dd3fc',shadowbolt:'#c084fc'};
+const SKIP=new Set(['tank','mlrs','elephant']);
+const ok=d=>!d.naval&&!d.building&&!d.air&&!d.large&&!d.renderAs&&d.cat!=='siege'&&!SKIP.has(d.id);
+const shade=(c,a)=>{const n=parseInt(c.slice(1,7),16),f=v=>Math.max(0,Math.min(255,Math.round(v+a)));return 'rgb('+f(n>>16)+','+f((n>>8)&255)+','+f(n&255)+')'};
+function kind(d,w){
+ if(w==='grenadier'||d.proj==='javelin'||d.proj==='boulder_sm')return'jav';
+ if(w==='flamethrower'||d.proj==='bullet'||d.proj==='cannonball'||d.proj==='rocket')return'gun';
+ if(d.healer||MAGIC[d.proj]||['pyro','frost','cleric','necro','gen_zhuge'].includes(w))return'staff';
+ if(d.proj==='bolt'||d.proj==='heavybolt')return'xbow';
+ if(d.proj)return'bow';
+ if(['warhammer','flail','monk_staff'].includes(w)||(d.kb>=36&&d.ap>=.7))return'hammer';
+ if(['berserker','shield_axe'].includes(w))return'axe';
+ if(d.antiCav>=1.6||['spearman','spartan','pikeman','halberdier','modao','lancer','gen_guanyu','gen_lubu','camel'].includes(w))return'spear';
+ return'sword';
+}
+function horse(c,r,g,w,tc){
+ const col=w==='camel'?'#b59360':w==='hussar'?'#8a6a45':'#5f4029',dark='#241a10';
+ c.lineCap='round';c.lineWidth=1.3;
+ for(const[sx,sy,ph]of[[.7,-.42,1],[.7,.42,-1],[-.7,-.42,-1],[-.7,.42,1]]){c.fillStyle='#2e2216';c.beginPath();c.ellipse(sx*r+ph*g*r*.28,sy*r,r*.24,r*.12,0,0,TAU);c.fill()}
+ c.strokeStyle=dark;c.fillStyle=col;
+ c.beginPath();c.ellipse(0,0,r*1.2,r*.5,0,0,TAU);c.fill();c.stroke();
+ c.beginPath();c.moveTo(r*.85,-r*.24);c.lineTo(r*1.55,-r*.14);c.lineTo(r*1.62,r*.14);c.lineTo(r*.85,r*.24);c.closePath();c.fill();c.stroke();
+ c.fillStyle=dark;c.beginPath();c.arc(r*1.35,-r*.22,r*.07,0,TAU);c.arc(r*1.35,r*.22,r*.07,0,TAU);c.fill();
+ c.lineWidth=2.2;c.beginPath();c.moveTo(r*.8,0);c.lineTo(r*1.5,0);c.stroke();
+ c.lineWidth=2.6;c.beginPath();c.moveTo(-r*1.1,0);c.quadraticCurveTo(-r*1.5,g*r*.3,-r*1.8,-g*r*.2);c.stroke();
+ c.fillStyle=tc;c.globalAlpha=.92;c.fillRect(-r*.42,-r*.46,r*.84,r*.92);c.globalAlpha=1;
+ c.strokeStyle='#d9b45b';c.lineWidth=1.2;c.strokeRect(-r*.42,-r*.46,r*.84,r*.92);
+}
+function weapon(c,k,R,d,u,w,st){
+ c.lineCap='round';const brown='#6a4a2c';
+ if(k==='sword'){
+  const L=R*(d.cleave>=50||w==='greatsword'?2.1:1.5),W=R*(w==='greatsword'?.3:.2);
+  c.fillStyle='#caa24e';c.fillRect(-2,-W*1.6,4,W*3.2);
+  c.fillStyle=st;c.strokeStyle='#5b6166';c.lineWidth=1.1;
+  c.beginPath();c.moveTo(2,-W/2);c.lineTo(L*.88,-W/2);c.lineTo(L,0);c.lineTo(L*.88,W/2);c.lineTo(2,W/2);c.closePath();c.fill();c.stroke();
+  c.strokeStyle='rgba(255,255,255,.75)';c.beginPath();c.moveTo(4,0);c.lineTo(L*.9,0);c.stroke();
+ }else if(k==='spear'){
+  const L=R*(w==='pikeman'?3:2.2);
+  c.strokeStyle=brown;c.lineWidth=2.4;c.beginPath();c.moveTo(-R*.7,0);c.lineTo(L,0);c.stroke();
+  c.fillStyle=st;c.strokeStyle='#5b6166';c.lineWidth=1;c.beginPath();c.moveTo(L+R*.5,0);c.lineTo(L-2,-R*.17);c.lineTo(L-2,R*.17);c.closePath();c.fill();c.stroke();
+ }else if(k==='axe'){
+  c.strokeStyle=brown;c.lineWidth=2.6;c.beginPath();c.moveTo(-R*.3,0);c.lineTo(R*1.3,0);c.stroke();
+  c.fillStyle=st;c.strokeStyle='#5b6166';c.lineWidth=1.1;
+  c.beginPath();c.moveTo(R*1.05,0);c.lineTo(R*1.55,-R*.75);c.quadraticCurveTo(R*1.95,0,R*1.55,R*.75);c.closePath();c.fill();c.stroke();
+ }else if(k==='hammer'){
+  c.strokeStyle=brown;c.lineWidth=3;c.beginPath();c.moveTo(-R*.4,0);c.lineTo(R*1.5,0);c.stroke();
+  c.fillStyle='#9aa0a5';c.strokeStyle='#33363a';c.lineWidth=1.3;c.fillRect(R*1.3,-R*.38,R*.5,R*.76);c.strokeRect(R*1.3,-R*.38,R*.5,R*.76);
+ }else if(k==='staff'){
+  const col=MAGIC[d.proj]||(w==='cleric'?'#fde08b':'#c9b3f5');
+  c.strokeStyle='#7a5c3d';c.lineWidth=2.6;c.beginPath();c.moveTo(-R*.4,0);c.lineTo(R*1.4,0);c.stroke();
+  c.fillStyle=col;c.globalAlpha=.3;c.beginPath();c.arc(R*1.5,0,R*.5,0,TAU);c.fill();c.globalAlpha=1;
+  c.beginPath();c.arc(R*1.5,0,R*.24,0,TAU);c.fill();
+ }else if(k==='gun'){
+  const L=R*(1.4+Math.min(1.2,d.range/420));
+  c.fillStyle='#6a4a2c';c.fillRect(-R*.4,-R*.11,R*.6,R*.22);
+  c.fillStyle='#2b2d2f';c.fillRect(R*.15,-R*.07,L-R*.15,R*.14);
+  if(u.lunge>.1){c.fillStyle='#ffd978';c.beginPath();c.arc(L+4,0,5,0,TAU);c.fill()}
+ }else if(k==='xbow'){
+  c.strokeStyle=brown;c.lineWidth=2.6;c.beginPath();c.moveTo(-R*.3,0);c.lineTo(R*1.1,0);c.stroke();
+  c.strokeStyle='#8c6234';c.lineWidth=2.4;c.beginPath();c.moveTo(R*.8,-R*.75);c.quadraticCurveTo(R*1.25,0,R*.8,R*.75);c.stroke();
+  c.strokeStyle='#eee';c.lineWidth=1;c.beginPath();c.moveTo(R*.8,-R*.75);c.lineTo(R*.55,0);c.lineTo(R*.8,R*.75);c.stroke();
+ }else if(k==='jav'){
+  c.strokeStyle=brown;c.lineWidth=2.2;c.beginPath();c.moveTo(-R*.3,0);c.lineTo(R*1.6,0);c.stroke();
+  c.fillStyle=st;c.beginPath();c.moveTo(R*1.85,0);c.lineTo(R*1.55,-R*.12);c.lineTo(R*1.55,R*.12);c.closePath();c.fill();
+ }else{
+  c.strokeStyle='#8c6234';c.lineWidth=2.6;c.beginPath();c.arc(R*.75,0,R*.9,-1.15,1.15);c.stroke();
+  c.strokeStyle='rgba(240,240,240,.8)';c.lineWidth=1;c.beginPath();c.moveTo(R*.75+R*.9*Math.cos(-1.15),R*.9*Math.sin(-1.15));c.lineTo(R*.2,0);c.lineTo(R*.75+R*.9*Math.cos(1.15),R*.9*Math.sin(1.15));c.stroke();
+  c.strokeStyle='#ebe4cc';c.lineWidth=1.6;c.beginPath();c.moveTo(R*.2,0);c.lineTo(R*1.5,0);c.stroke();
+ }
+}
+function shield(c,R,tc,dk,rect){
+ c.save();c.translate(R*.5,-R*.7);c.fillStyle=tc;c.strokeStyle='#d6d9dc';c.lineWidth=2;
+ if(rect){c.beginPath();c.roundRect(-R*.2,-R*.5,R*.5,R*1,3);c.fill();c.stroke();c.strokeStyle=dk;c.lineWidth=1.4;c.beginPath();c.moveTo(-R*.2,0);c.lineTo(R*.3,0);c.stroke()}
+ else{c.beginPath();c.arc(R*.05,0,R*.58,0,TAU);c.fill();c.stroke()}
+ c.fillStyle='#d9b45b';c.beginPath();c.arc(R*.05,0,R*.14,0,TAU);c.fill();c.restore();
+}
+function drawBetter(u,r,tc){
+ const c=ctx,d=u.d,T=performance.now()*.011+u.uid,mv=game.phase==='battle'&&!game.paused;
+ const g=mv?Math.sin(T*(d.speed>100?1.6:1.1)):0,gen=!!d.ult,cav=!!d.cav,w=d.ico||d.id;
+ const armor=u.flash>0?'#fff7dc':u.slow>0?'#a9c7d6':d.def>=14?'#bfc5ca':d.def>=8?'#8f9498':'#85734f';
+ const dk=shade(tc,-50),lt=shade(tc,45),skin='#d9b48c',steel='#dde2e5';
+ const R=cav?r*.64:r,k=kind(d,w),sw=u.lunge>0?Math.sin(u.lunge/.2*Math.PI):0;
+ c.save();c.rotate(u.face);c.lineCap='round';
+ if(gen){c.strokeStyle='rgba(240,205,110,'+(.4+.2*Math.sin(T*.5))+')';c.lineWidth=2;c.beginPath();c.arc(0,0,r*1.3,0,TAU);c.stroke()}
+ if(cav){horse(c,r,g,w,dk);c.translate(-r*.08,0)}
+ else{c.fillStyle='#352c20';for(const s of[-1,1]){c.beginPath();c.ellipse(g*s*R*.42,s*R*.36,R*.34,R*.2,0,0,TAU);c.fill()}}
+ if(gen||d.back){c.fillStyle=gen?lt:dk;c.strokeStyle=dk;c.lineWidth=1.2;c.beginPath();c.moveTo(-R*.1,-R*.7);c.quadraticCurveTo(-R*1.5-g*3,-R*.5,-R*1.6,0);c.quadraticCurveTo(-R*1.5+g*3,R*.5,-R*.1,R*.7);c.closePath();c.fill();c.stroke()}
+ c.fillStyle=armor;c.strokeStyle='#2b2822';c.lineWidth=1.4;c.beginPath();c.ellipse(0,0,R*.62,R*.86,0,0,TAU);c.fill();c.stroke();
+ c.fillStyle=tc;c.fillRect(-R*.55,-R*.24,R*1.1,R*.48);c.strokeStyle=dk;c.strokeRect(-R*.55,-R*.24,R*1.1,R*.48);
+ c.strokeStyle=armor;c.lineWidth=R*.3;c.beginPath();c.moveTo(R*.05,R*.7);c.lineTo(R*.5,R*.58);c.moveTo(R*.05,-R*.7);c.lineTo(R*.5,-R*.58);c.stroke();
+ c.fillStyle=skin;c.beginPath();c.arc(R*.52,R*.58,R*.14,0,TAU);c.arc(R*.52,-R*.58,R*.14,0,TAU);c.fill();
+ const dual=!cav&&(w==='assassin'||w==='berserker')&&(k==='sword'||k==='axe');
+ if(dual){c.save();c.translate(R*.52,-R*.58);c.rotate(sw-.05);weapon(c,k,R,d,u,w,steel);c.restore()}
+ else if(d.block>=.35&&!cav&&['sword','axe','spear','hammer'].includes(k))shield(c,R,tc,dk,w==='legionary');
+ c.save();c.translate(R*.52,R*.58);c.rotate(-sw+.05);weapon(c,k,R,d,u,w,steel);c.restore();
+ c.fillStyle=armor;c.strokeStyle='#2b2822';c.lineWidth=1.3;c.beginPath();c.arc(0,-R*.8,R*.3,0,TAU);c.arc(0,R*.8,R*.3,0,TAU);c.fill();c.stroke();
+ const hx=R*.1;
+ if(k==='staff'){
+  c.fillStyle=dk;c.strokeStyle='#1c1a22';c.lineWidth=1.3;c.beginPath();c.arc(hx,0,R*.62,0,TAU);c.fill();c.stroke();
+  c.fillStyle=lt;c.beginPath();c.arc(hx,0,R*.3,0,TAU);c.fill();
+ }else{
+  c.fillStyle=gen?'#e8c76b':(d.def>=8?armor:'#5b4630');c.strokeStyle='#2b2822';c.lineWidth=1.4;c.beginPath();c.arc(hx,0,R*.44,0,TAU);c.fill();c.stroke();
+  if(d.def>=8||gen){c.strokeStyle='rgba(255,255,255,.55)';c.lineWidth=1.6;c.beginPath();c.moveTo(hx-R*.4,0);c.lineTo(hx+R*.4,0);c.stroke()}
+  else{c.fillStyle=skin;c.beginPath();c.arc(hx+R*.2,0,R*.26,-1.3,1.3);c.fill()}
+  if(gen){c.fillStyle='#d83c32';c.strokeStyle='#d9b45b';c.lineWidth=1.2;c.beginPath();c.ellipse(hx-R*.7,0,R*.55,R*.16,0,0,TAU);c.fill();c.stroke()}
+ }
+ c.restore();
+}
+return { matches: ok, draw: drawBetter };
+})();
+
 function unitToken(u){
   const d=u.d, general=!!d.ult, tm=TEAMS[u.team]||TEAMS.blue, color=tm.token, light='#f6e7c4';
   const thrust=u.lunge>0?Math.sin((u.lunge/.2)*Math.PI)*5.5:0;
@@ -4378,7 +4515,9 @@ function unitToken(u){
     ctx.beginPath(); ctx.arc(r*.5,0,r*.85,-.7,.7); ctx.stroke(); ctx.restore();
   }
 
-  if(useMiniature){
+  if(patchedUnitModels.matches(d)){
+    patchedUnitModels.draw(u,r,color);
+  }else if(useMiniature){
     drawMiniature(u,model,r,tm);
   }else if(!d.naval){
     const rid = d.renderAs || d.id;
@@ -5868,7 +6007,21 @@ $('dip2v2').onclick=()=>{game.diplomacy.blue={ally:'A',trigger:'now',active:true
 $('dip3v1').onclick=()=>{game.diplomacy.blue={ally:'A',trigger:'now',active:true};game.diplomacy.green={ally:'A',trigger:'now',active:true};game.diplomacy.gold={ally:'A',trigger:'now',active:true};game.diplomacy.red={ally:'B',trigger:'now',active:true}; renderDipModal()};
 $('dipAmbush').onclick=()=>{game.diplomacy.blue={ally:'A',trigger:'now',active:true};game.diplomacy.red={ally:'B',trigger:'now',active:true};game.diplomacy.green={ally:'C',trigger:'now',active:true};game.diplomacy.gold={ally:'D',trigger:'red',active:false}; renderDipModal()};
 
+const fieldTools = $('fieldTools');
+document.addEventListener('pointerdown', e=>{
+  if(fieldTools.open && !fieldTools.contains(e.target)) fieldTools.open=false;
+});
+$('ordnanceBar').addEventListener('click', e=>{
+  if(e.target.closest('button') && (game.activeStrike || game.liveDeploy)) fieldTools.open=false;
+});
+
 window.onkeydown=e=>{
+  if(fieldTools.open && e.key==='Escape'){
+    fieldTools.open=false;
+    fieldTools.querySelector('summary').focus();
+    return;
+  }
+  if(fieldTools.contains(e.target) && (e.code==='Space' || e.code==='Enter')) return;
   if(e.target.matches('select,input')||$('report').open||$('dipModal').open||$('formModal').open||studio.open)return;
   if(e.code==='KeyP' && game.phase==='battle'){begin(); return;}
   if(e.code==='Escape'){if(game.cityMode){setCityMode(false);return;} if(game.activeStrike){setActiveStrike(null);return;} if(game.liveDeploy){setLiveDeploy(false);return;} if(game.controlled){game.controlled=null; game.keys={}; updateCtrlHud(); toast('已交還 AI 作戰'); return;}}
